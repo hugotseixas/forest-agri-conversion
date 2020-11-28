@@ -13,7 +13,7 @@
 #
 # Notes:        In order to run this routine, you will need to have access
 #               to Google Earth Engine (https://earthengine.google.com/).
-#               You will also need to install and configure the rgee package,
+#               You will also need to install and configure the {rgee} package,
 #               Installation and use guide can be found in:
 #               https://r-spatial.github.io/rgee/
 #
