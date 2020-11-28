@@ -7,7 +7,7 @@
 #
 # Author:       Hugo Tameirao Seixas
 # Contact:      tameirao.hugo@gmail.com
-# Date:         2020-09-11
+# Date:         2020-11-10
 #
 # Notes:        In order to run this routine, you will need to successfully
 #               install and connect to Spark using the {sparklyr} package.
