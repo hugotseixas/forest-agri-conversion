@@ -222,7 +222,7 @@ walk(
           title.vjust = 1
         ),
         color = FALSE
-        ) +
+      ) +
       ggsave(
         glue("./plots/trans_length_{agri_class}.pdf"),
         width = 15,
