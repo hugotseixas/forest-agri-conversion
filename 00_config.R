@@ -10,9 +10,9 @@
 
 # Set your GEE email ----------------------------------------------------------
 gee_email <- ""
-# Intert your email between the quotes
+# Insert your email between the quotes
 # You must be registered in Google Earth Engine (GEE) with a Gmail account
-# To have acces to the google drive to download the data
+# To have access to the google drive to download the data
 # GEE home page:
 # https://earthengine.google.com/
 
