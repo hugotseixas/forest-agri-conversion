@@ -146,14 +146,15 @@ area_collection <-
 ## Area of deforestation and agriculture establishment years ----
 area_collection %>%
   mutate(
-    area = area / 1e6,
+    area = area / 1e6, # Convert area to square kilometers
     layer = fct_rev(factor(layer))
     ) %>%
   filter(
     layer %in% c("forest_year", "agri_year"),
+    # Filter states with bigger area of transition
     state %in% c("Maranhão", "Mato Grosso", "Pará", "Rondônia")
     ) %>%
-  mutate(key = ymd((key + 1984), truncated = 2L)) %>%
+  mutate(key = ymd((key + 1984), truncated = 2L)) %>% # Convert years to date
   ggplot() +
   facet_grid(
     layer ~ state,
