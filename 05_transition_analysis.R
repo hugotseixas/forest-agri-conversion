@@ -89,7 +89,7 @@ trans_subset <-
     forest_type, agri_year, forest_year,
     agri_code, trans_length
   ) %>%
-  summarise(count = n(), .groups = "keep") %>%
+  summarise(count = n()) %>%
   collect()
 
 ## Mutate columns and convert to long format ----
@@ -102,7 +102,7 @@ trans_subset %<>%
     year = ymd(year, truncated = 2L)
   )
 
-## Disconect from Spark after all queries ----
+## Disconnect from Spark after all queries ----
 spark_disconnect(sc)
 
 # CREATE PLOTS ----------------------------------------------------------------
