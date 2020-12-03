@@ -36,19 +36,23 @@ ee_Initialize(email = gee_email)
 
 # LOAD DATA -------------------------------------------------------------------
 
-## Get the polygons of Brazilian states ----
+## Load vector data ----
+
+### Get the polygons of Brazilian states ----
 states <-
-  read_state(year = "2019") %>%
-  st_join( # Only ones that overlaps with the Amazon biome
-    read_biomes(year = "2019") %>%
-      filter(code_biome == 1),
-    join = st_overlaps # It's ok that coords are not planar in this case
-    # The behavior of this function will change soon in {sf} 1.0
+  read_state(year = "2019", simplified = TRUE) %>%
+  st_intersection(
+    read_biomes(year = "2019", simplified = TRUE) %>% filter(code_biome == 1)
   ) %>%
-  drop_na() %>%
+  filter(code_state %in% c(11, 15, 21, 51)) %>%
+  st_cast("POLYGON") %>%
+  group_by(name_state) %>%
+  slice(which.max(st_area(geom))) %>%
   select(code_state, name_state, geom)
 
-## List transition assets on GEE ----
+## Load forest-agriculture transition raster ----
+
+### List transition assets on GEE ----
 asset_list <-
   ee_manage_assetlist(
     path_asset = "users/hugoseixas/amazon_forest_transition"
@@ -56,10 +60,10 @@ asset_list <-
   as_tibble() %>%
   mutate(cycle = str_extract(ID, pattern = "[0-9]+"))
 
-## Get only the first agriculture transition cycle ----
+### Get only the first agriculture transition cycle ----
 asset <- asset_list %>% filter(cycle == 1) %>% pull(ID)
 
-## Load asset as Image on GEE ----
+### Load asset as Image on GEE ----
 trans_length <-
   ee$Image(asset)$
   select(
@@ -70,81 +74,134 @@ trans_length <-
     )
   )
 
-## List band names ----
-bands_list <- trans_length$bandNames()$getInfo()
+### List band names ----
+trans_bands <- trans_length$bandNames()$getInfo()
 
-## Plot transition length mosaic ----
+### Plot transition length mosaic ----
 Map$centerObject(trans_length$geometry())
 Map$addLayer(
   eeObject = trans_length,
   visParams = list(
     bands = "trans_length",
     min = 1,
-    max = 33,
+    max = 34,
     palette = viridis::plasma(n = 5)
     # blue = short transition length / yellow = longer transition length
   )
 )
 
-# CALCULATE AREAS -------------------------------------------------------------
+## Load MapBiomas transitions ----
 
-## Calculate area for each value, of each band, in each state ----
-area_collection <-
-  map_df(
-    .x = states$name_state,
-    function(state) {
-
-      cat("\n", state, "\n")
-
-      ## Load one state into GEE ----
-      ee_state <-
-        sf_as_ee(
-          states %>% filter(name_state == state)
-        )
-
-      ## Get area for each band in the state -----
-      return(
-        map_df(
-          .x = bands_list,
-          function(band) {
-
-            cat(band, " ", sep = " ")
-
-            ## Calculate area by group (discrete values of each band) ----
-            areas <-
-              ee$Image$
-              pixelArea()$
-              addBands(trans_length$select(band))$
-              reduceRegion(
-                reducer = ee$Reducer$sum()$group(
-                  groupField = 1L,
-                  groupName = "value"
-                ),
-                geometry = ee_state$first()$geometry(),
-                scale = 30,
-                maxPixels = 1e13
-              )$
-              get("groups")$
-              getInfo()
-
-            ## Return values as a table ----
-            return(
-              tibble(key = map(areas, "value"), area = map(areas, "sum")) %>%
-                unnest(cols = c(key, area)) %>%
-                mutate(state = state, layer = band)
-            )
-
-          }
-        )
-      )
-
-    }
+### Load MapBiomas transitions collection 5 ----
+mb_img <-
+  ee$Image(
+    paste(
+      'projects',
+      'mapbiomas-workspace',
+      'public',
+      'collection5',
+      'mapbiomas_collection50_transitions_v1',
+      sep = '/'
+    )
   )
 
-# CREATE PLOTS ----
+### List band names ----
+mb_bands <- mb_img$bandNames()$getInfo()[1:34]
+
+### Remap values ----
+mb_img <-
+  ee$Image(
+    map(mb_bands, function(band_name) {
+      return(
+        mb_img$
+          select(band_name)$
+          remap(
+            from = c(315, 339, 320, 341, 1539, 1520, 1541),
+            to = c(315, 339, 320, 341, 1539, 1520, 1541),
+            defaultValue = 0
+          )$
+          rename(as.character(band_name))
+      )
+    })
+  )$
+  selfMask()
+
+# CALCULATE AREAS -------------------------------------------------------------
+
+## Create function to calculate areas ----
+calc_area <- function(image, bands_list) {
+
+  bands <- bands_list
+
+  img <- image
+
+  ## Calculate area for each value, of each band, in each state ----
+  area_collection <-
+    map_df(
+      .x = states$name_state,
+      function(state) {
+
+        cat("\n", state, "\n")
+
+        ## Load one state into GEE ----
+        ee_state <-
+          sf_as_ee(
+            states %>% filter(name_state == state)
+          )
+
+        ## Get area for each band in the state -----
+        return(
+          map_df(
+            .x = bands,
+            function(b) {
+
+              cat(b, " ", sep = " ")
+
+              ## Calculate area by group (discrete values of each band) ----
+              areas <-
+                ee$Image$
+                pixelArea()$
+                addBands(img$select(b))$
+                reduceRegion(
+                  reducer = ee$Reducer$sum()$group(
+                    groupField = 1L,
+                    groupName = "value"
+                  ),
+                  geometry = ee_state$first()$geometry(),
+                  scale = 30,
+                  maxPixels = 1e13
+                )$
+                get("groups")$
+                getInfo()
+
+              ## Return values as a table ----
+              return(
+                tibble(key = map(areas, "value"), area = map(areas, "sum")) %>%
+                  unnest(cols = c(key, area)) %>%
+                  mutate(state = state, layer = b)
+              )
+
+            }
+          )
+        )
+
+      }
+    )
+
+  return(area_collection)
+
+}
+
+## Calculate areas for forest-agriculture transitions ----
+trans_area_collection <- calc_area(trans_length, trans_bands)
+
+## Calculate areas for MapBiomas transitions ----
+mb_area_collection <- calc_area(image = mb_img, bands_list =  mb_bands)
+
+# CREATE PLOTS ----------------------------------------------------------------
 
 ## Area of deforestation and agriculture establishment years ----
-area_collection %>%
+trans_area_collection %>%
   mutate(
     area = area / 1e6, # Convert area to square kilometers
     layer = fct_rev(factor(layer))
@@ -184,4 +241,72 @@ area_collection %>%
     width = 15,
     height = 12,
     units = "cm"
+  )
+
+mb_area_collection %>%
+  mutate(
+    transition = case_when(
+      key == 315 ~ "Pasture",
+      key > 315 ~ "Agriculture"
+    )
+  ) %>%
+  mutate(
+    layer = str_remove(layer, "transition_"),
+    key = factor(key),
+    area = area / 1e6
+  ) %>%
+  separate(layer, into = c("from", "to"), sep = "_") %>%
+  mutate_at(c("from", "to"), ~ymd(., truncated = 2)) %>%
+  rename(class = key, class_area = area) %>%
+  group_by(state, transition, to) %>%
+  summarise(area = sum(class_area)) %>%
+  ggplot() +
+  facet_wrap(~ state) +
+  geom_line(aes(x = to, y = area, linetype = transition)) +
+  scale_x_date(
+    date_breaks = "2 years",
+    date_labels = "%Y",
+    expand = c(0.02, 0.02)
+  ) +
+  labs(y = "Area (km²)", x = "Year") +
+  theme_dark() +
+  theme(
+    text = element_text(size = 11),
+    axis.text.y = element_text(angle = 45, vjust = 0.6, hjust = 0.5),
+    axis.text.x = element_text(angle = 45, vjust = 0.6, hjust = 0.4)
+  )
+
+mb_area_collection %>%
+  mutate(
+    transition = case_when(
+      key == 315 ~ "Pasture",
+      key > 315 ~ "Agriculture"
+    )
+  ) %>%
+  mutate(
+    layer = str_remove(layer, "transition_"),
+    key = factor(key),
+    area = area / 1e6
+  ) %>%
+  separate(layer, into = c("from", "to"), sep = "_") %>%
+  mutate_at(c("from", "to"), ~ymd(., truncated = 2)) %>%
+  rename(class = key, class_area = area) %>%
+  group_by(state, transition, to) %>%
+  summarise(area = sum(class_area)) %>%
+  pivot_wider(names_from = transition, values_from = area) %>%
+  mutate(relative_area = Agriculture / Pasture) %>%
+  ggplot() +
+  facet_wrap(~ state) +
+  geom_line(aes(x = to, y = relative_area)) +
+  scale_x_date(
+    date_breaks = "2 years",
+    date_labels = "%Y",
+    expand = c(0.02, 0.02)
+  ) +
+  labs(y = "Relative Area", x = "Year") +
+  theme_dark() +
+  theme(
+    text = element_text(size = 11),
+    axis.text.y = element_text(angle = 45, vjust = 0.6, hjust = 0.5),
+    axis.text.x = element_text(angle = 45, vjust = 0.6, hjust = 0.4)
   )
