@@ -129,12 +129,15 @@ mb_mask <- w_mask$updateMask(a_mask)$updateMask(f_mask)
 ## Apply masks ----
 mb_img <- mb_img$updateMask(mb_mask)
 
-##-- View mask if allowed ----
+## Calculate the area of each pixel of the mask ----
+mb_mask <- mb_mask$addBands(srcImg = mb_mask$pixelArea()$updateMask(mb_mask))
+
+## View mask if allowed ----
 if(view_map == TRUE) {
 
   Map$centerObject(aoi)
 
-  Map$addLayer(mb_mask$clip(aoi), name = "MapBiomas Mask")
+  Map$addLayer(mb_mask$clip(aoi)$select(0), name = "MapBiomas Mask")
 
 }
 
@@ -146,7 +149,7 @@ if (clear_driver_folder == TRUE) { drive_rm('mb_transition') }
 ## Set download task for mask data ----
 download_mask <-
   ee_image_to_drive(
-    image = mb_mask$clip(aoi),
+    image = mb_mask$clip(aoi)$toFloat(),
     description = "mb_mask",
     folder = "mb_transition",
     timePrefix = FALSE,
