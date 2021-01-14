@@ -81,7 +81,7 @@ bands <- mb_img$bandNames()$getInfo()
 
 ## Create water mask ----
 w_mask <-
-  ee$Image("JRC/GSW1_1/GlobalSurfaceWater")$
+  ee$Image("JRC/GSW1_2/GlobalSurfaceWater")$
   select("max_extent")$
   remap(c(0,1), c(1,0))$
   byte()
