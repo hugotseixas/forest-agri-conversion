@@ -16,8 +16,10 @@
 #
 # LIBRARIES -------------------------------------------------------------------
 #
+library(sf)
 library(raster)
 library(tabularaster)
+library(geobr)
 library(fs)
 library(magrittr)
 library(glue)
@@ -32,6 +34,11 @@ source('00_config.R')
 
 ## Read MapBiomas classes information ----
 mb_dict <- read_delim('data/mb_class_dictionary.csv', delim = ',')
+
+## Load municipalities vector data ----
+municip <- read_municipality(year = "2019") %>%
+  filter(code_state %in% c(11, 12, 13, 14, 15, 16, 17, 21, 51)) %>%
+  select(code_muni, geom)
 
 # LIST RASTER FILES -----------------------------------------------------------
 
@@ -75,11 +82,13 @@ mask_table <-
 
       # Extract values of a single tile ----
       return(
-        raster(raster_path) %>%
-          tabularaster::as_tibble(xy = TRUE, cell = TRUE) %>%
+        stack(raster_path) %>%
+          tabularaster::as_tibble(xy = TRUE, cell = TRUE, ) %>%
           rename(tile_cell_id = cellindex) %>%
           filter(!(cellvalue == 0)) %>%
-          select(-cellvalue) %>%
+          pivot_wider(names_from = dimindex, values_from = cellvalue) %>%
+          rename(area = `2`) %>%
+          select(-`1`) %>%
           mutate(tile_id = tile)
       )
 
@@ -159,7 +168,7 @@ walk(
         year = dimindex
       ) %>%
       left_join(mask_subset, by = "tile_cell_id") %>% # Get cell_id from mask
-      select(-c(lon, lat))
+      select(-c(lon, lat, area))
 
     # Check if raster have any value != 0 ----
     if (nrow(lulc_table) == 0) {
@@ -392,9 +401,17 @@ walk(
         ) %>%
         select(-trans_cycle)
 
-      # Remove tile_id column from mask_subset ----
+      # Add municipality in which each pixel is within ----
       mask_subset %<>%
-        select(-tile_id)
+        select(-tile_id) %>%
+        st_as_sf(coords = c("lon", "lat"), crs = crs(mb_raster)) %>%
+        st_join(
+          municip %>% st_transform(crs(mb_raster)),
+          join = st_within
+        ) %>%
+        mutate(coords = st_as_text(geometry)) %>%
+        as_tibble() %>%
+        select(-geometry)
 
       # Create directories and store tables as parquet files ----
       walk2(
