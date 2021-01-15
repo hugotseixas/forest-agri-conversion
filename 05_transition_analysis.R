@@ -22,13 +22,14 @@ library(lubridate)
 library(glue)
 library(scales)
 library(sparklyr)
+library(ggridges)
 library(tidyverse)
 #
 # OPTIONS ---------------------------------------------------------------------
 #
 config <- spark_config()
-config$`sparklyr.shell.driver-memory` <- "16G"
-config$`sparklyr.shell.executor-memory` <- "8G"
+config$`sparklyr.shell.driver-memory` <- "16g"
+config$`sparklyr.shell.executor-memory` <- "8g"
 config$`spark.yarn.executor.memoryOverhead` <- "1g"
 #
 # SET COLOR PALETTE AND LULC NAMES --------------------------------------------
@@ -42,10 +43,23 @@ mb_dict <- read_csv("data/mb_class_dictionary.csv") %>%
 palette <- read_csv('data/mb_class_dictionary.csv')$class_color
 names(palette) <- read_csv('data/mb_class_dictionary.csv')$class_code
 
-# LOAD DATASET ----------------------------------------------------------------
+# LOAD AUXILIARY DATA ---------------------------------------------------------
+
+## Load municipality data ----
+municip <- read_csv("data/municipalities_table.csv")
+
+# LOAD DATASETS ---------------------------------------------------------------
 
 ## Connect with Spark -----
 sc <- spark_connect(master = "local", config = config)
+
+## Load mask_cells table ----
+mask_cells <-
+  spark_read_parquet(
+    sc,
+    name = "mask_cells",
+    path = "data/trans_tabular_dataset/mask_cells/"
+  )
 
 ## Load trans_length table ----
 trans_length <-
@@ -77,19 +91,23 @@ trans_time_serie <-
   mutate(year = year - agri_year) %>%
   group_by(agri_code, forest_type, year, class_code) %>%
   summarise(count = n()) %>%
-  mutate(perc = count/sum(count)) %>%
+  mutate(perc = count/sum(count, na.rm = TRUE)) %>%
   collect()
 
-## Count deforestation and agriculture establishment along years ----
+## Sum deforestation and agriculture establishment along years ----
 trans_subset <-
   trans_length %>%
   filter(agri_cycle == 1) %>%
   select(cell_id:forest_type) %>%
+  left_join(
+    mask_cells %>% select(cell_id, area, code_muni),
+    by = "cell_id"
+  ) %>%
   group_by(
     forest_type, agri_year, forest_year,
-    agri_code, trans_length
+    agri_code, trans_length, code_muni
   ) %>%
-  summarise(count = n()) %>%
+  summarise(total_area = sum(area, na.rm = TRUE)) %>%
   collect()
 
 ## Mutate columns and convert to long format ----
@@ -101,6 +119,18 @@ trans_subset %<>%
     transition = fct_rev(factor(transition)),
     year = ymd(year, truncated = 2L)
   )
+
+## Sample rows to create ridge plot ----
+trans_ridges <-
+  trans_length %>%
+  filter(agri_cycle == 1) %>%
+  select(cell_id:forest_type) %>%
+  sdf_sample(fraction = 0.2, replacement = FALSE) %>%
+  left_join(
+    mask_cells %>% select(cell_id, area, code_muni),
+    by = "cell_id"
+  ) %>%
+  collect()
 
 ## Disconnect from Spark after all queries ----
 spark_disconnect(sc)
@@ -157,78 +187,113 @@ trans_time_serie %>%
   )
 
 ## Columns with transition years for each agriculture type ----
-walk(
-  .x = pull(trans_subset %>% distinct(agri_code)),
-  function(agri_class) {
-
-    # Get the name of the agriculture class
-    agri_name <-
-      trans_subset %>%
-      filter(agri_code == agri_class) %>%
-      distinct(agri_code, class_name) %>%
-      pull(class_name)
-
-    # Create plot
-    trans_subset %>%
-      filter(agri_code == agri_class) %>%
-      ggplot() +
-      facet_grid(
-        facets = transition ~ forest_type,
-        labeller = labeller(
-          transition = c(
-            "forest_year" = "Deforestation",
-            "agri_year" = "Agriculture establishment"
-          ),
-          forest_type = c(
-            "1" = "Primary Forest",
-            "2" = "Secondary Forest"
-          )
-        )
-      ) +
-      geom_col(
-        aes(
-          x = year,
-          y = count,
-          fill = trans_length,
-          color = trans_length,
-          group = trans_length
-        )
-      ) +
-      scale_fill_continuous(type = "viridis", name = "Transition Length") +
-      scale_color_continuous(type = "viridis", name = "Transition Length") +
-      scale_x_date(
-        date_breaks = "3 years",
-        date_labels = "%Y",
-        expand = c(0.02, 0.02)
-      ) +
-      scale_y_continuous(
-        expand = c(0.02, 0.02),
-        labels = scales::scientific,
-        breaks = pretty_breaks(3)
-      ) +
-      theme_dark() +
-      theme(
-        text = element_text(size = 11),
-        axis.text.y = element_text(angle = 45, vjust = 0.6, hjust = 0.5),
-        axis.text.x = element_text(angle = 45, vjust = 0.6, hjust = 0.4),
-        axis.title = element_blank(),
-        legend.position = "bottom"
-      ) +
-      labs(title = glue("Transition length from Forest to {agri_name}")) +
-      guides(
-        fill = guide_colourbar(
-          barwidth = 10,
-          barheight = 0.8,
-          title.vjust = 1
-        ),
-        color = FALSE
-      ) +
-      ggsave(
-        glue("./plots/trans_length_{agri_class}.pdf"),
-        width = 15,
-        height = 12,
-        units = "cm"
+trans_subset %>%
+  ggplot() +
+  facet_grid(
+    facets = transition ~ forest_type,
+    labeller = labeller(
+      transition = c(
+        "forest_year" = "Deforestation",
+        "agri_year" = "Agriculture Establishment"
+      ),
+      forest_type = c(
+        "1" = "Primary Forest",
+        "2" = "Secondary Forest"
       )
+    )
+  ) +
+  geom_col(
+    aes(
+      x = year,
+      y = total_area / 1e6,
+      fill = trans_length,
+      color = trans_length,
+      group = trans_length
+    ),
+    size = 0.25
+  ) +
+  scale_fill_viridis_c(option = "C", name = "Transition Length") +
+  scale_color_viridis_c(option = "C", name = "Transition Length") +
+  scale_x_date(
+    date_breaks = "3 years",
+    date_labels = "%Y",
+    expand = c(0.02, 0.02)
+  ) +
+  scale_y_continuous(
+    expand = c(0.02, 0.02),
+    labels = scales::scientific,
+    breaks = pretty_breaks(3)
+  ) +
+  theme_dark() +
+  theme(
+    text = element_text(size = 11),
+    axis.text.y = element_text(angle = 45, vjust = 0.6, hjust = 0.5),
+    axis.text.x = element_text(angle = 45, vjust = 0.6, hjust = 0.4),
+    axis.title = element_blank(),
+    legend.position = "bottom"
+  ) +
+  guides(
+    fill = guide_colourbar(
+      barwidth = 10,
+      barheight = 0.8,
+      title.vjust = 1
+    ),
+    color = FALSE
+  ) +
+  ggsave(
+    glue("./plots/trans_length_cols.pdf"),
+    width = 15,
+    height = 5,
+    units = "cm"
+  )
 
-  }
-)
+## Ridge plot ----
+trans_ridges %>%
+  left_join(municip, by = "code_muni") %>%
+  drop_na() %>%
+  mutate(agri_year = ymd(agri_year + 1984, truncated = 2L)) %>%
+  filter(
+    trans_length <= 10,
+    year(agri_year) >= 1995
+  ) %>%
+  ggplot() +
+  facet_wrap( ~ name_state, ncol = 2) +
+  geom_density_ridges_gradient(
+    aes(
+      x = trans_length,
+      y = agri_year,
+      group = agri_year,
+      fill = stat(x)
+    ),
+    bandwidth = 1
+  ) +
+  scale_fill_viridis_c(option = "C") +
+  scale_y_date(
+    date_breaks = "3 years",
+    date_labels = "%Y"
+  ) +
+  theme_dark() +
+  coord_flip() +
+  labs(
+    x = "Transition Length",
+    y = "Agriculture Establishment",
+    fill = "Transition Length"
+  ) +
+  guides(
+    fill = guide_colourbar(
+      barwidth = 10,
+      barheight = 0.8,
+      title.vjust = 1
+    )
+  ) +
+  theme(
+    text = element_text(size = 11),
+    axis.text.x = element_text(angle = 45, vjust = 0.6, hjust = 0.4),
+    legend.position = "bottom"
+  ) +
+  ggsave(
+    glue("./plots/trans_length_cols.pdf"),
+    width = 15,
+    height = 5,
+    units = "cm"
+  )
