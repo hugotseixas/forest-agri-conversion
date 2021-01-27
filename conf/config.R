@@ -72,3 +72,17 @@ trans_ant <- c(18, 19, 39, 20, 41, 36)
 # Default value are agriculture classes:
 #   trans_ant <- c(18, 19, 39, 20, 41, 36)
 # Check https://mapbiomas.org/codigos-de-legenda?cama_set_language=en
+
+# Spark memory options --------------------------------------------------------
+config <- spark_config()
+# Create configuration object
+config$`sparklyr.shell.driver-memory` <- "16g"
+# Storage memory ("refers to that used for caching and propagating
+# internal data across the cluster")
+config$`sparklyr.shell.executor-memory` <- "8g"
+# Executor memory ("refers to that used for computation in shuffles,
+# joins, sorts and aggregations")
+config$`spark.yarn.executor.memoryOverhead` <- "1g"
+# More information:
+#   https://spark.apache.org/docs/latest/tuning.html#memory-management-overview
+#   https://spark.rstudio.com/guides/connections/
