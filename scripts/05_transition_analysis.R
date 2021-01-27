@@ -27,10 +27,7 @@ library(tidyverse)
 #
 # OPTIONS ---------------------------------------------------------------------
 #
-config <- spark_config()
-config$`sparklyr.shell.driver-memory` <- "16g"
-config$`sparklyr.shell.executor-memory` <- "8g"
-config$`spark.yarn.executor.memoryOverhead` <- "1g"
+source('conf/config.R')
 #
 # SET COLOR PALETTE AND LULC NAMES --------------------------------------------
 
@@ -180,14 +177,17 @@ trans_time_serie %>%
     legend.position = "bottom"
   ) +
   ggsave(
-    glue("./plots/trans_classes.pdf"),
+    glue("./plots/trans_classes.png"),
     width = 15,
     height = 18,
-    units = "cm"
+    units = "cm",
+    dpi = 600
   )
 
-## Columns with transition years for each agriculture type ----
+## Columns with transition years ----
 trans_subset %>%
+  group_by(transition, forest_type, trans_length, year) %>%
+  summarise(total_area = sum(total_area, na.rm = TRUE), .groups = "drop") %>%
   ggplot() +
   facet_grid(
     facets = transition ~ forest_type,
@@ -241,10 +241,11 @@ trans_subset %>%
     color = FALSE
   ) +
   ggsave(
-    glue("./plots/trans_length_cols.pdf"),
+    glue("./plots/trans_length_cols.png"),
     width = 15,
-    height = 5,
-    units = "cm"
+    height = 12,
+    units = "cm",
+    dpi = 600
   )
 
 ## Ridge plot ----
@@ -292,8 +293,9 @@ trans_ridges %>%
     legend.position = "bottom"
   ) +
   ggsave(
-    glue("./plots/trans_length_cols.pdf"),
+    glue("./plots/trans_ridge.png"),
     width = 15,
-    height = 5,
-    units = "cm"
+    height = 15,
+    units = "cm",
+    dpi = 600
   )
