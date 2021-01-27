@@ -109,4 +109,10 @@ To facilitate the use of these new raster files, we also merged all the raster o
 
 The descriptive analysis were performed over the Parquet files. To read and manipulate these files, we used the {sparklyr} package, which makes possible to read, query and summarize sets of parquet files that may be larger than the computer memory. Here we employed the Spark locally, without the use of clusters. 
 
+An example of a result that can be obtained by this methodology is the figure below. The code used to produce this and other figures can be visualized in this vignette.
 
+![](./figs/trans_length_cols.svg)
+
+## Usage
+
+To reproduce the codes of this repository, 
