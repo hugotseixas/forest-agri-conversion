@@ -1,7 +1,8 @@
 # CONFIG ----------------------------------------------------------------------
 #
 # This is a configuration file that sets options and variables that will be
-# used in the "01_download_mapbiomas.R" and "02_extract_transition.R" scripts.
+# used in the "01_download_mapbiomas.R", "02_extract_transition.R" and
+# "05_transition_analysis.R" scripts.
 # The options "gee_email", "clear_driver_folder" and "view_map" are safe
 # to be changed ("gee_email" is actually essential to run the download script).
 # However, it is not guaranteed that changes in the other options will generate
