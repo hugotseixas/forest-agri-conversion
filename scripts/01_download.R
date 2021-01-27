@@ -38,7 +38,7 @@ library(tidyverse)
 #
 # OPTIONS ---------------------------------------------------------------------
 #
-source('00_config.R')
+source('conf/config.R')
 #
 # START GEE API ---------------------------------------------------------------
 
@@ -71,8 +71,7 @@ mb_img <-
       'mapbiomas_collection50_integration_v1',
       sep = '/'
     )
-  )$
-  byte()
+  )
 
 ## Get band names ----
 bands <- mb_img$bandNames()$getInfo()
@@ -83,8 +82,7 @@ bands <- mb_img$bandNames()$getInfo()
 w_mask <-
   ee$Image("JRC/GSW1_2/GlobalSurfaceWater")$
   select("max_extent")$
-  remap(c(0,1), c(1,0))$
-  byte()
+  remap(c(0,1), c(1,0))
 
 ## Create agriculture mask ----
 a_mask <-
