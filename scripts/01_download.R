@@ -17,7 +17,7 @@
 #               Installation and use guide can be found in:
 #               https://r-spatial.github.io/rgee/
 #
-#               Check the "00_config.R" file to change options for this
+#               Check the "conf/config.R" file to change options for this
 #               routine.
 #
 #               Avoid opening the raster tiles in any GIS, since they may
