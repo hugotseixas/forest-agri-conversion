@@ -9,7 +9,7 @@
 # here to facilitate testing and future developments.
 
 # Set your GEE email ----------------------------------------------------------
-gee_email <- ""
+gee_email <- "hugo.seixas@alumni.usp.br"
 # Insert your email between the quotes
 # You must be registered in Google Earth Engine (GEE) with a Gmail account
 # To have access to the google drive to download the data
@@ -26,7 +26,7 @@ clear_driver_folder <- TRUE
 # DUPLICATE RASTER FILES MAY GENERATE ERRORS IN THE CODES
 
 # Preview masks result in GEE before download ---------------------------------
-view_map <- TRUE
+view_map <- FALSE
 # This will create the plot and ask if it should proceed
 # Default:
 #   view_map = FALSE
