@@ -115,4 +115,24 @@ An example of a result that can be obtained by this methodology is the figure be
 
 ## Usage
 
-To reproduce the codes of this repository, 
+To reproduce the codes of this repository, you will need to have R installed (we recommend version >= 4.0.0), and also a set of R packages (all of them are available on CRAN):
+
+ *arrow, dplyr, forcats, fs, gdalUtils, geobr, ggplot2, ggridges, glue, googledrive, lubridate, magrittr, purrr, raster, readr, rgee, scales, sf, sp, sparklyr, stringr, tabularaster, tibble, tidyr, tidyverse* 
+
+All packages can be simply installed with the function ```install.packages()```, however, *rgee* and *sparklyr* requires additional steps, please check their homepages for more details (https://github.com/r-spatial/rgee, https://spark.rstudio.com/).
+
+After installed all required packages, you have to download the repository to your local computer. The project contains 5 routines in the "./scripts/" folder. To reproduce the results of the project, you should run the scripts in the order displayed below.
+
+* **01_download.R** - This code uses the Google Earth Engine API within R {rgee} to access and download Land Use and Land Cover (LULC) data in the Brazilian Amazon biome. The LULC data is provided by the MapBiomas project (https://mapbiomas.org/en?cama_set_language=en). In order to run this routine, you will need to have access to Google Earth Engine (https://earthengine.google.com/). You will also need to modify the "conf/config.R" file, just add your email inside the brackets in the gee_email option.
+
+* **02_extracttransition.R** - This code extracts values of the transition between Forest and Agriculture from MapBiomas raster files. The process is applied in each file, where a number of iterations are performed to extract values from different transition cycles. The results are saved in .parquet format. 
+
+* **03_rasterize.R** - This codes takes values from the "trans_length" dataset and metadata information to recreate raster tiles with the transition values. The new raster files share the same spatial characteristics as the downloaded tiles (extent, resolution...) Each tile will be composed by a set of raster files, one file for each forest-agriculture transition cycle, and the bands of the new files carry values of the variables stored in the parquet dataset.
+
+* **04_merge_raster.R** - This script merges the raster tiles created in the "03_rasterize.R" script into a single mosaic. Each mosaic is created for each forest-agriculture transition cycle.
+
+* **05_transition_analysis.R** - The objective of this routine is to explore the dataset by filtering and aggregating data in Spark. Results are supposed to give us a overall view of the data by plots and tables. In order to run this routine, you will need to successfully install and connect to Spark using the {sparklyr} package.
+
+The project also contains a configuration file in the "./conf" folder. You should check this file before start running the scripts to set the  options in the most suitable way to reproduce the methodology.
+
+-----
