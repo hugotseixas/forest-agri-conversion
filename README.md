@@ -12,9 +12,9 @@ In this project, we took the opportunity to quantify the length of this transiti
 
 In this document, we explain the methodology to calculate the length (in years) of forest to agriculture transitions in the Amazon biome, and also describe a possible approach to access and analyze the data.
 
-# Methodology
+## Methodology
 
-## Downloading data
+### Downloading data
 
 The data source of this project is the MapBiomas, which provides annual land cover classification from 1985 to 2019 (it gets updated each year), in a resolution of 30 meters. The classification products can be directly assessed and processed in the Google Earth Engine (GEE) platform.
 
@@ -36,7 +36,7 @@ In this process, two different datasets are downloaded, one containing the LULC 
 
 To avoid problems when processing the downloaded raster files, the MapBiomas and the mask data are divided in multiple tiles by GEE. These are saved to a Google Drive account and subsequently downloaded in the local disk (in the working directory). The files follows the pattern **mb_{variable}-{tile code}.tif** (e.g. mb_lulc-0000020480-0000069120.tif), and are saved to the path "./data/mb_raw_tiles/".
 
-## Extracting LULC transition values
+### Extracting LULC transition values
 
 With the raster files saved in the local disk, we can start processing them to extract the transition values to a tabular format. 
 
@@ -76,7 +76,7 @@ The resulting tables are described in the image below. Note that all values are 
 
 ![](./figs/tables_scheme.svg)
 
-## Storing the data
+### Storing the data
 
 We chose two ways to store and share the data we generated in the section above. 
 
@@ -84,13 +84,13 @@ We chose two ways to store and share the data we generated in the section above.
 
 * The other is to convert the "trans_length.parquet" tables back to raster files. Raster files are useful to efficiently store spatial data, calculate areas, operate in relation to vector objects and perform data summaries, and it is also a very accessible format. However, it would be difficult to store data from "trans_classes.csv" due to its high complexity, so this information is not added to the raster files;
 
-### Parquet files
+#### Parquet files
 
 The Parquet is a column-oriented storage format, being more efficient than popular storage formats such as CSV, at the cost of accessibility (you can't open it in spreadsheet programs or as plain text). However it can work with a large number of programming languages, such as Java, Python and R. The structure of the Parquet data set is organized as the scheme below.
 
 ![](./figs/dataset_structure.svg)
 
-### Raster files
+#### Raster files
 
 The new raster files are created based on the tiles downloaded from GEE (which are in the path "./data/raw_raster_tiles/"), using their extent values and its number of rows and columns (located on the "./data/trans_tabular_dataset/tiles_metadata.parquet" file). For each tile file from "./data/raw_raster_tiles/", a set of new raster files are created based in the number of agriculture cycle ("agri_cycle") found in the tables, resulting in one raster for each agriculture cycle. Each new raster file contains 6 bands:
 
@@ -112,6 +112,15 @@ The descriptive analysis were performed over the Parquet files. To read and mani
 An example of a result that can be obtained by this methodology is the figure below. The code used to produce this and other figures can be visualized in this vignette.
 
 ![](./figs/trans_length_cols.svg)
+
+
+## References
+
+Pekel, Jean-François, Andrew Cottam, Noel Gorelick, and Alan S. Belward. 2016. “High-Resolution Mapping of Global Surface Water and Its Long-Term Changes.” Nature 540 (7633): 418–22. https://doi.org/10.1038/nature20584.
+
+Souza, Carlos M., Julia Z. Shimbo, Marcos R. Rosa, Leandro L. Parente, Ane A. Alencar, Bernardo F. T. Rudorff, Heinrich Hasenack, et al. 2020. “Reconstructing Three Decades of Land Use and Land Cover Changes in Brazilian Biomes with Landsat Archive and Earth Engine.” Remote Sensing 12 (17): 2735. https://doi.org/10.3390/rs12172735.
+
+-----
 
 ## Usage
 
