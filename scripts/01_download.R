@@ -135,7 +135,14 @@ if(view_map == TRUE) {
 
   Map$centerObject(aoi)
 
-  Map$addLayer(mb_mask$clip(aoi)$select(0), name = "MapBiomas Mask")
+  Map$addLayer(
+    eeObject = mb_mask$clip(aoi),
+    visParams = list(
+      bands = c("remapped"),
+      min = 1 # Avoid showing pixels in white
+    ),
+    name = "MapBiomas Mask"
+  )
 
 }
 
