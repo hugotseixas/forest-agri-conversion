@@ -36,7 +36,8 @@ source('conf/config.R')
 mb_dict <- read_delim('data/mb_class_dictionary.csv', delim = ',')
 
 ## Load municipalities vector data ----
-municip <- read_municipality(year = "2019") %>%
+municip <-
+  read_municipality(year = "2019") %>%
   filter(code_state %in% c(11, 12, 13, 14, 15, 16, 17, 21, 51)) %>%
   select(code_muni, geom)
 
@@ -49,7 +50,10 @@ file_list <-
     function(raster_type) {
 
       return(
-        dir_info('data/raw_raster_tiles/', regexp = raster_type) %>%
+        dir_info(
+          path = 'data/raw_raster_tiles/',
+          regexp = glue("{raster_type}.+tif$")
+        ) %>%
           select(path) %>%
           mutate(
             tile_code = str_extract(path, glue("(?<={raster_type}-)[^.tif]+"))
