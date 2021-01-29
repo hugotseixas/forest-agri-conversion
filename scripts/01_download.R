@@ -166,12 +166,6 @@ download_mask <-
     fileFormat = "GEO_TIFF"
   )
 
-### Start download ----
-download_mask$start()
-
-### Monitor the download ----
-ee_monitoring(download_mask, task_time = 60)
-
 ## Set download task for MapBiomas data ----
 download_mb <-
   ee_image_to_drive(
@@ -187,10 +181,12 @@ download_mb <-
     fileFormat = "GEO_TIFF"
   )
 
-### Start download ----
+### Start download tasks ----
+download_mask$start()
 download_mb$start()
 
-### Monitor the download ----
+### Monitor downloads ----
+ee_monitoring(download_mask, task_time = 60)
 ee_monitoring(download_mb, task_time = 60)
 
 # DOWNLOAD FROM DRIVE TO LOCAL DISK -------------------------------------------
