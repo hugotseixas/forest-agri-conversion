@@ -1,8 +1,7 @@
 # CONFIG ----------------------------------------------------------------------
 #
 # This is a configuration file that sets options and variables that will be
-# used in the "01_download_mapbiomas.R", "02_extract_transition.R" and
-# "05_transition_analysis.R" scripts.
+# used in the "01_download_mapbiomas.R" and "02_extract_transition.R".
 # The options "gee_email", "clear_driver_folder" and "view_map" are safe
 # to be changed ("gee_email" is actually essential to run the download script).
 # However, it is not guaranteed that changes in the other options will generate
@@ -10,7 +9,7 @@
 # here to facilitate testing and future developments.
 
 # Set your GEE email ----------------------------------------------------------
-gee_email <- "hugo.seixas@alumni.usp.br"
+gee_email <- ""
 # Insert your email between the quotes
 # You must be registered in Google Earth Engine (GEE) with a Gmail account
 # To have access to the google drive to download the data
@@ -18,7 +17,7 @@ gee_email <- "hugo.seixas@alumni.usp.br"
 # https://earthengine.google.com/
 
 # Clear Google Drive target download folder? ----------------------------------
-clear_driver_folder <- TRUE
+clear_driver_folder <- FALSE
 # Default:
 #   clear_driver_folder <- FALSE
 # This will delete the folder named "mb_transition" from your google drive
@@ -73,17 +72,3 @@ trans_ant <- c(18, 19, 39, 20, 41, 36)
 # Default value are agriculture classes:
 #   trans_ant <- c(18, 19, 39, 20, 41, 36)
 # Check https://mapbiomas.org/codigos-de-legenda?cama_set_language=en
-
-# Spark memory options --------------------------------------------------------
-config <- spark_config()
-# Create configuration object
-config$`sparklyr.shell.driver-memory` <- "16g"
-# Storage memory ("refers to that used for caching and propagating
-# internal data across the cluster")
-config$`sparklyr.shell.executor-memory` <- "8g"
-# Executor memory ("refers to that used for computation in shuffles,
-# joins, sorts and aggregations")
-config$`spark.yarn.executor.memoryOverhead` <- "1g"
-# More information:
-#   https://spark.apache.org/docs/latest/tuning.html#memory-management-overview
-#   https://spark.rstudio.com/guides/connections/
