@@ -163,7 +163,8 @@ download_mask <-
     maxPixels = 1e13,
     fileDimensions = tile_dim,
     skipEmptyTiles = TRUE,
-    fileFormat = "GEO_TIFF"
+    fileFormat = "GEO_TIFF",
+    crs = "EPSG:4326"
   )
 
 ## Set download task for MapBiomas data ----
@@ -178,7 +179,8 @@ download_mb <-
     maxPixels = 1e13,
     fileDimensions = tile_dim,
     skipEmptyTiles = TRUE,
-    fileFormat = "GEO_TIFF"
+    fileFormat = "GEO_TIFF",
+    crs = "EPSG:4326"
   )
 
 ### Start download tasks ----
@@ -204,9 +206,9 @@ walk2(
   function(id, name) {
 
     drive_download(
-    file = as_id(id),
-    path = glue::glue('data/raw_raster_tiles/{name}'),
-    overwrite = TRUE
+      file = as_id(id),
+      path = glue::glue('data/raw_raster_tiles/{name}'),
+      overwrite = TRUE
     )
 
   }
