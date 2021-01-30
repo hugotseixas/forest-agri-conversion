@@ -27,7 +27,7 @@ library(tidyverse)
 #
 # OPTIONS ---------------------------------------------------------------------
 #
-source('conf/config.R')
+source('conf/spark_config.R')
 #
 # SET COLOR PALETTE AND LULC NAMES --------------------------------------------
 
