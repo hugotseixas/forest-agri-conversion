@@ -20,7 +20,7 @@ The data source of this project is the MapBiomas, which provides annual land cov
 
 Due to the amount of data contained in the full collection of MapBiomas, only a subset of the data was downloaded to be used in the project. To filter this subset, we first set the area of interest, which in this case is the whole extent of the Amazon biome region according to the Brazilian Institute of Geography and Statistics (IBGE). After defining the area of interest, we generated three masks to filter the pixels of interest: 
 
-* A water mask, extracted from the Global Surface Water product provided by the Copernicus Programme [@Pekel2016];
+* A water mask, extracted from the Global Surface Water product provided by the Copernicus Programme (Pekel et al. 2016);
 
 * An agriculture mask, derived from the MapBiomas data, which we filtered pixels that contains any occurrence of non natural class (the classes are specified in the configuration file), but not only these classes;
 
