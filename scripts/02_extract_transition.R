@@ -88,7 +88,7 @@ mask_table <-
       # Extract values of a single tile ----
       return(
         stack(raster_path) %>%
-          tabularaster::as_tibble(xy = TRUE, cell = TRUE, ) %>%
+          tabularaster::as_tibble(xy = TRUE, cell = TRUE) %>%
           rename(tile_cell_id = cellindex) %>%
           filter(!(cellvalue == 0)) %>%
           pivot_wider(names_from = dimindex, values_from = cellvalue) %>%
