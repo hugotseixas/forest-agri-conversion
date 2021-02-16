@@ -34,7 +34,8 @@ library(sf)
 library(geobr)
 library(glue)
 library(fs)
-library(tidyverse)
+library(dplyr)
+library(purrr)
 #
 # OPTIONS ---------------------------------------------------------------------
 #

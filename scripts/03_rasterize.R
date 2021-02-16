@@ -25,7 +25,8 @@ library(magrittr)
 library(fs)
 library(glue)
 library(arrow)
-library(tidyverse)
+library(dplyr)
+library(purrr)
 #
 # OPTIONS ---------------------------------------------------------------------
 #

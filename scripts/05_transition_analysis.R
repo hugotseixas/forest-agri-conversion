@@ -23,7 +23,9 @@ library(glue)
 library(scales)
 library(sparklyr)
 library(ggridges)
-library(tidyverse)
+library(dplyr)
+library(readr)
+library(ggplot2)
 #
 # OPTIONS ---------------------------------------------------------------------
 #

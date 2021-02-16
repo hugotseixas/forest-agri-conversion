@@ -19,7 +19,9 @@ library(raster)
 library(fs)
 library(magrittr)
 library(glue)
-library(tidyverse)
+library(dplyr)
+library(tibble)
+library(purrr)
 #
 # OPTIONS ---------------------------------------------------------------------
 #

@@ -24,7 +24,12 @@ library(fs)
 library(magrittr)
 library(glue)
 library(arrow)
-library(tidyverse)
+library(dplyr)
+library(readr)
+library(tidyr)
+library(strigr)
+library(tibble)
+library(purrr)
 #
 # OPTIONS ---------------------------------------------------------------------
 #
