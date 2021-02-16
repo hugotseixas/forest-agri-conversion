@@ -124,11 +124,15 @@ Souza, Carlos M., Julia Z. Shimbo, Marcos R. Rosa, Leandro L. Parente, Ane A. Al
 
 ## Usage
 
-To reproduce the codes of this repository, you will need to have R installed (we recommend version >= 4.0.0), and also a set of R packages (all of them are available on CRAN):
+To reproduce the codes of this repository, you will need to have R installed (we recommend version >= 4.0.0). You can check the R website (https://www.r-project.org/) to download the software, there is also a detailed guide to install and manage R (https://cran.r-project.org/doc/manuals/r-release/R-admin.html). We also recommend using the Rstudio interface to run the codes, since it offers many facilities to interact with the code, you can check their website for download and intallation steps (https://rstudio.com/products/rstudio/download/).
 
- *arrow, dplyr, forcats, fs, gdalUtils, geobr, ggplot2, ggridges, glue, googledrive, lubridate, magrittr, purrr, raster, readr, rgee, scales, sf, sp, sparklyr, stringr, tabularaster, tibble, tidyr, tidyverse* 
+Our methodology also requires a set of packages to be reproduced (all of them are available on CRAN). You can run the following code in the R console to install them all (although we recommend you to check the website of each before installation, and make the installation separately).
 
-All packages can be simply installed with the function ```install.packages()```, however, *rgee* and *sparklyr* requires additional steps, please check their homepages for more details (https://github.com/r-spatial/rgee, https://spark.rstudio.com/).
+```
+install.packages(c("arrow", "dplyr", "forcats", "fs", "gdalUtils", "geobr", "ggplot2", "ggridges", "glue", "googledrive", "lubridate", "magrittr", "purrr", "raster", "readr", "scales", "sf", "sp", "stringr", "tabularaster", "tibble", "tidyr", "rgee", "sparklyr"))
+```
+
+Most of the packages should be ready to be used after being installed with the function ```install.packages()```, however, *rgee* and *sparklyr* requires additional steps, please check their homepages for more details (https://github.com/r-spatial/rgee, https://spark.rstudio.com/).
 
 After installed all required packages, you have to download the repository to your local computer. The project contains 5 routines in the "./scripts/" folder. To reproduce the results of the project, you should run the scripts in the order displayed below.
 
