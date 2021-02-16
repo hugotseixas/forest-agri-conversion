@@ -129,7 +129,14 @@ To reproduce the codes of this repository, you will need to have R installed (we
 Our methodology also requires a set of packages to be reproduced (all of them are available on CRAN). You can run the following code in the R console to install them all (although we recommend you to check the website of each before installation, and make the installation separately).
 
 ```
-install.packages(c("arrow", "dplyr", "forcats", "fs", "gdalUtils", "geobr", "ggplot2", "ggridges", "glue", "googledrive", "lubridate", "magrittr", "purrr", "raster", "readr", "scales", "sf", "sp", "stringr", "tabularaster", "tibble", "tidyr", "rgee", "sparklyr"))
+install.packages(
+  c(
+    "dplyr", "forcats", "tibble", "tidyr", "readr", "magrittr", "purrr",
+    "glue", "lubridate", "stringr", "ggplot2", "ggridges", "scales"
+    "arrow", "fs", "gdalUtils", "geobr", "googledrive", "raster", "sf", "sp", 
+    "tabularaster", "rgee", "sparklyr"
+  )
+)
 ```
 
 Most of the packages should be ready to be used after being installed with the function ```install.packages()```, however, *rgee* and *sparklyr* requires additional steps, please check their homepages for more details (https://github.com/r-spatial/rgee, https://spark.rstudio.com/).
