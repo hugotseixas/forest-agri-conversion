@@ -4,9 +4,9 @@
 
 ## Background
 
-In the last decades, the Amazon biome have been submitted to strong changes, the advance of agricultural areas over native forests is shaping a new landscape in the region. The most common pattern of transitions from natural forest formations to agriculture sites, is the initial process of deforestation, followed by the establishment of pasture, where extensive livestock production takes place, until its replacement to agricultural activities. This process can several decades to be accomplished, or even less than one year, in which it may be considered as a direct transition from forest to agriculture.
+In the last decades, the Amazon biome have been submitted to strong changes, the advance of agricultural areas over native forests is shaping a new landscape in the region. The most common pattern of transitions from natural forest formations to agriculture sites, is the initial process of deforestation, followed by the establishment of pasture, where extensive livestock production takes place, until its replacement to agricultural activities. This process can take several decades to be accomplished, or even less than one year, in which it may be considered as a direct transition from forest to agriculture.
 
-<img src="./figs/graphical_abstract.svg" width="900" />
+<img src="./figs/graphical_abstract.svg" width="900"/>
 
 In this project, we took the opportunity to quantify the length of this transition, by using data from a Land Cover and Land Use (LULC) classification from MapBiomas (Souza et al. 2020). This project aims to characterize and quantify the length of the transitions from forest formations to agriculture in the Amazon.
 
