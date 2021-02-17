@@ -1,6 +1,6 @@
 # Forest to Agriculture transitions in the Amazon biome
 
-![](./figs/trans_length_map.svg)
+<img src="./figs/trans_length_map.svg" width="900"/>
 
 ## Background
 
