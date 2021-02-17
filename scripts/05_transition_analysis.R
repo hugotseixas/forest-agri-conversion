@@ -25,6 +25,8 @@ library(sparklyr)
 library(ggridges)
 library(dplyr)
 library(readr)
+library(tidyr)
+library(forcats)
 library(ggplot2)
 #
 # OPTIONS ---------------------------------------------------------------------
@@ -109,7 +111,7 @@ trans_subset <-
   summarise(total_area = sum(area, na.rm = TRUE)) %>%
   collect()
 
-## Mutate columns and convert to long format ----
+### Mutate columns and convert to long format ----
 trans_subset %<>%
   left_join(mb_dict, by = "agri_code") %>%
   mutate(across(c(agri_year, forest_year), ~.x + 1984L)) %>%
