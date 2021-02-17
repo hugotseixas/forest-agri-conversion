@@ -95,7 +95,7 @@ mask_table <-
         stack(raster_path) %>%
           tabularaster::as_tibble(xy = TRUE, cell = TRUE) %>%
           rename(tile_cell_id = cellindex) %>%
-          filter(!(cellvalue == 0)) %>%
+          filter(!(cellvalue == 0)) %>% # Remove empty cells
           pivot_wider(names_from = dimindex, values_from = cellvalue) %>%
           rename(area = `2`) %>%
           select(-`1`) %>%
@@ -370,6 +370,7 @@ walk(
 
         }
 
+        # Get the classes remaining in the table
         dist_list <- lulc_table %>% distinct(class_code) %>% pull(class_code)
 
         # Check if there is more classes than just forest in the updated table
