@@ -1455,12 +1455,12 @@
       <g class="com.sun.star.drawing.ConnectorShape">
        <g id="id79">
         <rect class="BoundingBox" stroke="none" fill="none" x="14974" y="33939" width="56" height="2117"/>
-        <path fill="none" stroke="rgb(51,51,51)" stroke-width="53" stroke-linejoin="round" d="M 15002,36028 L 15002,35710"/>
-        <path fill="none" stroke="rgb(51,51,51)" stroke-width="53" stroke-linejoin="round" d="M 15002,35551 L 15002,35498"/>
-        <path fill="none" stroke="rgb(51,51,51)" stroke-width="53" stroke-linejoin="round" d="M 15002,35339 L 15002,35021"/>
-        <path fill="none" stroke="rgb(51,51,51)" stroke-width="53" stroke-linejoin="round" d="M 15001,34863 L 15001,34810"/>
-        <path fill="none" stroke="rgb(51,51,51)" stroke-width="53" stroke-linejoin="round" d="M 15001,34651 L 15001,34333"/>
-        <path fill="none" stroke="rgb(51,51,51)" stroke-width="53" stroke-linejoin="round" d="M 15001,34174 L 15001,34121"/>
+        <path fill="none" stroke="rgb(191,0,65)" stroke-width="53" stroke-linejoin="round" d="M 15002,36028 L 15002,35710"/>
+        <path fill="none" stroke="rgb(191,0,65)" stroke-width="53" stroke-linejoin="round" d="M 15002,35551 L 15002,35498"/>
+        <path fill="none" stroke="rgb(191,0,65)" stroke-width="53" stroke-linejoin="round" d="M 15002,35339 L 15002,35021"/>
+        <path fill="none" stroke="rgb(191,0,65)" stroke-width="53" stroke-linejoin="round" d="M 15001,34863 L 15001,34810"/>
+        <path fill="none" stroke="rgb(191,0,65)" stroke-width="53" stroke-linejoin="round" d="M 15001,34651 L 15001,34333"/>
+        <path fill="none" stroke="rgb(191,0,65)" stroke-width="53" stroke-linejoin="round" d="M 15001,34174 L 15001,34121"/>
        </g>
       </g>
       <g class="com.sun.star.drawing.ConnectorShape">
