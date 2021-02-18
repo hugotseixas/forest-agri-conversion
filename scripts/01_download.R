@@ -132,7 +132,7 @@ mb_img <- mb_img$updateMask(mb_mask)
 mb_mask <- mb_mask$addBands(srcImg = mb_mask$pixelArea()$updateMask(mb_mask))
 
 ## View mask if allowed ----
-if(view_map == TRUE) {
+if (view_map == TRUE) {
 
   Map$centerObject(aoi)
 
@@ -149,15 +149,38 @@ if(view_map == TRUE) {
 
 # DOWNLOAD DATA TO DRIVE ------------------------------------------------------
 
-## Delete googledrive download folder if allowed ----
-if (clear_driver_folder == TRUE) { drive_rm('mb_transition') }
+## Create a time code to add to folder names ----
+time_code <- as.integer(Sys.time())
+
+## Create folders ----
+
+# Parent folder
+drive_mkdir(
+  name = glue("mb_transition-{time_code}"),
+  path = "~/",
+  overwrite = FALSE
+)
+
+# Sub folders
+walk(
+  .x = c("mb_mask", "mb_lulc"),
+  function(folder_name) {
+
+    drive_mkdir(
+      name = glue("{folder_name}-{time_code}"),
+      path = glue("~/mb_transition-{time_code}/"),
+      overwrite = FALSE
+    )
+
+  }
+)
 
 ## Set download task for mask data ----
 download_mask <-
   ee_image_to_drive(
     image = mb_mask$clip(aoi)$toFloat(),
     description = "mb_mask",
-    folder = "mb_transition",
+    folder = glue("mb_mask-{time_code}"),
     timePrefix = FALSE,
     region = aoi$geometry()$bounds(),
     scale = scale,
@@ -173,7 +196,7 @@ download_mb <-
   ee_image_to_drive(
     image = mb_img$clip(aoi),
     description = "mb_lulc",
-    folder = "mb_transition",
+    folder = glue("mb_lulc-{time_code}"),
     timePrefix = FALSE,
     region = aoi$geometry()$bounds(),
     scale = scale,
@@ -195,7 +218,19 @@ ee_monitoring(download_mb, task_time = 60)
 # DOWNLOAD FROM DRIVE TO LOCAL DISK -------------------------------------------
 
 ## List files ----
-drive_files <- drive_ls('/mb_transition')
+drive_files <-
+  map_dfr(
+    .x = c("mb_mask", "mb_lulc"),
+    function(img) {
+
+      # Replicate file search 5 times and get distinct values
+      # Tries to avoid a problem where drive_ls does not find all files
+      # This is not optimal and should be replaced as soon as possible
+      map_dfr(1:5, ~ drive_ls(glue("{img}-{time_code}"))) %>%
+        distinct(name, .keep_all = TRUE)
+
+    }
+  )
 
 ## Create local download dir ----
 dir_create("data/raw_raster_tiles")
