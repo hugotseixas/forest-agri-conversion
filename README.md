@@ -145,7 +145,7 @@ After installed all required packages, you have to download the repository to yo
 
 * **01_download.R** - This code uses the Google Earth Engine API within R {rgee} to access and download Land Use and Land Cover (LULC) data in the Brazilian Amazon biome. The LULC data is provided by the MapBiomas project (https://mapbiomas.org/en?cama_set_language=en). In order to run this routine, you will need to have access to Google Earth Engine (https://earthengine.google.com/). You will also need to modify the "conf/config.R" file, just add your email inside the brackets in the gee_email option.
 
-* **02_extracttransition.R** - This code extracts values of the transition between Forest and Agriculture from MapBiomas raster files. The process is applied in each file, where a number of iterations are performed to extract values from different transition cycles. The results are saved in .parquet format. 
+* **02_extract_transition.R** - This code extracts values of the transition between Forest and Agriculture from MapBiomas raster files. The process is applied in each file, where a number of iterations are performed to extract values from different transition cycles. The results are saved in .parquet format. 
 
 * **03_rasterize.R** - This codes takes values from the "trans_length" dataset and metadata information to recreate raster tiles with the transition values. The new raster files share the same spatial characteristics as the downloaded tiles (extent, resolution...) Each tile will be composed by a set of raster files, one file for each forest-agriculture transition cycle, and the bands of the new files carry values of the variables stored in the parquet dataset.
 
