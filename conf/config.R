@@ -16,15 +16,6 @@ gee_email <- ""
 # GEE home page:
 # https://earthengine.google.com/
 
-# Clear Google Drive target download folder? ----------------------------------
-clear_driver_folder <- FALSE
-# Default:
-#   clear_driver_folder <- FALSE
-# This will delete the folder named "mb_transition" from your google drive
-# folder if set TRUE. When downloading data, make sure that this folder is
-# empty since Google Drive create duplicates of files with same name
-# DUPLICATE RASTER FILES MAY GENERATE ERRORS IN THE CODES
-
 # Preview masks result in GEE before download ---------------------------------
 view_map <- FALSE
 # This will create the plot and ask if it should proceed
@@ -53,7 +44,7 @@ scale <- 30
 #   scale <- 30
 
 # The dimension of tiles to be downloaded from GEE ----------------------------
-tile_dim <- 1280L
+tile_dim <- 1536L
 # Values have to be multiple of 256
 # Values ALWAYS have to be followed by the letter L
 # You can use tile_dim <- NULL to let GEE to choose the size automatically
