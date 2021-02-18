@@ -27,7 +27,7 @@ library(arrow)
 library(dplyr)
 library(readr)
 library(tidyr)
-library(strigr)
+library(stringr)
 library(tibble)
 library(purrr)
 #
