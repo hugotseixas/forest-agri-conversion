@@ -19,8 +19,7 @@
 #
 # LIBRARIES -------------------------------------------------------------------
 #
-library(raster)
-library(gdalUtils)
+library(terra)
 library(magrittr)
 library(fs)
 library(glue)
@@ -51,7 +50,7 @@ mask_ds <- open_dataset("data/trans_tabular_dataset/mask_cells/")
 
 ## Create set of raster files for each tile ----
 walk(
-  tiles_metadata$tile_id,
+  .x = tiles_metadata$tile_id,
   function(tile) {
 
     cat('\n')
@@ -106,8 +105,8 @@ walk(
 
                 #### Create empty raster using metadata values ----
                 trans_raster <-
-                  raster(
-                    x = extent(
+                  rast(
+                    extent = ext(
                       c(meta$x_min, meta$x_max, meta$y_min, meta$y_max)
                     ),
                     ncols = meta$n_col,
@@ -130,7 +129,7 @@ walk(
             )
 
           # Create raster stack from list ----
-          trans_stack <- stack(trans_raster_list)
+          trans_stack <- rast(trans_raster_list)
 
           # Save stack to file ----
           writeRaster(
@@ -139,9 +138,8 @@ walk(
               'data/trans_raster_tiles/',
               'trans_stack_{meta$tile_code}_cycle_{.y}.tif'
             ),
-            options = "INTERLEAVE=BAND",
-            overwrite = TRUE,
-            datatype = 'INT1U'
+            wopt = list(datatype = 'INT1U'),
+            overwrite = TRUE
           )
 
         }
