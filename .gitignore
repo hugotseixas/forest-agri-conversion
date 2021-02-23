@@ -2,7 +2,10 @@
 .Rhistory
 .RData
 .Ruserdata
-data/
 *.log
+data/raw_raster_tiles/
+data/trans_raster_mosaic/
+data/trans_raster_tiles/
+data/trans_tabular_dataset/
 logs/
 plots/
