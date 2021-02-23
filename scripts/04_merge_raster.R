@@ -10,18 +10,18 @@
 # Date:         2020-09-11
 #
 # Notes:        Do not change the names of files and directories of the
-#               results, since it will break the next codes.
+#               results, since it will break the codes.
 #
 # LIBRARIES -------------------------------------------------------------------
 #
-library(gdalUtils)
-library(raster)
+library(terra)
 library(fs)
 library(magrittr)
 library(glue)
 library(dplyr)
 library(tibble)
 library(purrr)
+library(stringr)
 #
 # OPTIONS ---------------------------------------------------------------------
 #
@@ -33,18 +33,18 @@ library(purrr)
 dir_create("data/trans_raster_mosaic/")
 
 ## List raster files with transition values ----
-raster_list <- dir_ls("data/trans_raster_tiles/")
+file_list <- dir_ls("data/trans_raster_tiles/")
 
 # LIST FOREST-AGRICULTURE TRANSITION CYCLES -----------------------------------
 
 ## Get number of cycles ----
-raster_list %<>%
+file_list %<>%
   as_tibble() %>%
-  mutate(cycle = str_extract(raster_list, '(?<=cycle_)[^.tif]+')) %>%
+  mutate(cycle = str_extract(file_list, "(?<=cycle_)[^.tif]+")) %>%
   rename(path = value)
 
 ## Create list with the cycle numbers ----
-cycle_list <- unique(raster_list$cycle)
+cycle_list <- unique(file_list$cycle)
 
 # MERGE RASTER TILES ----------------------------------------------------------
 
@@ -53,36 +53,52 @@ walk(
   .x = cycle_list,
   function(cycle_num) {
 
-    cat('Creating mosaic from cycle: ', c, '\n', sep = ' ')
+    cat("Creating mosaic from cycle: ", cycle_num, "\n", sep = " ")
 
     # Get the path for all raster of one cycle ----
-    raster_path <- raster_list %>%
+    raster_path <-
+      file_list %>%
       filter(cycle == cycle_num) %>%
       pull(path)
 
     # Merge raster as a mosaic using GDAL ----
-    raster_mosaic <- mosaic_rasters( # Creates a big raster dataset
+    gdalbuildvrt(
       gdalfile = raster_path,
-      dst_dataset = glue('data/trans_raster_mosaic/gdal_mosaic_cycle_{c}.vrt'),
-      ot = 'Byte',
-      srcnodata = 0,
-      vrtnodata = 0,
-      output_Raster = TRUE
+      glue("data/trans_raster_mosaic/gdal_mosaic_cycle_{cycle_num}.vrt"),
+      hidenodata = FALSE,
+      overwrite = TRUE
     )
+
+    # Open virtual raster to SpatRaster object ----
+    raster_mosaic <-
+      rast(
+        glue("data/trans_raster_mosaic/gdal_mosaic_cycle_{cycle_num}.vrt")
+      )
+
+    # Rename bands ----
+    names(raster_mosaic) <- names(rast(raster_path[1]))
 
     cat('Saving file...', '\n')
 
     # Save mosaic as TIF file ----
     # (smaller than GDAL output)
     writeRaster(
-      raster_mosaic,
-      glue('data/trans_raster_mosaic/mb_mosaic_cycle_{c}.tif'),
+      x = raster_mosaic,
+      filename = glue(
+        'data/trans_raster_mosaic/mb_mosaic_cycle_{cycle_num}.tif'
+      ),
       overwrite = TRUE,
-      datatype = 'INT1U'
+      wopt = list(
+        datatype = "INT1U",
+        progress = 0,
+        gdal = c("COMPRESS=LZW")
+      )
     )
 
     # Delete the virtual raster created by GDAL function ----
-    file_delete(glue('data/trans_raster_mosaic/gdal_mosaic_cycle_{c}.vrt'))
+    file_delete(
+      glue('data/trans_raster_mosaic/gdal_mosaic_cycle_{cycle_num}.vrt')
+    )
 
   }
 )
