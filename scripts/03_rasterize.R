@@ -24,6 +24,7 @@ library(magrittr)
 library(fs)
 library(glue)
 library(arrow)
+library(tibble)
 library(dplyr)
 library(purrr)
 #
