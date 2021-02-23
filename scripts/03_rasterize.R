@@ -139,7 +139,10 @@ walk(
               'data/trans_raster_tiles/',
               'trans_stack_{meta$tile_code}_cycle_{.y}.tif'
             ),
-            wopt = list(datatype = 'INT1U'),
+            wopt = list(
+              datatype = 'INT1U',
+              progress = 0
+            ),
             overwrite = TRUE
           )
 
