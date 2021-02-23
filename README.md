@@ -133,8 +133,8 @@ install.packages(
   c(
     "dplyr", "forcats", "tibble", "tidyr", "readr", "magrittr", "purrr",
     "glue", "lubridate", "stringr", "ggplot2", "ggridges", "scales"
-    "arrow", "fs", "gdalUtils", "geobr", "googledrive", "raster", "sf", "sp", 
-    "tabularaster", "rgee", "sparklyr"
+    "arrow", "fs", "gdalUtils", "geobr", "googledrive", "terra", "sf", "sp", 
+    "rgee", "sparklyr"
   )
 )
 ```
