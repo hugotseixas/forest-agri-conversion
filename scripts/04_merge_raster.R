@@ -14,6 +14,7 @@
 #
 # LIBRARIES -------------------------------------------------------------------
 #
+library(gdalUtils)
 library(terra)
 library(fs)
 library(magrittr)
