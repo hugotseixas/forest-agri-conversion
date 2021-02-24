@@ -182,7 +182,7 @@ trans_time_serie %>%
     legend.position = "bottom"
   ) +
   ggsave(
-    glue("./plots/trans_classes.png"),
+    glue("./figs/trans_classes.png"),
     width = 15,
     height = 18,
     units = "cm",
@@ -246,7 +246,7 @@ trans_subset %>%
     color = FALSE
   ) +
   ggsave(
-    glue("./plots/trans_length_cols.png"),
+    glue("./figs/trans_length_cols.png"),
     width = 15,
     height = 12,
     units = "cm",
@@ -298,7 +298,7 @@ trans_ridges %>%
     legend.position = "bottom"
   ) +
   ggsave(
-    glue("./plots/trans_ridge.png"),
+    glue("./figs/trans_ridge.png"),
     width = 15,
     height = 15,
     units = "cm",
