@@ -7,13 +7,28 @@
 # Spark memory options --------------------------------------------------------
 config <- spark_config()
 # Create configuration object
-config$`sparklyr.shell.driver-memory` <- "16g"
-# Storage memory ("refers to that used for caching and propagating
-# internal data across the cluster")
-config$`sparklyr.shell.executor-memory` <- "8g"
-# Executor memory ("refers to that used for computation in shuffles,
-# joins, sorts and aggregations")
-config$`spark.yarn.executor.memoryOverhead` <- "1g"
-# More information:
-#   https://spark.apache.org/docs/latest/tuning.html#memory-management-overview
-#   https://spark.rstudio.com/guides/connections/
+
+# Use custom spark configuration?
+custom_config <- TRUE
+# Set to TRUE if you want to set custom configuration
+
+if (custom_config) {
+
+  # Storage memory
+  config$`sparklyr.shell.driver-memory` <- "24G"
+  # ("refers to that used for caching and propagating
+  # internal data across the cluster")
+
+  # Executor memory
+  config$`sparklyr.shell.executor-memory` <- "4G"
+  # ("refers to that used for computation in shuffles,
+  # joins, sorts and aggregations")
+
+  # Overhead
+  config$`spark.yarn.executor.memoryOverhead` <- "1G"
+
+  # More information:
+  # https://spark.apache.org/docs/latest/tuning.html#memory-management-overview
+  # https://spark.rstudio.com/guides/connections/
+
+}
