@@ -127,7 +127,7 @@ mask_table <-
         st_as_sf(coords = c("x", "y"), crs = crs(raster)) %>%
         st_join(
           municip %>% st_transform(crs(raster)),
-          join = st_within
+          join = st_contains
         ) %>%
         mutate(coords = st_as_text(geometry)) %>%
         as_tibble() %>%
