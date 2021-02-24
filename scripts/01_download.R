@@ -74,16 +74,22 @@ mb_img <-
     )
   )
 
+## Change product scale if it is not the default value ----
+if (scale != 30) {
+
+  mb_crs <- mb_img$projection()
+
+  mb_img <-
+    mb_img$
+    reduceResolution(reducer = ee$Reducer$mode(), maxPixels = 1000)$
+    reproject(crs = mb_crs, scale = scale)
+
+}
+
 ## Get band names ----
 bands <- mb_img$bandNames()$getInfo()
 
 # CREATE AND APPLY MASKS ------------------------------------------------------
-
-## Create water mask ----
-w_mask <-
-  ee$Image("JRC/GSW1_2/GlobalSurfaceWater")$
-  select("max_extent")$
-  remap(c(0,1), c(1,0))
 
 ## Create agriculture mask ----
 a_mask <-
@@ -100,9 +106,7 @@ a_mask <-
       )
     })
   )$
-  reduce(ee$Reducer$countDistinct())$
-  # Turn to 1 pixels that had other classes besides the mask along time series
-  remap(from = c(1, 2), to = c(0, 1), defaultValue = 0)
+  reduce(ee$Reducer$anyNonZero())
 
 ## Create forest mask ----
 f_mask <-
@@ -119,17 +123,22 @@ f_mask <-
       )
     })
   )$
-  reduce(ee$Reducer$countDistinct())$
-  remap(from = c(1, 2), to = c(0, 1), defaultValue = 0)
-
-## Combine masks ----
-mb_mask <- w_mask$updateMask(a_mask)$updateMask(f_mask)
+  reduce(ee$Reducer$anyNonZero())
 
 ## Apply masks ----
-mb_img <- mb_img$updateMask(mb_mask)
+mb_img <- mb_img$updateMask(a_mask)$updateMask(f_mask)
+
+## Combine masks ----
+mb_mask <- mb_img$reduce(ee$Reducer$allNonZero())
 
 ## Calculate the area of each pixel of the mask ----
-mb_mask <- mb_mask$addBands(srcImg = mb_mask$pixelArea()$updateMask(mb_mask))
+mb_mask <-
+  mb_mask$
+  addBands(
+    srcImg = mb_img$
+      pixelArea()$
+      updateMask(mb_mask)
+  )
 
 ## View mask if allowed ----
 if (view_map == TRUE) {
