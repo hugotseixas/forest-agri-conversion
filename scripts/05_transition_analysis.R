@@ -16,6 +16,8 @@
 #
 # LIBRARIES -------------------------------------------------------------------
 #
+library(sf)
+library(geobr)
 library(magrittr)
 library(fs)
 library(lubridate)
@@ -48,7 +50,7 @@ names(palette) <- read_csv('data/mb_class_dictionary.csv')$class_code
 # LOAD AUXILIARY DATA ---------------------------------------------------------
 
 ## Load municipality data ----
-municip <- read_csv("data/municipalities_table.csv")
+municip <- read_municipality(year = "2019")
 
 # LOAD DATASETS ---------------------------------------------------------------
 
