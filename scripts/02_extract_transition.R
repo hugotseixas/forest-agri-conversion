@@ -127,7 +127,8 @@ mask_table <-
         st_as_sf(coords = c("x", "y"), crs = crs(raster)) %>%
         st_join(
           municip %>% st_transform(crs(raster)),
-          join = st_contains
+          join = st_nearest_feature # Avoids duplicates
+          # It may not join the geometry in which the point is inside
         ) %>%
         mutate(coords = st_as_text(geometry)) %>%
         as_tibble() %>%
