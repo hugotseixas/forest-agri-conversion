@@ -157,4 +157,10 @@ After installed all required packages, you have to download the repository to yo
 
 The project also contains a configuration file in the "./conf" folder. You should check this file before start running the scripts to set the  options in the most suitable way to reproduce the methodology.
 
+## Known issues
+
+* When searching the googledrive files exported by GEE, it may not find all files in the driver folder, specially with a big number a files (avoid setting the tile_dim option lower than 1536 in the config.R file). This is an open issue that have not been addressed yet in the *googledrive* package. It seems that the problem is related to google itself. You can read about the issue here: https://github.com/tidyverse/googledrive/issues/288. In an attempt to avoid this problem, the code repeats the drive_ls functions some times and get the distinct files it have found, but this may not work every time. If you have problems downloading the files, please download them manually and extract the files altogether in the folder called "./data/raw_raster_tiles".
+
+* When running the 02_extract_mask.R, you may see an error being raised, something like "Error in (function (x) : attempt to apply non-function". This is a known issue, however the reasons for it are still unknown. You can ignore these error calls. Here is some links about this issue: https://github.com/rspatial/terra/issues/30 and https://github.com/sneumann/xcms/issues/288
+
 -----
