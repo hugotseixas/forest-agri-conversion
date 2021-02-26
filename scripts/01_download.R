@@ -125,20 +125,15 @@ f_mask <-
   )$
   reduce(ee$Reducer$anyNonZero())
 
+## Calculate the area of each pixel of the masks ----
+mb_mask <-
+  mb_img$
+  pixelArea()$
+  updateMask(a_mask)$
+  updateMask(f_mask)
+
 ## Apply masks ----
 mb_img <- mb_img$updateMask(a_mask)$updateMask(f_mask)
-
-## Combine masks ----
-mb_mask <- mb_img$reduce(ee$Reducer$allNonZero())
-
-## Calculate the area of each pixel of the mask ----
-mb_mask <-
-  mb_mask$
-  addBands(
-    srcImg = mb_img$
-      pixelArea()$
-      updateMask(mb_mask)
-  )
 
 ## View mask if allowed ----
 if (view_map == TRUE) {
@@ -148,7 +143,7 @@ if (view_map == TRUE) {
   Map$addLayer(
     eeObject = mb_mask$clip(aoi),
     visParams = list(
-      bands = c("remapped"),
+      bands = c("area"),
       min = 1 # Avoid showing pixels in white
     ),
     name = "MapBiomas Mask"
@@ -187,7 +182,7 @@ walk(
 ## Set download task for mask data ----
 download_mask <-
   ee_image_to_drive(
-    image = mb_mask$clip(aoi)$toFloat(),
+    image = mb_mask$clip(aoi),
     description = "mb_mask",
     folder = glue("mb_mask-{time_code}"),
     timePrefix = FALSE,
