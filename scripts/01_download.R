@@ -227,18 +227,17 @@ ee_monitoring(download_mb, task_time = 60)
 # DOWNLOAD FROM DRIVE TO LOCAL DISK -------------------------------------------
 
 ## List files ----
+# Replicate file search 10 times and get distinct values
+# Tries to avoid a problem where drive_ls does not find all files
+# This is not optimal and should be replaced as soon as possible
 drive_files <-
   map_dfr(
-    .x = c("mb_mask", "mb_lulc"),
-    function(img) {
-
-      # Replicate file search 5 times and get distinct values
-      # Tries to avoid a problem where drive_ls does not find all files
-      # This is not optimal and should be replaced as soon as possible
-      map_dfr(1:5, ~ drive_ls(glue("{img}-{time_code}"))) %>%
-        distinct(name, .keep_all = TRUE)
-
-    }
+    1:10,
+    ~ drive_ls(glue("~/mb_transition-{time_code}/"), recursive = TRUE)
+  ) %>%
+  distinct(name, .keep_all = TRUE) %>%
+  filter(
+    !name %in% c(glue("mb_lulc-{time_code}"), glue("mb_mask-{time_code}"))
   )
 
 ## Create local download dir ----
