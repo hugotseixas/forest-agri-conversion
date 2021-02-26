@@ -23,12 +23,12 @@ library(fs)
 library(magrittr)
 library(glue)
 library(arrow)
-library(dplyr)
 library(readr)
 library(tidyr)
 library(stringr)
 library(tibble)
 library(purrr)
+library(dplyr)
 #
 # OPTIONS ---------------------------------------------------------------------
 #
@@ -116,10 +116,12 @@ mask_table <-
         terra_as_tibble(xy = TRUE, cell = TRUE) %>%
         rename(tile_cell_id = cellindex) %>%
         filter(!(cellvalue == 0)) %>% # Remove empty cells
-        pivot_wider(names_from = dimindex, values_from = cellvalue) %>%
-        rename(area = `2`) %>%
-        select(-`1`) %>%
-        mutate(tile_id = tile)
+        mutate(tile_id = tile) %>%
+        rename(area = cellvalue)
+
+      # Check if there is any valid pixel ----
+      # Avoids possible unexpected errors
+      if (nrow(mask_subset) == 0) { return() }
 
       # Add municipality in which each pixel is within ----
       mask_subset <-
