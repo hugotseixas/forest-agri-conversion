@@ -50,7 +50,7 @@ tile_dim <- 1536L
 # You can use tile_dim <- NULL to let GEE to choose the size automatically
 # Bigger values will result in bigger tiles, demanding more memory
 # Default:
-#   tile_dim <- 1280L
+#   tile_dim <- 1536L
 
 # The natural class of the transition -----------------------------------------
 trans_nat <- c(3)
