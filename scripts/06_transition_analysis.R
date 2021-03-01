@@ -185,7 +185,7 @@ trans_time_serie %>%
   ) +
   ggsave(
     glue("./figs/trans_classes.png"),
-    width = 15,
+    width = 17,
     height = 18,
     units = "cm",
     dpi = 600
@@ -249,8 +249,8 @@ trans_subset %>%
   ) +
   ggsave(
     glue("./figs/trans_length_cols.png"),
-    width = 15,
-    height = 12,
+    width = 17,
+    height = 14,
     units = "cm",
     dpi = 600
   )
@@ -301,7 +301,7 @@ trans_ridges %>%
   ) +
   ggsave(
     glue("./figs/trans_ridge.png"),
-    width = 15,
+    width = 17,
     height = 15,
     units = "cm",
     dpi = 600
