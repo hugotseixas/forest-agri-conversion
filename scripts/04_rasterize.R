@@ -70,12 +70,20 @@ walk(
       tiles_metadata %>%
       filter(tile_id == tile)
 
-    # Create one raster for each group (agri_cycle) ----
-    trans_ds %>%
+    # Get transition values ----
+    trans_table <-
+      trans_ds %>%
       filter(tile_id == tile) %>% # First filter the dataset for the tile
       select(-tile_id) %>%
       group_by(agri_cycle) %>%
-      collect() %>%
+      collect()
+
+    # Check if there is any valid value ----
+    # Avoids possible unexpected errors
+    if (nrow(trans_table) == 0) { return() }
+
+    # Create one raster for each group (agri_cycle) ----
+    trans_table %>%
       group_walk(
         ~ {
 
