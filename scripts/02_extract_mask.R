@@ -87,7 +87,7 @@ tiles_metadata <-
           n_col = ncol(raster),
           n_row = nrow(raster),
           n_cell = ncell(raster),
-          crs = as.character(crs(raster, proj4 = TRUE))
+          crs = as.character(crs(raster, proj = TRUE))
         )
 
     }
