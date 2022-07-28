@@ -1,31 +1,35 @@
-class_name,class_code,class_type,class_color
-Forest,1,mosaic,#129912
-Natural Forest,2,natural,#1F4423
-Forest Formation,3,natural,#006400
-Savanna Formation,4,natural,#32CD32
-Mangrove,5,natural,#687537
-Forest Plantation,9,anthropic,#935132
-Non Forest Natural Formation,10,natural,#BBFCAC
-Wetland,11,natural,#45C2A5
-Grassland,12,natural,#B8AF4F
-Salt Flat,32,natural,#968c46
-Rocky Outcrop,29,natural,#FF8C00
-Other non Forest Formations,13,natural,#BDB76B
-Farming,14,anthropic,#FFFFB2
-Pasture,15,anthropic,#FFD966
-Agriculture,18,anthropic,#E974ED
-Temporary Crop,19,anthropic,#D5A6BD
-Soybean,39,anthropic,#c59ff4
-Sugar Cane,20,anthropic,#C27BA0
-Other Temporary Crops,41,anthropic,#e787f8
-Perennial Crop,36,anthropic,#f3b4f1
-Mosaic of Agriculture and Pasture,21,anthropic,#FFEFC3
-Non Vegetated Area,22,mosaic,#EA9999
-Beach and Dune,23,natural,#DD7E6B
-Urban Infrastructure,24,anthropic,#af2a2a
-Mining,30,anthropic,#8A2BE2
-Other Non Vegetated Areas,25,mosaic,#FF99FF
-Water,26,mosaic,#0000FF
-"River, Lake and Ocean",33,natural,#0000FF
-Aquaculture,31,anthropic,#29EEE4
-Non Observed,27,NA,#D5D5E5
+class_name,class_code,class_color
+Forest,1,#129912
+Forest Formation,3,#6400
+Savanna Formation,4,#00ff00
+Mangrove,5,#687537
+Wooded Restinga,49,#6b9932
+Non Forest Natural Formation,10,#BBFCAC
+Wetlands,11,#45C2A5
+Grassland,12,#B8AF4F
+Salt Flat,32,#968c46
+Rocky Outcrop,29,#665a3a
+Other non Forest Formations,13,#f1c232
+Farming ,14,#FFFFB2
+Pasture,15,#FFD966
+Agriculture,18,#E974ED
+Temporary Crop,19,#D5A6BD
+Soybean,39,#e075ad
+Sugar cane,20,#C27BA0
+Rice,40,#982c9e
+Other temporary Crops,41,#e787f8
+Perennial Crop,36,#f3b4f1
+Coffee,46,#cca0d4
+Citrus,47,#d082de
+Other Perennial Crop,48,#cd49e4
+Forest Plantation,9,#ad4413
+Mosaic Agriculture and Pasture,21,#fff3bf
+Non vegetated Area,22,#EA9999
+Beach Dune and Sand Spot,23,#DD7E6B
+Urban Area,24,#aa0000
+Mining,30,#af2a2a
+Other non Vegetaded Areas,25,#ff3d3d
+Water,26,#0000FF
+River Lake and Ocean,33,#0000FF
+Aquaculture,31,#02106f
+Non Observed,27,#D5D5E5
