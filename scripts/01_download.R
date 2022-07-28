@@ -74,16 +74,22 @@ mb_img <-
     )
   )
 
+## Change product scale if it is not the default value ----
+if (scale != 30) {
+
+  mb_crs <- mb_img$projection()
+
+  mb_img <-
+    mb_img$
+    reduceResolution(reducer = ee$Reducer$mode(), maxPixels = 1000)$
+    reproject(crs = mb_crs, scale = scale)
+
+}
+
 ## Get band names ----
 bands <- mb_img$bandNames()$getInfo()
 
 # CREATE AND APPLY MASKS ------------------------------------------------------
-
-## Create water mask ----
-w_mask <-
-  ee$Image("JRC/GSW1_2/GlobalSurfaceWater")$
-  select("max_extent")$
-  remap(c(0,1), c(1,0))
 
 ## Create agriculture mask ----
 a_mask <-
@@ -100,9 +106,7 @@ a_mask <-
       )
     })
   )$
-  reduce(ee$Reducer$countDistinct())$
-  # Turn to 1 pixels that had other classes besides the mask along time series
-  remap(from = c(1, 2), to = c(0, 1), defaultValue = 0)
+  reduce(ee$Reducer$anyNonZero())
 
 ## Create forest mask ----
 f_mask <-
@@ -119,17 +123,17 @@ f_mask <-
       )
     })
   )$
-  reduce(ee$Reducer$countDistinct())$
-  remap(from = c(1, 2), to = c(0, 1), defaultValue = 0)
+  reduce(ee$Reducer$anyNonZero())
 
-## Combine masks ----
-mb_mask <- w_mask$updateMask(a_mask)$updateMask(f_mask)
+## Calculate the area of each pixel of the masks ----
+mb_mask <-
+  mb_img$
+  pixelArea()$
+  updateMask(a_mask)$
+  updateMask(f_mask)
 
 ## Apply masks ----
-mb_img <- mb_img$updateMask(mb_mask)
-
-## Calculate the area of each pixel of the mask ----
-mb_mask <- mb_mask$addBands(srcImg = mb_mask$pixelArea()$updateMask(mb_mask))
+mb_img <- mb_img$updateMask(a_mask)$updateMask(f_mask)
 
 ## View mask if allowed ----
 if (view_map == TRUE) {
@@ -139,7 +143,7 @@ if (view_map == TRUE) {
   Map$addLayer(
     eeObject = mb_mask$clip(aoi),
     visParams = list(
-      bands = c("remapped"),
+      bands = c("area"),
       min = 1 # Avoid showing pixels in white
     ),
     name = "MapBiomas Mask"
@@ -178,7 +182,7 @@ walk(
 ## Set download task for mask data ----
 download_mask <-
   ee_image_to_drive(
-    image = mb_mask$clip(aoi)$toFloat(),
+    image = mb_mask$clip(aoi),
     description = "mb_mask",
     folder = glue("mb_mask-{time_code}"),
     timePrefix = FALSE,
@@ -218,18 +222,17 @@ ee_monitoring(download_mb, task_time = 60)
 # DOWNLOAD FROM DRIVE TO LOCAL DISK -------------------------------------------
 
 ## List files ----
+# Replicate file search 10 times and get distinct values
+# Tries to avoid a problem where drive_ls does not find all files
+# This is not optimal and should be replaced as soon as possible
 drive_files <-
   map_dfr(
-    .x = c("mb_mask", "mb_lulc"),
-    function(img) {
-
-      # Replicate file search 5 times and get distinct values
-      # Tries to avoid a problem where drive_ls does not find all files
-      # This is not optimal and should be replaced as soon as possible
-      map_dfr(1:5, ~ drive_ls(glue("{img}-{time_code}"))) %>%
-        distinct(name, .keep_all = TRUE)
-
-    }
+    1:10,
+    ~ drive_ls(glue("~/mb_transition-{time_code}/"), recursive = TRUE)
+  ) %>%
+  distinct(name, .keep_all = TRUE) %>%
+  filter(
+    !name %in% c(glue("mb_lulc-{time_code}"), glue("mb_mask-{time_code}"))
   )
 
 ## Create local download dir ----

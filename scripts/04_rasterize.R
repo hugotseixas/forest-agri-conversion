@@ -70,12 +70,20 @@ walk(
       tiles_metadata %>%
       filter(tile_id == tile)
 
-    # Create one raster for each group (agri_cycle) ----
-    trans_ds %>%
+    # Get transition values ----
+    trans_table <-
+      trans_ds %>%
       filter(tile_id == tile) %>% # First filter the dataset for the tile
       select(-tile_id) %>%
       group_by(agri_cycle) %>%
-      collect() %>%
+      collect()
+
+    # Check if there is any valid value ----
+    # Avoids possible unexpected errors
+    if (nrow(trans_table) == 0) { return() }
+
+    # Create one raster for each group (agri_cycle) ----
+    trans_table %>%
       group_walk(
         ~ {
 
@@ -83,7 +91,7 @@ walk(
           trans_table <-
             .x %>%
             # Get cell id of the tile
-            left_join(cells, by = "cell_id") %>%
+            full_join(cells, by = "cell_id") %>%
             # Expand values to the whole raster extent
             # Will include NA values for empty cells (very important)
             right_join(
@@ -115,11 +123,14 @@ walk(
                     crs = meta$crs
                   )
 
-                # Fill layer with values ----
-                values(trans_raster) <-
+                # Arrange cell values ----
+                raster_values <-
                   trans_table %>%
                   arrange(tile_cell_id) %>%
                   pull(!!var)
+
+                # Fill layer with values ----
+                trans_raster <- setValues(trans_raster, values = raster_values)
 
                 # Set layer name ----
                 names(trans_raster) <- var

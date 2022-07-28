@@ -141,18 +141,26 @@ install.packages(
 
 Most of the packages should be ready to be used after being installed with the function ```install.packages()```, however, *rgee* and *sparklyr* requires additional steps, please check their homepages for more details (https://github.com/r-spatial/rgee, https://spark.rstudio.com/).
 
-After installed all required packages, you have to download the repository to your local computer. The project contains 5 routines in the "./scripts/" folder. To reproduce the results of the project, you should run the scripts in the order displayed below.
+After installed all required packages, you have to download the repository to your local computer. The project contains 6 routines in the "./scripts/" folder. To reproduce the results of the project, you should run the scripts in the order displayed below. It is possible to run the analysis after running scripts 01 to 03, the 04 and 05 are optional, and serve to transform the data back to raster format.
 
 * **01_download.R** - This code uses the Google Earth Engine API within R {rgee} to access and download Land Use and Land Cover (LULC) data in the Brazilian Amazon biome. The LULC data is provided by the MapBiomas project (https://mapbiomas.org/en?cama_set_language=en). In order to run this routine, you will need to have access to Google Earth Engine (https://earthengine.google.com/). You will also need to modify the "conf/config.R" file, just add your email inside the brackets in the gee_email option.
 
-* **02_extract_transition.R** - This code extracts values of the transition between Forest and Agriculture from MapBiomas raster files. The process is applied in each file, where a number of iterations are performed to extract values from different transition cycles. The results are saved in .parquet format. 
+* **02_extract_mask.r** - This code extracts area values of the mask raster files and its metadata. The process is applied in each file. The results are saved in .parquet format.
 
-* **03_rasterize.R** - This codes takes values from the "trans_length" dataset and metadata information to recreate raster tiles with the transition values. The new raster files share the same spatial characteristics as the downloaded tiles (extent, resolution...) Each tile will be composed by a set of raster files, one file for each forest-agriculture transition cycle, and the bands of the new files carry values of the variables stored in the parquet dataset.
+* **03_extract_transition.R** - This code extracts values of the transition between Forest and Agriculture from MapBiomas raster files. The process is applied in each file, where a number of iterations are performed to extract values from different transition cycles. The results are saved in .parquet format. 
 
-* **04_merge_raster.R** - This script merges the raster tiles created in the "03_rasterize.R" script into a single mosaic. Each mosaic is created for each forest-agriculture transition cycle.
+* **04_rasterize.R** - This codes takes values from the "trans_length" dataset and metadata information to recreate raster tiles with the transition values. The new raster files share the same spatial characteristics as the downloaded tiles (extent, resolution...) Each tile will be composed by a set of raster files, one file for each forest-agriculture transition cycle, and the bands of the new files carry values of the variables stored in the parquet dataset.
 
-* **05_transition_analysis.R** - The objective of this routine is to explore the dataset by filtering and aggregating data in Spark. Results are supposed to give us a overall view of the data by plots and tables. In order to run this routine, you will need to successfully install and connect to Spark using the {sparklyr} package.
+* **05_merge_raster.R** - This script merges the raster tiles created in the "03_rasterize.R" script into a single mosaic. Each mosaic is created for each forest-agriculture transition cycle.
+
+* **06_transition_analysis.R** - The objective of this routine is to explore the dataset by filtering and aggregating data in Spark. Results are supposed to give us a overall view of the data by plots and tables. In order to run this routine, you will need to successfully install and connect to Spark using the {sparklyr} package.
 
 The project also contains a configuration file in the "./conf" folder. You should check this file before start running the scripts to set the  options in the most suitable way to reproduce the methodology.
+
+## Known issues
+
+* When searching the googledrive files exported by GEE, it may not find all files in the driver folder, specially with a big number a files (avoid setting the tile_dim option lower than 1536 in the config.R file). This is an open issue that have not been addressed yet in the *googledrive* package. It seems that the problem is related to google itself. You can read about the issue here: https://github.com/tidyverse/googledrive/issues/288. In an attempt to avoid this problem, the code repeats the drive_ls functions some times and get the distinct files it have found, but this may not work every time. If you have problems downloading the files, please download them manually and extract the files altogether in the folder called "./data/raw_raster_tiles".
+
+* When running the 02_extract_mask.R, you may see an error being raised, something like "Error in (function (x) : attempt to apply non-function". This is a known issue, however the reasons for it are still unknown. You can ignore these error calls. Here is some links about this issue: https://github.com/rspatial/terra/issues/30 and https://github.com/sneumann/xcms/issues/288
 
 -----
