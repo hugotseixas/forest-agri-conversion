@@ -1,35 +1,35 @@
-class_name,class_code,class_color
-Forest,1,#129912
-Forest Formation,3,#6400
-Savanna Formation,4,#00ff00
-Mangrove,5,#687537
-Wooded Restinga,49,#6b9932
-Non Forest Natural Formation,10,#BBFCAC
-Wetlands,11,#45C2A5
-Grassland,12,#B8AF4F
-Salt Flat,32,#968c46
-Rocky Outcrop,29,#665a3a
-Other non Forest Formations,13,#f1c232
-Farming ,14,#FFFFB2
-Pasture,15,#FFD966
-Agriculture,18,#E974ED
-Temporary Crop,19,#D5A6BD
-Soybean,39,#e075ad
-Sugar cane,20,#C27BA0
-Rice,40,#982c9e
-Other temporary Crops,41,#e787f8
-Perennial Crop,36,#f3b4f1
-Coffee,46,#cca0d4
-Citrus,47,#d082de
-Other Perennial Crop,48,#cd49e4
-Forest Plantation,9,#ad4413
-Mosaic Agriculture and Pasture,21,#fff3bf
-Non vegetated Area,22,#EA9999
-Beach Dune and Sand Spot,23,#DD7E6B
-Urban Area,24,#aa0000
-Mining,30,#af2a2a
-Other non Vegetaded Areas,25,#ff3d3d
-Water,26,#0000FF
-River Lake and Ocean,33,#0000FF
-Aquaculture,31,#02106f
-Non Observed,27,#D5D5E5
+class_name,class_code,class_type,class_color
+Forest,1,natural,#129912
+Forest Formation,3,natural,#6400
+Savanna Formation,4,natural,#00ff00
+Mangrove,5,natural,#687537
+Wooded Restinga,49,natural,#6b9932
+Non Forest Natural Formation,10,natural,#BBFCAC
+Wetlands,11,natural,#45C2A5
+Grassland,12,natural,#B8AF4F
+Salt Flat,32,natural,#968c46
+Rocky Outcrop,29,natural,#665a3a
+Other non Forest Formations,13,natural,#f1c232
+Farming ,14,anthropic,#FFFFB2
+Pasture,15,anthropic,#FFD966
+Agriculture,18,anthropic,#E974ED
+Temporary Crop,19,anthropic,#D5A6BD
+Soybean,39,anthropic,#e075ad
+Sugar cane,20,anthropic,#C27BA0
+Rice,40,anthropic,#982c9e
+Other temporary Crops,41,anthropic,#e787f8
+Perennial Crop,36,anthropic,#f3b4f1
+Coffee,46,anthropic,#cca0d4
+Citrus,47,anthropic,#d082de
+Other Perennial Crop,48,anthropic,#cd49e4
+Forest Plantation,9,anthropic,#ad4413
+Mosaic Agriculture and Pasture,21,anthropic,#fff3bf
+Non vegetated Area,22,mosaic,#EA9999
+Beach Dune and Sand Spot,23,natural,#DD7E6B
+Urban Area,24,anthropic,#aa0000
+Mining,30,anthropic,#af2a2a
+Other non Vegetaded Areas,25,mosaic,#ff3d3d
+Water,26,mosaic,#0000FF
+River Lake and Ocean,33,natural,#0000FF
+Aquaculture,31,anthropic,#02106f
+Non Observed,27,NA,#D5D5E5
