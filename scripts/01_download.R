@@ -29,6 +29,7 @@
 # LIBRARIES -------------------------------------------------------------------
 #
 library(rgee)
+library(geojsonio)
 library(googledrive)
 library(sf)
 library(geobr)
@@ -44,7 +45,9 @@ source('conf/config.R')
 # START GEE API ---------------------------------------------------------------
 
 ## Initialize GEE ----
-ee_Initialize(email = gee_email, drive = TRUE)
+ee_Initialize(
+  user = gee_email, drive = TRUE
+)
 
 # SET REGION OF INTEREST ------------------------------------------------------
 
@@ -61,15 +64,15 @@ aoi <- sf_as_ee(biomes)
 
 # LOAD LULC DATA --------------------------------------------------------------
 
-## Load MapBiomas collection 5 ----
+## Load MapBiomas collection 6 ----
 mb_img <-
   ee$Image(
     paste(
       'projects',
       'mapbiomas-workspace',
       'public',
-      'collection5',
-      'mapbiomas_collection50_integration_v1',
+      'collection6',
+      'mapbiomas_collection60_integration_v1',
       sep = '/'
     )
   )
@@ -216,8 +219,8 @@ download_mask$start()
 download_mb$start()
 
 ### Monitor downloads ----
-ee_monitoring(download_mask, task_time = 60)
-ee_monitoring(download_mb, task_time = 60)
+ee_monitoring(download_mask, task_time = 600)
+ee_monitoring(download_mb, task_time = 600)
 
 # DOWNLOAD FROM DRIVE TO LOCAL DISK -------------------------------------------
 
