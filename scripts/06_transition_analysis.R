@@ -141,8 +141,8 @@ spark_disconnect(sc)
 
 # CREATE PLOTS ----------------------------------------------------------------
 
-## LULC percentage time serie ----
-trans_time_serie %>%
+## LULC percentage time series ----
+pts <- trans_time_serie %>%
   ggplot() +
   facet_grid(
     facets = agri_code ~ forest_type,
@@ -168,7 +168,7 @@ trans_time_serie %>%
   ) +
   geom_vline(xintercept = 33.5) +
   scale_fill_manual(values = palette) +
-  scale_color_manual(values = palette, guide = FALSE) +
+  scale_color_manual(values = palette, guide = "none") +
   scale_x_discrete(breaks = seq(-35, 5, 5), expand = c(0.02, 0.02)) +
   scale_y_continuous(limits = c(0, 100.1), expand = c(0.015, 0.015)) +
   labs(
@@ -182,17 +182,19 @@ trans_time_serie %>%
     panel.grid = element_blank(),
     panel.border = element_blank(),
     legend.position = "bottom"
-  ) +
-  ggsave(
-    glue("./figs/trans_classes.png"),
-    width = 17,
-    height = 18,
-    units = "cm",
-    dpi = 600
   )
 
+ggsave(
+  glue("./figs/trans_classes.png"),
+  pts,
+  width = 17,
+  height = 18,
+  units = "cm",
+  dpi = 600
+)
+
 ## Columns with transition years ----
-trans_subset %>%
+cty <- trans_subset %>%
   group_by(transition, forest_type, trans_length, year) %>%
   summarise(total_area = sum(total_area, na.rm = TRUE), .groups = "drop") %>%
   ggplot() +
@@ -245,18 +247,20 @@ trans_subset %>%
       barheight = 0.8,
       title.vjust = 1
     ),
-    color = FALSE
-  ) +
-  ggsave(
-    glue("./figs/trans_length_cols.png"),
-    width = 17,
-    height = 14,
-    units = "cm",
-    dpi = 600
+    color = "none"
   )
 
+ggsave(
+  glue("./figs/trans_length_cols.png"),
+  cty,
+  width = 17,
+  height = 14,
+  units = "cm",
+  dpi = 600
+)
+
 ## Ridge plot ----
-trans_ridges %>%
+rp <- trans_ridges %>%
   left_join(municip, by = "code_muni") %>%
   drop_na() %>%
   mutate(agri_year = ymd(agri_year + 1984, truncated = 2L)) %>%
@@ -298,11 +302,13 @@ trans_ridges %>%
     text = element_text(size = 11),
     axis.text.x = element_text(angle = 45, vjust = 0.6, hjust = 0.4),
     legend.position = "bottom"
-  ) +
-  ggsave(
-    glue("./figs/trans_ridge.png"),
-    width = 17,
-    height = 15,
-    units = "cm",
-    dpi = 600
   )
+
+ggsave(
+  glue("./figs/trans_ridge.png"),
+  rp,
+  width = 17,
+  height = 15,
+  units = "cm",
+  dpi = 600
+)

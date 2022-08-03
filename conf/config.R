@@ -56,10 +56,10 @@ tile_dim <- 1536L
 trans_nat <- c(3)
 # Default value is "Forest Formation":
 #   trans_nat <- c(3)
-# Check https://mapbiomas.org/codigos-de-legenda?cama_set_language=en
+# Check https://mapbiomas.org/en/codigos-de-legenda?cama_set_language=en
 
 # The non natural class of the transition -------------------------------------
-trans_ant <- c(18, 19, 39, 20, 41, 36)
+trans_ant <- c(18, 19, 39, 20, 40, 41, 36, 46, 47, 48)
 # Default value are agriculture classes:
-#   trans_ant <- c(18, 19, 39, 20, 41, 36)
-# Check https://mapbiomas.org/codigos-de-legenda?cama_set_language=en
+#   trans_ant <- c(18, 19, 39, 20, 40, 41, 36, 46, 47, 48)
+# Check https://mapbiomas.org/en/codigos-de-legenda?cama_set_language=en
