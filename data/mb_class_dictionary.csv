@@ -1,6 +1,6 @@
 class_name,class_code,class_type,class_color
 Forest,1,natural,#129912
-Forest Formation,3,natural,#6400
+Forest Formation,3,natural,#006400
 Savanna Formation,4,natural,#00ff00
 Mangrove,5,natural,#687537
 Wooded Restinga,49,natural,#6b9932
