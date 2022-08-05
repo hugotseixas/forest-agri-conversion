@@ -41,6 +41,7 @@ library(purrr)
 # OPTIONS ---------------------------------------------------------------------
 #
 source('conf/config.R')
+options(googledrive_quiet = TRUE)
 #
 # START GEE API ---------------------------------------------------------------
 
