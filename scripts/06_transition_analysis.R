@@ -55,14 +55,15 @@ municip <- read_municipality(year = "2019")
 # LOAD DATASETS ---------------------------------------------------------------
 
 ## Connect with Spark -----
-sc <- spark_connect(master = "local", config = config)
+sc <- spark_connect(master = "local", config = config, version = "3.3.0")
 
 ## Load mask_cells table ----
 mask_cells <-
   spark_read_parquet(
     sc,
     name = "mask_cells",
-    path = "data/trans_tabular_dataset/mask_cells/"
+    path = "data/trans_tabular_dataset/mask_cells/",
+    memory = FALSE
   )
 
 ## Load trans_length table ----
@@ -70,7 +71,8 @@ trans_length <-
   spark_read_parquet(
     sc,
     name = "trans_length",
-    path = "data/trans_tabular_dataset/trans_length/"
+    path = "data/trans_tabular_dataset/trans_length/",
+    memory = FALSE
   )
 
 ## Load trans_classes table ----
@@ -78,7 +80,8 @@ trans_classes <-
   spark_read_parquet(
     sc,
     name = "trans_classes",
-    path = "data/trans_tabular_dataset/trans_classes/"
+    path = "data/trans_tabular_dataset/trans_classes/",
+    memory = FALSE
   )
 
 # FILTER AND AGGREGATE DATA ---------------------------------------------------
