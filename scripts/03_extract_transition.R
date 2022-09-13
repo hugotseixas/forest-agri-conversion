@@ -363,7 +363,7 @@ walk(
                     "agri_cycle={cycle}/",
                     "{var}-{file_list$tile_code[tile]}.parquet"
                   ),
-                  version = "2.0"
+                  version = "2.6"
                 )
 
               }
