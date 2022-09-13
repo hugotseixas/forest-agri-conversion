@@ -72,8 +72,8 @@ mb_img <-
       'projects',
       'mapbiomas-workspace',
       'public',
-      'collection6',
-      'mapbiomas_collection60_integration_v1',
+      'collection7',
+      'mapbiomas_collection70_integration_v2',
       sep = '/'
     )
   )
