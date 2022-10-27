@@ -41,6 +41,7 @@ library(purrr)
 # OPTIONS ---------------------------------------------------------------------
 #
 source('conf/config.R')
+options(googledrive_quiet = TRUE)
 #
 # START GEE API ---------------------------------------------------------------
 
@@ -64,15 +65,15 @@ aoi <- sf_as_ee(biomes)
 
 # LOAD LULC DATA --------------------------------------------------------------
 
-## Load MapBiomas collection 6 ----
+## Load MapBiomas collection 7 ----
 mb_img <-
   ee$Image(
     paste(
       'projects',
       'mapbiomas-workspace',
       'public',
-      'collection6',
-      'mapbiomas_collection60_integration_v1',
+      'collection7',
+      'mapbiomas_collection70_integration_v2',
       sep = '/'
     )
   )

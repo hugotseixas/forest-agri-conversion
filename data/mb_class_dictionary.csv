@@ -9,6 +9,7 @@ Wetlands,11,natural,#45C2A5
 Grassland,12,natural,#B8AF4F
 Salt Flat,32,natural,#968c46
 Rocky Outcrop,29,natural,#665a3a
+Herbaceous Sandbank Vegetation,50,natural,#66ffcc
 Other non Forest Formations,13,natural,#f1c232
 Farming ,14,anthropic,#FFFFB2
 Pasture,15,anthropic,#FFD966
@@ -17,6 +18,7 @@ Temporary Crop,19,anthropic,#D5A6BD
 Soybean,39,anthropic,#e075ad
 Sugar cane,20,anthropic,#C27BA0
 Rice,40,anthropic,#982c9e
+Cotton,62,anthropic,#660066
 Other temporary Crops,41,anthropic,#e787f8
 Perennial Crop,36,anthropic,#f3b4f1
 Coffee,46,anthropic,#cca0d4

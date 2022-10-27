@@ -182,7 +182,7 @@ walk(
           "tile_id={tile}/",
           "mask_cells-{file_list$tile_code[tile]}.parquet"
         ),
-        version = "2.0"
+        version = "2.6"
       )
 
     }
@@ -194,7 +194,7 @@ walk(
 write_parquet(
   x = tiles_metadata,
   sink = "data/trans_tabular_dataset/tiles_metadata.parquet",
-  version = "2.0"
+  version = "2.6"
 )
 
 # Work complete!
