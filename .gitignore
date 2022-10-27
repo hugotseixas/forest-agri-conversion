@@ -3,6 +3,7 @@
 .RData
 .Ruserdata
 *.log
+*.tif
 data/raw_raster_tiles/
 data/trans_raster_mosaic/
 data/trans_raster_tiles/
