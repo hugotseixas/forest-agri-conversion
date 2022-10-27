@@ -65,7 +65,7 @@ aoi <- sf_as_ee(biomes)
 
 # LOAD LULC DATA --------------------------------------------------------------
 
-## Load MapBiomas collection 6 ----
+## Load MapBiomas collection 7 ----
 mb_img <-
   ee$Image(
     paste(
