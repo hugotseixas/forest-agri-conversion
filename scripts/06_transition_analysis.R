@@ -32,7 +32,9 @@ library(readr)
 library(tidyr)
 library(forcats)
 library(ggplot2)
-library(mapsf)
+library(ggtext)
+library(ggfx)
+library(patchwork)
 library(scico)
 #
 # OPTIONS ---------------------------------------------------------------------
@@ -240,6 +242,7 @@ ggsave(
 cty <- trans_subset %>%
   group_by(transition, forest_type, trans_length, year) %>%
   summarise(total_area = sum(total_area, na.rm = TRUE), .groups = "drop") %>%
+  mutate(total_area = total_area / 1e6) %>%
   ggplot() +
   facet_grid(
     facets = transition ~ forest_type,
@@ -254,20 +257,53 @@ cty <- trans_subset %>%
       )
     )
   ) +
+  geom_vline(
+    xintercept = ymd("2003-01-01", "2006-01-01", "2012-01-01"),
+    color = "white",
+    linetype = "dashed"
+  ) +
+  geom_richtext(
+    data = tibble(
+      year = ymd("2003-05-01", "2006-05-01", "2012-05-01"),
+      total_area = c(5000, 3500, 2000),
+      forest_type = factor(1),
+      transition = factor("forest_year"),
+      label = c("Deforestation Act", "Soy Moratorium", "Forest Code")
+    ),
+    aes(x = year, y = total_area, label = label),
+    size = 2.5,
+    hjust = "left",
+    label.r = unit(0, "pt"),
+    label.padding = unit(2, "pt"),
+    fill = "#dddddd"
+  ) +
   geom_col(
     aes(
       x = year,
-      y = total_area / 1e6,
+      y = total_area,
       fill = trans_length,
       color = trans_length,
       group = trans_length
     ),
-    size = 0.25
+    lwd = 0.1
+  ) +
+  geom_col(
+    data = . %>%
+      group_by(transition, forest_type, year) %>%
+      summarise(total_area = sum(total_area, na.rm = TRUE), .groups = "drop"),
+    aes(
+      x = year,
+      y = total_area
+    ),
+    fill = "transparent",
+    color = "black",
+    lwd = 0.2
   ) +
   geom_text(
     data = tibble(
       label = c("(a)", "(b)", "(c)", "(d)"),
-      transition = as.factor(c("forest_year", "agri_year", "forest_year", "agri_year")),
+      transition =
+        as.factor(c("forest_year", "agri_year", "forest_year", "agri_year")),
       forest_type = c(1, 1, 2, 2),
       area = rep(5100, 4),
       year = rep(ymd("1985-06-01"), 4)
@@ -278,10 +314,10 @@ cty <- trans_subset %>%
   ) +
   scale_fill_scico(
     palette = "batlow",
-    name = "Transition Length",
+    name = "Transition Length (year)",
     breaks = c(1, 18, 36)
   ) +
-  scale_color_scico(palette = "batlow", name = "Transition Length") +
+  scale_color_scico(palette = "batlow", name = "Transition Length (year)") +
   scale_x_date(
     date_breaks = "3 years",
     date_labels = "%Y",
@@ -289,9 +325,7 @@ cty <- trans_subset %>%
   ) +
   scale_y_continuous(
     expand = c(0.02, 0.02),
-    labels = scales::pretty_breaks(),
     breaks = pretty_breaks(3),
-    limits = c(0, 4500)
   ) +
   labs(
     title = "Transition area per year and transition length",
@@ -441,7 +475,7 @@ dist_map <- ggplot() +
   ) +
   theme_void() +
   theme(
-    legend.position = c(0.1, 0.77),
+    legend.position = c(0.14, 0.77),
     text = element_text(size = 11)
   )
 
@@ -484,7 +518,7 @@ ggsave(
   glue("./figs/map.png"),
   full_map,
   width = 17,
-  height = 13,
+  height = 12.99,
   units = "cm",
   dpi = 300
 )
