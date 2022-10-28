@@ -30,7 +30,9 @@ library(readr)
 library(tidyr)
 library(forcats)
 library(purrr)
+library(scales)
 library(ggplot2)
+library(ggtext)
 #
 # OPTIONS ---------------------------------------------------------------------
 #
@@ -156,23 +158,77 @@ ggsave(
   dpi = 600
 )
 
+quants <- comparison %>%
+  group_by(var) %>%
+  summarise(
+    value = quantile(
+      difference,
+      probs = c(0.05, 0.25, 0.75, 0.95),
+      na.rm = TRUE
+    )
+  ) %>%
+  mutate(
+    lim = c("min", "min", "max", "max"),
+    group_id = c(1, 2, 2, 1)
+  ) %>%
+  pivot_wider(
+    id_cols = c(var, group_id),
+    names_from = lim,
+    values_from = value
+  )
+
+quants <- do.call("rbind", replicate(37, quants, simplify = FALSE)) %>%
+  group_by(var, group_id) %>%
+  mutate(estimated = 0:36, observed = 0:36)
+
 ## Create scatter plot with the errors ----
 scatter_plot <- comparison %>%
   ggplot() +
   facet_wrap( ~ var) +
-  geom_abline(intercept = 0, slope = 1, color = "white") +
-  geom_abline(
-    data = mae,
-    aes(intercept = mae, slope = 1),
-    color = "white", linetype = "dashed"
+  geom_ribbon(
+    data = subset(quants, group_id == 2),
+    aes(
+      ymin = observed + min, ymax = max + observed,
+      xmin = estimated + min, xmax = max + estimated,
+      x = estimated, y = observed
+    ),
+    fill = "white", alpha = 0.7
+  ) +
+  geom_ribbon(
+    data = subset(quants, group_id == 1),
+    aes(
+      ymin = observed + min, ymax = max + observed,
+      xmin = estimated + min, xmax = max + estimated,
+      x = estimated, y = observed
+    ),
+    fill = "white", alpha = 0.3
+  ) +
+  geom_abline(intercept = 0, slope = 1, color = "#6a6a6a") +
+  geom_text(
+    data = tibble(
+      quant = c("5%", "25%", "75%", "95%"),
+      observed = c(17 + 12, 17 + 4.75, 17 - 1.75, 17 - 8.7),
+      estimated = c(16.5, 16.5, 16.5, 16.5),
+      var = factor("agri_year")
+    ),
+    aes(x = estimated, y = observed, label = quant),
+    hjust = "left",
+    size = 2.3,
+    fontface = "bold"
   ) +
   geom_point(
     aes(x = estimated, y = observed),
     fill = "black",
     size = 0.6
   ) +
+  scale_x_continuous(breaks = pretty_breaks(n = 5), expand = c(0, 0)) +
+  scale_y_continuous(breaks = pretty_breaks(n = 5), expand = c(0.01, 0.01)) +
+  coord_fixed(
+    ylim = c(0, 36), xlim = c(0, 36),
+    expand = TRUE,
+    clip = "on"
+  ) +
   labs(x = "Estimated", y = "Observed") +
-  coord_fixed() +
   theme_dark() +
   theme(
     text = element_text(size = 11),
