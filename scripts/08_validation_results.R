@@ -79,7 +79,13 @@ setdiff(unique(observed$cell_id), unique(estimated$cell_id))
 ## Join tables ----
 comparison <- estimated %>%
   inner_join(observed, by = c("cell_id", "var")) %>%
-  mutate(difference = observed - estimated)
+  mutate(
+    difference = observed - estimated,
+    var = factor(
+      var,
+      levels = c("forest_year", "agri_year", "trans_length")
+    )
+  )
 
 # ANALYSE RESULTS -------------------------------------------------------------
 
@@ -107,6 +113,7 @@ metrics <- mae %>%
 bar_plot <- comparison %>%
   ggplot() +
   facet_wrap( ~ var) +
+  ggtitle("Distribution of the errors of transition estimates.") +
   geom_vline(
     data = mae,
     aes(xintercept = mae),
@@ -153,7 +160,7 @@ ggsave(
   glue("./figs/error_bars.png"),
   bar_plot,
   width = 17,
-  height = 7.5,
+  height = 8.5,
   units = "cm",
   dpi = 600
 )
@@ -185,6 +192,7 @@ quants <- do.call("rbind", replicate(37, quants, simplify = FALSE)) %>%
 scatter_plot <- comparison %>%
   ggplot() +
   facet_wrap( ~ var) +
+  ggtitle("Dispersion between observed and estimated transitions.") +
   geom_ribbon(
     data = subset(quants, group_id == 2),
     aes(
@@ -249,7 +257,7 @@ ggsave(
   glue("./figs/error_scatter.png"),
   scatter_plot,
   width = 17,
-  height = 7,
+  height = 8,
   units = "cm",
-  dpi = 600
+  dpi = 300
 )
