@@ -259,8 +259,8 @@ walk(
           trans_length %<>%
             rename(
               agri_code = class_code,
-              forest_year = forest_max,
-              agri_year = agri_min,
+              forest_year = forest_max + 1 + 1984L, # Deforestation year
+              agri_year = agri_min + 1984, # Convert to year
             ) %>%
             select(
               cell_id, agri_code, forest_year,
