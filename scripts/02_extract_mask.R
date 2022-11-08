@@ -30,7 +30,6 @@ library(dplyr)
 # OPTIONS ---------------------------------------------------------------------
 #
 source("conf/config.R")
-source("R/terra_as_tibble.R")
 sf::sf_use_s2(TRUE)
 #
 # LOAD AUXILIARY DATA ---------------------------------------------------------
@@ -119,11 +118,11 @@ mask_table <-
       # Extract values of a single tile ----
       mask_subset <-
         raster %>%
-        terra_as_tibble(xy = TRUE, cell = TRUE) %>%
-        rename(tile_cell_id = cellindex) %>%
-        filter(!(cellvalue == 0)) %>% # Remove empty cells
-        mutate(tile_id = tile) %>%
-        rename(area = cellvalue)
+        as.data.frame(xy = TRUE, cell = TRUE) %>%
+        as_tibble() %>%
+        rename(tile_cell_id = cell) %>%
+        filter(!(area == 0)) %>% # Remove empty cells
+        mutate(tile_id = tile)
 
       # Check if there is any valid pixel ----
       # Avoids possible unexpected errors
