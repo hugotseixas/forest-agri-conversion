@@ -123,6 +123,8 @@ The transition calculations shows that between 1985 and 2021, 64874 squared kilo
 The length of the transitions can go from 1 to 36 years, in which transitions closer to 1 year are considered as fast transitions, and transitions closer to 36 years are considered as slow transitions.
 Transitions of 1 year are considered as "direct" transitions, where there were no presence of pasture before the establishment of agriculture, out estimations shows that around 9.2 % of the transitions are considered as "direct".
 
+Although we named as deforestation the last years identified as forest before classification of antropic cover, we acknowledge that it is not a direct measurement of deforestation (such as PRODES), it is however a proxy to deforestation.
+
 ## Transition patterns
 
 Transitions from forest to agriculture can be found in almost every region in the Amazon, but is mostly concentrated in clusters, specially in the south and east of the biome, in the states of Mato Grosso, Pará and Maranhão (Figure \@ref(fig:map-plot)).
@@ -147,8 +149,8 @@ knitr::include_graphics("figs/trans_length_cols.png")
 
 ```
 
-The deforestation area of primary forests increased largely from 1985 to 2002, which was followed be a steep decrease until 2007, when the deforested areas being converted to agriculture reached a stable rate.
-From 1985 to approximately 1995, most of deforested areas suffered a slow transition, mostly were higher than 10 years, after this period, fast transitions started to become more common, specially from 2001 to 2003.
+The deforestation area of primary forests increased largely from 1986 to 2003, which was followed be a steep decrease until 2008, when the deforested areas being converted to agriculture reached a stable rate.
+From 1986 to approximately 1995, most of deforested areas suffered a slow transition, mostly were higher than 10 years, after this period, fast transitions started to become more common, specially from 2002 to 2004.
 
 Agriculture establishment over areas of primary forests peaked in 2005 and 2013.
 Despite similar rates between both years, their transition lengths differ greatly, in 2005 most of the transitions were faster than 10 years, while in 2013 the great majority of transitions were slower than 10 years.
@@ -160,7 +162,7 @@ In 2006, the Brazilian Association of Vegetable Oil Industries (BIOVE) and the N
 Our estimates of transitions show a decrease of deforested areas to be converted to agriculture after 2007, where it reached minimal values (Figure \@ref(fig:transbar-plot).a).
 After 2006, agriculture establishment over deforested primary forests suffered a decrease, which stayed relatively stable until 2012, where a steep increase occurred, however, the new areas being occupied by agriculture were mainly over areas that were cleared more than a decade before (therefore, before 2006) (Figure \@ref(fig:transbar-plot).b) This shows that agriculture expansion did not halt after the soy moratorium, producers started expanding in old cleared areas.
 Expansion of agriculture areas also expanded over cleared areas of secondary forests in 2012, but with an important amount of fast transitions.
-The causes of the increase of agriculture establishment areas can be numerous, one main driver was the approval of a new Forest Code, in 2012, which is considered to have undermined the environmental protection [@Kroger2017; @Pereira2019].
+The causes of the increase of agriculture establishment areas can be numerous, one main driver was the approval of a new Forest Code, in 2012, which is considered to have undermined the environmental protection of forests [@Kroger2017; @Pereira2019].
 
 The transition length patterns across years can change significantly between different states (Figure \@ref(fig:transridge-plot)).
 
