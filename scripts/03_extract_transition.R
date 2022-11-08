@@ -88,13 +88,16 @@ walk(
     ## Convert raster stack to tibble ----
     lulc_table <-
       mb_raster %>%
-      terra_as_tibble() %>%
-      filter(cellvalue != 0) %>%
-      rename(
-        class_code = cellvalue,
-        tile_cell_id = cellindex,
-        year = dimindex
+      as.data.frame(cells = TRUE) %>%
+      as_tibble() %>%
+      pivot_longer(
+        cols = starts_with("classification"),
+        names_to = "year",
+        values_to = "class_code"
       ) %>%
+      filter(class_code != 0) %>%
+      mutate(year = as.integer(str_extract(year, "(\\d)+"))) %>%
+      rename(tile_cell_id = cell) %>%
       left_join(mask_subset, by = "tile_cell_id") # Get cell_id from mask
 
     ## Check if raster have any value != 0 ----
@@ -213,7 +216,8 @@ walk(
             filter(class_type == 'forest') %>%
             group_by(cell_id) %>%
             slice(which.max(year)) %>%
-            rename(forest_max = year)
+            rename(forest_max = year) %>%
+            mutate(forest_max = forest_max + 1) # Get deforestation year
 
           #### Get the min year of agriculture in the "before" period ----
           agri_min <-
@@ -263,8 +267,8 @@ walk(
               agri_year = agri_min
             ) %>%
             mutate(
-              forest_year = forest_year + 1 + 1984L, # Deforestation year
-              agri_year = agri_year + 1984 # Convert to year
+              forest_year = forest_year,
+              agri_year = agri_year
             ) %>%
             select(
               cell_id, agri_code, forest_year,
@@ -284,7 +288,7 @@ walk(
           filter(period == 'after') %>%
           select(-period)
 
-        # Check if there is any data in the update version of the table
+        # Check if there is any data in the updated version of the table
         if (nrow(lulc_table) == 0) {
 
           break
