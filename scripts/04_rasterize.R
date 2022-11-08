@@ -151,7 +151,7 @@ walk(
               'trans_stack_{meta$tile_code}_cycle_{.y}.tif'
             ),
             wopt = list(
-              datatype = 'INT1U',
+              datatype = 'INT2U',
               progress = 0
             ),
             overwrite = TRUE

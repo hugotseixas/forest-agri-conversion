@@ -90,7 +90,7 @@ walk(
       ),
       overwrite = TRUE,
       wopt = list(
-        datatype = "INT1U",
+        datatype = "INT2U",
         progress = 0,
         gdal = c("COMPRESS=LZW")
       )
