@@ -138,7 +138,7 @@ dist_map <- ggplot() +
   geom_sf(
     data = trans_hex,
     aes(fill = trans_length),
-    lwd = 0.1
+    linewidth = 0.05
   ) +
   ggtitle(
     "Distribution of transitions from forest to agriculture in the Amazon"
@@ -175,7 +175,7 @@ hr_map <- ggplot() +
   theme(
     legend.position = "",
     panel.background = element_rect(fill = "#747171"),
-    panel.border = element_rect(colour = "black", fill = NA, size = 0.5)
+    panel.border = element_rect(colour = "black", fill = NA, linewidth = 0.5)
   )
 
 hist_plot <- ggplot() +
