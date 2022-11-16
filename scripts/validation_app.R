@@ -50,9 +50,9 @@ if (!file_exists(glue("{proj_path}/data/validation/results.csv"))) {
 ui <- grid_page(
   theme = bslib::bs_theme(bootswatch = "slate"),
   layout = c(
-    "header  header      header       header     ",
-    "sidebar composite1  composite2   composite3 ",
-    "sidebar forest      agri         length     "
+    "header  header      header       header",
+    "sidebar composite1  composite2   composite3",
+    "sidebar forest      agri         length"
   ),
   row_sizes = c(
     "70px",
@@ -128,7 +128,7 @@ ui <- grid_page(
   grid_card_plot(area = "composite3"),
   grid_card_plot(area = "forest"),
   grid_card_plot(area = "agri"),
-  grid_card_plot(area = "lenght")
+  grid_card_plot(area = "length")
 )
 
 # Define server logic
@@ -295,6 +295,141 @@ server <-
         theme(
           plot.title = element_text(size = 14, face = "bold"),
           legend.position = ""
+        )
+
+    })
+
+    output$forest <- renderPlot({
+
+      bbox <-
+        rast(
+          dir_ls(
+            glue(
+              "{proj_path}/data/validation/landsat/{input$sampleCell}/"
+            ),
+            regexp = input$imageYear
+          )
+        )
+
+      img <-
+        crop(
+          rast(
+            glue(
+              "{proj_path}/data/trans_raster_mosaic/mb_mosaic_cycle_1.tif"
+            )
+          )[[2]],
+          bbox
+        )
+
+      img_df <- as.data.frame(img, xy = TRUE)
+
+      point <- sample_points %>%
+        filter(cell_id == input$sampleCell)
+
+      ggplot() +
+        geom_raster(
+          data = img_df,
+          aes(x = x, y = y, fill = forest_year)
+        ) +
+        geom_sf(
+          data = point,
+          alpha = 0.5
+        ) +
+        scale_fill_viridis_c(limits = c(1985, 2021)) +
+        theme_void() +
+        labs(title = "Forest Year") +
+        theme(
+          plot.title = element_text(size = 14, face = "bold")
+        )
+
+    })
+
+    output$agri <- renderPlot({
+
+      bbox <-
+        rast(
+          dir_ls(
+            glue(
+              "{proj_path}/data/validation/landsat/{input$sampleCell}/"
+            ),
+            regexp = input$imageYear
+          )
+        )
+
+      img <-
+        crop(
+          rast(
+            glue(
+              "{proj_path}/data/trans_raster_mosaic/mb_mosaic_cycle_1.tif"
+            )
+          )[[3]],
+          bbox
+        )
+
+      img_df <- as.data.frame(img, xy = TRUE)
+
+      point <- sample_points %>%
+        filter(cell_id == input$sampleCell)
+
+      ggplot() +
+        geom_raster(
+          data = img_df,
+          aes(x = x, y = y, fill = agri_year)
+        ) +
+        geom_sf(
+          data = point,
+          alpha = 0.5
+        ) +
+        scale_fill_viridis_c(limits = c(1985, 2021)) +
+        theme_void() +
+        labs(title = "Agriculture Year") +
+        theme(
+          plot.title = element_text(size = 14, face = "bold")
+        )
+
+    })
+
+    output$length <- renderPlot({
+
+      bbox <-
+        rast(
+          dir_ls(
+            glue(
+              "{proj_path}/data/validation/landsat/{input$sampleCell}/"
+            ),
+            regexp = input$imageYear
+          )
+        )
+
+      img <-
+        crop(
+          rast(
+            glue(
+              "{proj_path}/data/trans_raster_mosaic/mb_mosaic_cycle_1.tif"
+            )
+          )[[4]],
+          bbox
+        )
+
+      img_df <- as.data.frame(img, xy = TRUE)
+
+      point <- sample_points %>%
+        filter(cell_id == input$sampleCell)
+
+      ggplot() +
+        geom_raster(
+          data = img_df,
+          aes(x = x, y = y, fill = trans_length)
+        ) +
+        geom_sf(
+          data = point,
+          alpha = 0.5
+        ) +
+        scale_fill_viridis_c(limits = c(0, 35)) +
+        theme_void() +
+        labs(title = "Transition Length") +
+        theme(
+          plot.title = element_text(size = 14, face = "bold")
         )
 
     })
