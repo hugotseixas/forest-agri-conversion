@@ -195,6 +195,10 @@ Rondônia and Tocantins also presented a pattern in which transitions became slo
 
 ## Validation
 
+From the 100 random sample points used in the results validation, 1 point (sample 21) was not considered as a transition from our estimations, however, the visual inspection pointed to a likely event of transition from forest to agriculture.
+Also, there were 6 points (sample 6, 7, 55, 56, 78, 97) which the visual inspection did not found a transition from forest to pasture, although our estimations pointed as transitions.
+Therefore, 7% of the sample were completely misclassified by our estimates, and the rest of the accuracy assessment was performed over the remaining 93 sample points.
+
 When analyzing the errors from the transition length estimates, we observe that the year of deforestation shows the least amount of errors (Figure \@ref(fig:errorbar-plot)).
 The MAE of the deforestation year is of 1.42 years, and the error shows a bias towards underestimation.
 The year of the agriculture establishment and the transition length estimates showed larger errors when comparing with visual inspection.
