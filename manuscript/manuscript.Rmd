@@ -59,8 +59,11 @@ output:
 
 \introduction[Introduction]
 
-In the last decades, the Amazon biome have been submitted to strong changes, the advance of agricultural areas over native forests is shaping a new landscape in the region.
-The most common pattern of transitions from natural forest formations to agriculture sites, is the initial process of deforestation, followed by the establishment of pasture, where extensive livestock production takes place, until its replacement to agricultural activities.
+Brazil policies since the 1960s were focused on the expansion of the frontier in the Amazon, specially focused in economic income and land security [@Carvalho2002; @Mcdonald2003].
+Such development model led to the construction of thousands of kilometers of roads, and the settlement of large scale livestock farms [@Carvalho2002].
+This period was marked with high rates of deforestation of mature forests [@Fearnside2005].
+At the same time, cattle and soybean productions started to move to the north direction in the Brazilian territory, in which soybeans cultivation areas followed cattle ranches expansion over the Amazon forest [@Simon2005].
+This pattern of extensive livestock occupation after deforestation, followed by the establishment of annual crops is very characteristics in the Amazon biome, and persists nowadays.
 This process can take several decades to be accomplished, or even less than one year, in which it may be considered as a direct transition from forest to agriculture.
 
 Land cover transitions can cause important impacts on ecosystem properties [@Nunes2022].
@@ -159,6 +162,8 @@ knitr::include_graphics("figs/trans_length_cols.png")
 
 ```
 
+TODO: Talk about the Avança Brasil plan [@Carvalho2002].
+
 The deforestation area of primary forests increased largely from 1986 to 2003, which was followed be a steep decrease until 2009, when the deforested areas reached a stable rate.
 From 1986 to approximately 1995, most of deforested areas suffered a slow transition, mostly were higher than 10 years, after this period, fast transitions started to become more common, specially from 2002 to 2004.
 
@@ -192,6 +197,9 @@ The state of Amapá presented fast transitions along all the time series, where 
 In contrast, Acre shows a majority of slow transitions, in which only 2021 showed more fast transitions.
 There are three states where the pattern of transitions length across time are alike, Mato Grosso and Pará presented more fast transitions from 1995 to 2005, after this period, slow transitions became more common with time.
 Rondônia and Tocantins also presented a pattern in which transitions became slower with time, however this pattern started to occur earlier than Mato Grosso and Pará.
+
+TODO: Talk about the percentage of each agriculture type in the total transitions.
+And show numbers about what happens 5 years after transitions for each crop type.
 
 ## Validation
 
