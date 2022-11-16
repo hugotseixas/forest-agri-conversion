@@ -142,6 +142,8 @@ This project aims to characterize and quantify the length of the transitions fro
 
 \section{Methods}
 
+\subsection{Transition length calculation}
+
 The estimations of transition from forest to agriculture were performed for the Amazon biome region, as defined by the Brazilian Institute of Geography and Statistics (IBGE), in 2019.
 Transitions were calculated using land use and land cover classification data from MapBiomas \citep{Souza2020}, which ranges from 1985 to 2021, at a spatial resolution of approximately 30 meters.
 The data was filtered to contain only pixels that were occupied by forest and agriculture at some period, and that are not considered as water, according to the Global Surface Water product provided by Copernicus \citep{Pekel2016}.
@@ -168,6 +170,23 @@ Transition length was calculated pixel by pixel, by performing the following ste
 
 The steps 2 to 7 are performed recursively to identify multiple transitions, in case they are present.
 Because of the amount of data, the processing and storage was performed in batches of data, structured in raster tiles.
+
+\subsection{Accuracy assessment}
+
+The accuracy assessment was performed by visual inspection of annual composites of Landsat images from MapBiomas.
+We selected 100 random points to be analysed.
+An area of approximately 4 squared kilometers around the sample point was used in the visual inspection of satellite images.
+
+The visual inspection used several variables derived from the Landsat historical collection.
+The median of Red, Green, Blue, Near Infrared (NIR) and Short Wave Infrared (SWIR1) from dry and wet season were used, and also the annual amplitude of the Normalized Difference Vegetation Index (NDVI).
+The process of accuracy assessment was performed in a Shiny app, and was conducted without any consultation to the transition length results.
+In the validation app, we estimated, by visual inspection, the year of deforestation and the year of agriculture establishment.
+The observed transition length was obtained by subtracting both dates.
+
+To evaluate the accuracy, we calculated the Mean Absolute Error (MAE), the Bias (BIAS), and the Percent Bias (PBIAS).
+We also analysed the results by plotting the errors as frequency bars, and scatter plots between observed and estimated values.
+
+After the completion of the analysis of the 100 sample points, we also conducted a qualitative assessment, where we compared our results with the satellite images.
 
 \section{Description of data collection}
 
@@ -245,7 +264,8 @@ The transition length patterns across years can change significantly between dif
 
 The state of Amapá presented fast transitions along all the time series, where slow transitions are not as common.
 In contrast, Acre shows a majority of slow transitions, in which only 2021 showed more fast transitions.
-There are three states where the pattern of transitions length across time are alike, Mato Grosso, Pará and Rondônia presented more fast transitions from 1995 to 2005, after this period, slow transitions became more common with time, until around 2015, where the occurrence of fast transitions were the majority again.
+There are three states where the pattern of transitions length across time are alike, Mato Grosso and Pará presented more fast transitions from 1995 to 2005, after this period, slow transitions became more common with time.
+Rondônia and Tocantins also presented a pattern in which transitions became slower with time, however this pattern started to occur earlier than Mato Grosso and Pará.
 
 \subsection{Validation}
 
@@ -254,14 +274,37 @@ The MAE of the deforestation year is of 1.42 years, and the error shows a bias t
 The year of the agriculture establishment and the transition length estimates showed larger errors when comparing with visual inspection.
 
 \begin{figure}[ht]
-\includegraphics[width=17cm]{figs/error_bars} \caption{ }\label{fig:errorbar-plot}
+\includegraphics[width=17cm]{figs/error_bars} \caption{Bar with the count of error values (difference between observed and estimated values). Positive values indicate underestimation of the variable (estimations were lower than observations), negative values indicates overestimation (estimations higher than observations). Error metrics (Mean Absolute Error, Bias and Percent Bias) are displayed in the top right position of each box. The white deshed lines represents the MAE values of each variable.}\label{fig:errorbar-plot}
 \end{figure}
+
+The dispersion of observed and estimated values shows no clear pattern of errors (Figure \ref{fig:errorscatter-plot}).
+Transition length values are more concentrated in smaller values, which also shows higher errors (Figure \ref{fig:errorscatter-plot}.c).
+However, this is expected since faster transitions are more common (Figure \ref{fig:map-plot}).
 
 \begin{figure}[ht]
-\includegraphics[width=17cm]{figs/error_scatter} \caption{ }\label{fig:errorscatter-plot}
+\includegraphics[width=17cm]{figs/error_scatter} \caption{Scatter plot between paired values of estimated and observed Deforestation and Agriculture Establishment years, and their respective Transition Length. Translucid white areas represent quantile ranges (5\%, 25\%, 75\% and 95\%) of the errors. The area between 5\% and 95\% quantiles includes 90\% of points. The area between 25\% and 75\% quantiles includes 50\% of points.}\label{fig:errorscatter-plot}
 \end{figure}
 
+According to accuracy assessment from MapBiomas, the collection 7 presents a global accuracy of 96.6\% for the Amazon biome, which is the proportion of pixels that were classified correctly.
+For the Forest class, MapBiomas showed small errors of inclusion (proportion of pixels misclassified as other classes, but the real class were Forest), which fluctuated around 1\%.
+The omission errors for Forests are also small (proportion of pixels misclassified as Forests, but the real class were not Forest), which fluctuated around 2\%.
+The Agriculture class presented more errors, the inclusion errors ranged from 22\% to 5\%, and were mostly composed by Forests pixels (forest pixels misclassified as agriculture).
+The omission errors of Agriculture ranged from 22\% to 8\%, and were also mostly composed by Forests pixels (agriculture pixels misclassified as Agriculture).
+
 \subsection{Qualitative assessment}
+
+High heterogeneity inside agriculture plots (sample 56), caused by both year of deforestation or year of agriculture establishment.
+Roads being considered as agriculture (sample 2).
+Omissions were detected, specially agriculture plots not being considered as a transition as a whole, parts of a plot that were clearly a transition were not considered as a transition (sample 16, 30, 75).
+Inclusions were detected, areas that clearly showed no agriculture were considered as transitions (sample 10, 98).
+Effect of border on results (sample 25, 56, 84, 92).
+Areas with sparse forest vegetation presented large error of deforestation year (sample 33).
+
+Patterns of agriculture areas are roughly well represented (sample 25, 43, 56, 84).
+Some locations presents a better homogeneity of transitions inside agriculture plots (sample 84).
+
+Interference due to atmospheric conditions and lack of image availability clearly shaped spatial patterns of transitions at some locations.
+Quality of composites trough the time series affected accuracy of results.
 
 \conclusions[Conclusions]
 
