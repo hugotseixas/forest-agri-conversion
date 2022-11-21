@@ -59,7 +59,7 @@ output:
 
 \introduction[Introduction]
 
-Brazil policies since the 1960s were focused on the expansion of the frontier in the Amazon, specially focused in economic income and land security [@Carvalho2002; @Mcdonald2003; @Banerjee2009]. Such development model led to the construction of thousands of kilometers of roads, and the settlement of large scale livestock farms [@Carvalho2002; @Banerjee2009]. This period was marked with high rates of deforestation of mature forests [@Fearnside2005]. At the same time, cattle and soybean productions started to move to the north direction in the Brazilian territory, in which soybeans cultivation areas followed cattle ranches expansion over the Amazon forest [@Simon2005]. This pattern of extensive livestock occupation after deforestation, followed by the establishment of annual crops is very characteristics in the Amazon biome, and persists nowadays. This process can take several decades to be accomplished, or even less than one year, in which it may be considered as a direct transition from forest to agriculture.
+Brazil policies since the 1960s were focused on the expansion of the frontier in the Amazon, specially focused in economic income and land security [@Carvalho2002; @Mcdonald2003; @Banerjee2009]. Such development model led to the construction of thousands of kilometers of roads, and the settlement of large scale livestock farms [@Carvalho2002; @Banerjee2009]. This period was marked with high rates of deforestation of mature forests [@Fearnside2005]. At the same time, cattle and soybean productions started to move to the north direction in the Brazilian territory, in which soybeans cultivation areas followed cattle ranches expansion over the Amazon forest [@Simon2005; @Barona2010; @Arima2011]. This pattern of extensive livestock occupation after deforestation, followed by the establishment of annual crops is very characteristic in the Amazon biome, and persists nowadays. This process can take several decades to be accomplished, or even less than one year, in which it may be considered as a direct transition from forest to agriculture.
 
 Land cover transitions can cause important impacts on ecosystem properties [@Nunes2022].
 
@@ -143,7 +143,9 @@ TODO: Talk about public policies from 1985 to 2000 (greater carajas program, nat
 
 TODO: Talk about the Avança Brasil plan [@Carvalho2002; @Banerjee2009].
 
-TODO: confront our results with Morton 2006 (see the year of 2003).
+TODO: confront our results with Morton 2006 (see the year of 2003). Confront results from [@Macedo2012], talking about how the expansion of soybean areas are still responsible for production growth, because of very slow transitions.
+
+TODO: talk that even with soy moratorium, and that the deforestation related to transitions were smaller, the deforestation related to pasture occupation kept going, with indirect effects of soybean expansion (Arima 2011).
 
 The deforestation area of primary forests increased largely from 1986 to 2003, which was followed be a steep decrease until 2009, when the deforested areas reached a stable rate. From 1986 to approximately 1995, most of deforested areas suffered a slow transition, mostly were higher than 10 years, after this period, fast transitions started to become more common, specially from 2002 to 2004.
 
@@ -193,6 +195,6 @@ High heterogeneity inside agriculture plots (sample 56), caused by both year of 
 
 Patterns of agriculture areas are roughly well represented (sample 25, 43, 56, 84). Some locations presents a better homogeneity of transitions inside agriculture plots (sample 84).
 
-Interference due to atmospheric conditions and lack of image availability clearly shaped spatial patterns of transitions at some locations. Quality of composites trough the time series affected accuracy of results.
+Interference due to atmospheric conditions and lack of image availability clearly shaped spatial patterns of transitions at some locations. Quality of composites trough the time series affected accuracy of results. Regions of the North part of the Amazon presents lower quality than regions in the South of the Amazon BIome.
 
 \conclusions[Conclusions]
