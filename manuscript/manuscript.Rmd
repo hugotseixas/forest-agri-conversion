@@ -207,9 +207,6 @@ When analyzing what happened after 5 years since the transition, Soybean farms a
 "Other Temporary Crops" are less persistent, 27% of these areas remains as the same use, 56% is converted to Soybean, and 15% to Pasture.
 Sugar Cane, Cotton and Perennial Crops also appears, but in a negligible proportions.
 
-TODO: Talk about the percentage of each agriculture type in the total transitions.
-And show numbers about what happens 5 years after transitions for each crop type.
-
 ## Validation
 
 From the 100 random sample points used in the results validation, 1 point (sample 21) was not considered as a transition from our estimations, however, the visual inspection pointed to a likely event of transition from forest to agriculture.
