@@ -150,8 +150,14 @@ The availability of this data can be useful to the development of interdisciplin
 \subsection{Transition length calculation}
 
 The estimations of transition from forest to agriculture were performed for the Amazon biome region, as defined by the Brazilian Institute of Geography and Statistics (IBGE), in 2019.
-Transitions were calculated using land use and land cover classification data from MapBiomas, which ranges from 1985 to 2021, at a spatial resolution of approximately 30 meters.
-The data was filtered to contain only pixels that were occupied by forest and agriculture at some period, and that are not considered as water, according to the Global Surface Water product provided by Copernicus \citep{Pekel2016}.
+Transitions were calculated using land use and land cover classification data from MapBiomas, collection 7, which ranges from 1985 to 2021, at a spatial resolution of approximately 30 meters.
+
+The MapBiomas data was downloaded from Google Earth Engine platform \citep{Gorelick2017}.
+The pixels of the Amazon biome were filtered to contain only those that were occupied by forest and agriculture at some period, and that are not considered as water, according to the Global Surface Water product provided by Copernicus \citep{Pekel2016}.
+For the download, the data was divided in tiles, to allow local processing of a large quantity of pixels.Two sets of data were downloaded with the same spatial dimensions, one with the LULC classifications for each year, and another with binary values, representing whether that pixels was valid for processing or not.
+
+The first part of the processing was to create a table from the binary values data, and create unique identification for each pixel, their coordinates, calculate the area, and also address the municipality in which each pixel was inside.
+In this part, a table was also generated with the spatial information of each tile, so that it is possible to convert the generated tables back to raster format.
 
 Transition length was calculated pixel by pixel, by performing the following steps:
 
