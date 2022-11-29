@@ -22,7 +22,7 @@ author:
 
 affiliation:
   - code: 1
-    address: Center for Environmental Studies and Research, University of Campinas, Rua dos Flamboyants 155, Brazil
+    address: Center for Environmental Studies and Research, State University of Campinas, Rua dos Flamboyants 155, Brazil
   - code: 2
     address: Embrapa Territorial, Av. Soldado Passarinho 303, Brazil
   - code: 3
