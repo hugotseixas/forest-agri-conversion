@@ -16,18 +16,20 @@ author:
   - given_name: Fabiana
     surname: Da Silva Soares
     affiliation: 2
-  - given_name: Ramon
-    surname: Bicudo
-    affiliation: 1
+  - given_name: Ramon Felipe
+    surname: Bicudo da Silva
+    affiliation: "1, 3"
 
 affiliation:
   - code: 1
     address: Center for Environmental Studies and Research, University of Campinas, Rua dos Flamboyants 155, Brazil
   - code: 2
     address: Embrapa Territorial, Av. Soldado Passarinho 303, Brazil
+  - code: 3
+    address: Center for Systems Integration and Sustainability, Department of Fisheries and Wildlife, Michigan State University, East Lansing, MI, 48823, USA
 
 abstract: |
-  Land use and land cover changes in the Amazon biome are a main process that influences many aspects at local, national, and global levels. A large quantity of studies already reliad on land use classification to analyse this process, drivers and impacts. A new dataset was created by calculating the time necessary for deforested forests to transition to agriculture in the Brazillian Amazon biome. The new data can be useful in interdiciplinary studies about land cover and land use change in brazil, its drivers and implications. A main inovation is that the dataset links the deforestation year with the year of agriculture establishment, which can provide new information about this process.
+  Land-use and land-cover changes in the Amazon biome are a main process that influences the environment and societies at local, national, and global levels. A large quantity of studies already relied on land-use classification to analyze this process. This study brings a new dataset created by calculating the time necessary for deforested areas to change to agriculture in the Brazilian Amazon biome. The new data can be useful in interdisciplinary studies about land-use and land-cover change analysis in Brazil, such as exploring its drivers and evaluating the effects on natural vegetation cover and ecosystem services. The major innovation brought by this study are links between the deforestation year of a given pixel with its respective ywar of agriculture establishment, which can provide new insights to understand long-term land transition processes in tropical ecosystems.
   
 bibliography: references.bib
 
