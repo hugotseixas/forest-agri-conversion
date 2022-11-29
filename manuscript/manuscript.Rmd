@@ -61,17 +61,18 @@ output:
 
 \introduction[Introduction]
 
-Brazil policies since the 1960s were focused on the expansion of the frontier in the Amazon, specially focused in economic income and land security [@Carvalho2002; @Mcdonald2003; @Banerjee2009]. Such development model led to the construction of thousands of kilometers of roads, and the settlement of large scale livestock farms [@Carvalho2002; @Banerjee2009]. This period was marked with high rates of deforestation of mature forests [@Fearnside2005]. At the same time, cattle and soybean productions started to move to the north direction in the Brazilian territory, in which soybeans cultivation areas followed cattle ranches expansion over the Amazon forest [@Simon2005; @Barona2010; @Arima2011].
-This pattern of extensive livestock occupation after deforestation, followed by the establishment of annual crops is very characteristic in the Amazon biome, and persists nowadays.
-This process can take several decades to be accomplished, or even less than one year, in which it may be considered as a direct transition from forest to agriculture.
+Brazilian policies since the 1960s were focused on the expansion of the agricultural frontier in the Amazon, specially focused in in fostering economic growth and national security of the territory [@Carvalho2002; @Mcdonald2003; @Banerjee2009]. Such development model led to the construction of thousands of kilometers of roads, and the settlement of large scale crop and livestock farms [@Carvalho2002; @Banerjee2009]. This period was marked with high rates of deforestation of mature forests [@Fearnside2005]. At the same time, cattle and soybean production started to move from Southern Brazil into the Midwest and Northern parts of the country, in which soybean cultivation areas followed cattle expansion (i.e., pastureland expansion) over the Amazon forest [@Simon2005; @Barona2010; @Arima2011].
+The pattern of extensive livestock production after deforestation, followed by the establishment of annual crops after a given period is typical in the Amazon biome, and persists nowadays (needs reference).
+This process, also known as \"indirect land-use change\" (needs reference) can take several decades to be accomplished, but sometimes less than one year.
+In this last case, the land change process can be considered as a direct transition (i.e., from forest to agriculture).
 
-Land cover transitions are known to cause impacts on different scales.
-Deforestation and land use changes can affect hidrological processes in large basins [@Arias2018]; reduce the forest resilience to extreme events and other sources of perturbation [@Boulton2022]; deforestation and farming practices can reduce convective rainfall and increase surface temperature [@Maeda2021]; increase carbon emissions [@Gatti2021]; cause important impacts on fauna and flora diversity, soil properties and carbon stocks [@Nunes2022]; and even negatively impact public health [@Ellwanger2020].
+Land-use and land-cover changes (LULC) are known to cause impacts on different scales.
+Deforestation and land use changes can affect hydrological processes in large basins [@Arias2018]; reduce the forest resilience to extreme events (e.g., drought) and other sources of perturbation [@Boulton2022]; deforestation and farming practices can reduce convective rainfall and increase surface temperature [@Maeda2021]; increase carbon emissions [@Gatti2021]; cause important impacts on fauna and flora diversity, soil properties and carbon stocks [@Nunes2022]; and even negatively impact public health [@Ellwanger2020].
 
-Data on land use and land cover (LULC) classification are evolving rapidly in the last decade.
-Initiatives such as MapBiomas [@Souza2020], launched in 2015, which provides high resolution, annual classifications for the Brazilian territory.
+Data on LULC classification are evolving rapidly in the last decade.
+Initiatives such as MapBiomas [@Souza2020], launched in 2015, provides high resolution, annual classifications for the Brazilian territory.
 Such type of data are essential to analyse LULC change processes, make causal inferences, and understand what drives and what are the impacts of the transformation of the landscape in Brazil.
-In this context, this project aims to characterize and quantify the length of the transitions from forest formations to agriculture in the Amazon.
+In this context, this study aims to characterize and quantify the length of the transitions from forest formations to agriculture in the Amazon over the last 36 years.
 The availability of this data can be useful to the development of interdisciplinary research involved with LULC changes.
 
 # Methods
