@@ -282,3 +282,6 @@ Quality of composites trough the time series affected accuracy of results.
 Regions of the North part of the Amazon presents lower quality than regions in the South of the Amazon biome.
 
 \conclusions[Conclusions]
+
+TODO: resumo ainda precisa de mais informações, por exemplo, a série temporal da análise, a escala (ex. todo o bioma Amazônia no Brasil, na América do Sul, apenas alguns estados da Amazônia).
+Falar do método, que tipo de álgebra de mapa foi usada, algum tipo de regressão...enfim.
