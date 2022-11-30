@@ -63,10 +63,10 @@ output:
 
 Brazilian policies since the 1960s were focused on the expansion of the agricultural frontier in the Amazon, specially focused in in fostering economic growth and national security of the territory [@Carvalho2002; @Mcdonald2003; @Banerjee2009]. Such development model led to the construction of thousands of kilometers of roads, and the settlement of large scale crop and livestock farms [@Carvalho2002; @Banerjee2009]. This period was marked with high rates of deforestation of mature forests [@Fearnside2005]. At the same time, cattle and soybean production started to move from Southern Brazil into the Midwest and Northern parts of the country, in which soybean cultivation areas followed cattle expansion (i.e., pastureland expansion) over the Amazon forest [@Simon2005; @Barona2010; @Arima2011].
 The pattern of extensive livestock production after deforestation, followed by the establishment of annual crops after a given period is typical in the Amazon biome, and persists nowadays (needs reference).
-This process, also known as \"indirect land-use change\" (needs reference) can take several decades to be accomplished, but sometimes less than one year.
+This process, also known as "indirect land-use change" (needs reference) can take several decades to be accomplished, but sometimes less than one year.
 In this last case, the land change process can be considered as a direct transition (i.e., from forest to agriculture).
 
-Land-use and land-cover changes (LULC) are known to cause impacts on different scales.
+Land-use and land-cover (LULC) changes are known to cause impacts on different scales.
 Deforestation and land use changes can affect hydrological processes in large basins [@Arias2018]; reduce the forest resilience to extreme events (e.g., drought) and other sources of perturbation [@Boulton2022]; deforestation and farming practices can reduce convective rainfall and increase surface temperature [@Maeda2021]; increase carbon emissions [@Gatti2021]; cause important impacts on fauna and flora diversity, soil properties and carbon stocks [@Nunes2022]; and even negatively impact public health [@Ellwanger2020].
 
 Data on LULC classification are evolving rapidly in the last decade.
@@ -80,11 +80,11 @@ The availability of this data can be useful to the development of interdisciplin
 ## Transition length calculation
 
 The estimations of transition from forest to agriculture were performed for the Amazon biome region, as defined by the Brazilian Institute of Geography and Statistics (IBGE), in 2019.
-Transitions were calculated using land use and land cover classification data from MapBiomas, collection 7, which ranges from 1985 to 2021, at a spatial resolution of approximately 30 meters.
+Transitions were calculated using LULC classification data from MapBiomas, collection 7, which ranges from 1985 to 2021, at a spatial resolution of approximately 30 meters, and global accuracy at 91.3%.
 
 The MapBiomas data was downloaded from Google Earth Engine platform [@Gorelick2017].
 The pixels of the Amazon biome were filtered to contain only those that were occupied by forest and agriculture at some period, and that are not considered as water, according to the Global Surface Water product provided by Copernicus [@Pekel2016].
-For the download, the data was divided in tiles, to allow local processing of a large quantity of pixels.Two sets of data were downloaded with the same spatial dimensions, one with the LULC classifications for each year, and another with binary values, representing whether that pixels was valid for processing or not.
+For the download, the data was divided in 2732 tiles, to allow local processing of a large quantity of pixels.Two sets of data were downloaded with the same spatial dimensions, one with the LULC classifications for each year, and another with binary values, representing whether that pixels was valid for processing or not.
 
 The first part of the processing was to create a table from the binary values data, and create unique identification for each pixel, their coordinates, calculate the area, and also address the municipality in which each pixel was inside.
 In this part, a table was also generated with the spatial information of each tile, so that it is possible to convert the generated tables back to raster format.
@@ -96,20 +96,20 @@ The transitions were calculated pixel by pixel, by performing the following step
 
 2.  Calculate the year of first occurrence of any agriculture class for each pixel;
 
-3.  Calculate the first year of "Forest Formation" LULC class after the year calculated in step 2.
-    This step identifies if here are more than one transition in a pixel;
+3.  Calculate the first year of \"Forest Formation\" LULC class after the year calculated in step 2.
+    This step identifies the occurrence of more than one transition in a given pixel;
 
-4.  Classify rows as "before" or "after" the occurrence of the year calculated in step 3.
+4.  Classify rows as \"before\" or \"after\" the occurrence of the year calculated in step 3.
     This is the identification of periods before and after the recurrence of forest after a first transition to agriculture;
 
-5.  Calculate the last year of "Forest Formation" within the rows classified as "before", and add 1 year to represent the deforestation year;
+5.  Calculate the last year of \"Forest Formation\" within the rows classified as \"before\", and add 1 year to represent the deforestation year;
 
-6.  Calculate the first year of any agriculture type class within the rows classified as "before", for each pixel;
+6.  Calculate the first year of any agriculture type class within the rows classified as \"before\", for each pixel;
 
 7.  Calculate the difference between years from items 5 and 6 to get the LULC transition length in years, for each pixel;
 
 The steps 2 to 7 are performed recursively to identify multiple transitions, in case they are present.
-In addition to the transition length values and the years of the transition, transitions are also qualified by the type of agriculture that were established after deforestation, if the transition occurred from primary or secondary forests, and the number of recurrence of transitions in a single pixel.
+In addition to the transition length values and the years of the transition, transitions are also qualified by the type of agriculture that were established after deforestation, if the transition occurred from primary or secondary forests, and the number of recurrences of transitions at the pixel.
 The LULC classes within the transition and until 5 years after the transitions were also stored.
 
 The transition results are stored in a data set of tabular files, where data can be queried for further analysis.
@@ -117,27 +117,26 @@ After the calculations, data was also converted back to raster format, with the 
 
 ## Accuracy assessment
 
-An accuracy assessment was performed by visual inspection of annual composites of Landsat images from MapBiomas.
-We selected 100 random points to be analysed.
-An area of approximately 4 squared kilometers around the sample point was used in the visual inspection of satellite images.
+Accuracy assessment was performed by visual inspection of annual composites of Landsat images from MapBiomas.
+We selected 100 random points to be analyzed.
+An area of approximately 4 square kilometers around the sample point was used in the visual inspection of satellite images.
 
 The visual inspection used several variables derived from the Landsat historical collection.
 The median of Red, Green, Blue, Near Infrared (NIR) and Short Wave Infrared (SWIR1) from dry and wet season were used, and also the annual amplitude of the Normalized Difference Vegetation Index (NDVI).
 The process of accuracy assessment was performed in a Shiny app, and was conducted without any consultation to the transition length results.
-In the validation app, we estimated, by visual inspection, the year of deforestation and the year of agriculture establishment.
+In the validation app, we estimated, by visual inspection, the year of deforestation and the year of agricultural establishment.
 The observed transition length was obtained by subtracting both dates.
 
 To evaluate the accuracy, we calculated the Mean Absolute Error (MAE), the Bias (BIAS), and the Percent Bias (PBIAS).
-We also analysed the results by plotting the errors as frequency bars, and scatter plots between observed and estimated values.
-
+We also analyzed the results by plotting the errors as frequency bars, and scatter plots between observed and estimated values.
 After the completion of the analysis of the 100 sample points, we also conducted a qualitative assessment, where we compared our results with the satellite images.
 
 # Description of data collection
 
 After the calculation of transitions, the results are stored in three different types of tables, organized in a folder structure and stored as Apache Parquet files.
 
--   Tables that contains the spatial information (longitude, latitude) of each pixel, its unique id and the code of the municipality which contains the pixel.
-    It is named as "mask_cells";
+-   Tables that contain the spatial information (longitude, latitude) of each pixel, its unique id and the code of the municipality which contains the pixel.
+    It is named as \"mask_cells\";
 
 -   Tables with transition length values, the first and last year of the transition, the resulting agriculture type, and the number of the transition cycle.
     They also contain the unique id of each pixel (related to the table above);
@@ -146,7 +145,7 @@ After the calculation of transitions, the results are stored in three different 
 
 The three tables are related to each other and can be used altogether, and are separated by tiles.
 Another table containing the metadata of each tile is also created, and holds the spatial characteristics of the tiles.
-With this spatial information, it is possible to convert the tabular data back to spatial raster, with identical spatial properties as the MapBiomas classification data.
+With this spatial information, it is possible to convert the tabular data back to spatial raster, with identical spatial properties as the original MapBiomas classification data.
 
 # Results and discussion
 
