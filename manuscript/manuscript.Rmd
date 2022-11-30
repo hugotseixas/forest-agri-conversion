@@ -149,101 +149,107 @@ With this spatial information, it is possible to convert the tabular data back t
 
 # Results and discussion
 
-The transition calculations shows that between 1985 and 2021, 64874 squared kilometers of forests were converted to agriculture, in the Brazilian Amazon biome.
-The length of the transitions can go from 0 to 35 years, in which transitions closer to 0 year are considered as fast transitions, and transitions closer to 35 years are considered as slow transitions.
-Transitions of 0 year are considered as "direct" transitions, where there were no presence of pasture before the establishment of agriculture, our estimations shows that around 9.2 % of the transitions are considered as "direct".
+The transition calculations show that between 1985 and 2021, 64,874 square kilometers of forests were converted to agriculture in the Brazilian Amazon biome.
+The length of the transitions can go from 0 to 35 years, in which transitions closer to 0 years are considered as fast transitions, and transitions closer to 35 years are considered as slow transitions.
+Transitions of 0 years are considered \"direct\" transitions, where there was no presence of pasture before the establishment of agriculture.
+Our estimations show that around 9.2% of the transitions were \"direct\".
 
-Our transitions calculations found pixels that presented up to six transitions from forest to agriculture since 1985, as these numbers are unlikely to happen (they are distributed as sparse pixels, and do not show patterns of real transitions, being common at borders), we proceeded the results analysis only in the first transitions found in each pixel.
+Our transitions calculations found pixels that presented up to six transitions from forest to agriculture since 1985, as these numbers are unlikely to happen (they are distributed as sparse pixels, and do not show patterns of real transitions, being common at borders), we proceeded the results analysis only in the first transitions found in each of these pixels.
 
-Although we named as deforestation the last years identified as forest before classification of antropic cover, we acknowledge that it is not a direct measurement of deforestation (such as PRODES), it is however a proxy to deforestation.
+Although we named the year of change from forest to anthropic land uses as deforestation, we acknowledge that it is not a direct measurement of deforestation (such as PRODES), however it represents a proxy to deforestation.
 
 ## Transition patterns
 
 Transitions from forest to agriculture can be found in almost every region in the Amazon, but is mostly concentrated in clusters, specially in the south and east of the biome, in the states of Mato Grosso, Pará and Maranhão (Figure \@ref(fig:map-plot)).
 
-```{r map-plot, out.width = "17cm", fig.pos = "ht", echo = FALSE, fig.cap = "Map of distribution of transitions from forests to agriculture in the Brazillian Amazon biome. The hexagonal cells represent the most common transition length, and do not reflect the amount of area of transitions inside a cell. Transitions are concentraded in the south (Mato Grosso state), and in the east (Pará and Maranhão states). The transition length ranges from 1 (blue tones) to 36 years (pink tones), and clusters of fast transitions (transitions closer to 1 year) can be discerned from clusters of slow transitions (transitions closer to 36 years). The histogram located in the bottom left shows that fast transitions are more common than slower transitions. The zoomed map in the bottom right shows the results in finer resolution, where it is possible to observe different transition lengths between properties."}
+```{r map-plot, out.width = "17cm", fig.pos = "ht", echo = FALSE, fig.cap = "Map of distribution of transitions from forest to agriculture in the Brazilian Amazon biome. The hexagonal cells represent the most common transition length, and do not reflect the amount of area of transitions inside a cell. Transitions are concentrated in the south (Mato Grosso state), and in the east (Pará and Maranhão states). The transition length ranges from 0 (blue tones) to 35 years (pink tones), and clusters of fast transitions (transitions closer to 1 year) can be discerned from clusters of slow transitions (transitions closer to 36 years). The histogram located in the bottom left shows that fast transitions are more common than slower transitions. The zoomed map in the bottom right shows the results in finer resolution, where it is possible to observe different transition lengths between properties."}
 
 knitr::include_graphics("figs/map.png")
 
 ```
 
-Well defined clusters can be observed in the map created with aggregated transition length data (Figure \@ref(fig:map-plot)), slow transition areas tend to concentrate in specific regions in the Amazon biome, while fast transitions seem to have a wider distributions, but also tend to form clusters.
+Well defined clusters can be observed in the map created with aggregated transition length data (Figure \@ref(fig:map-plot)).
+Slow transition areas tend to concentrate in specific regions of the biome, while fast transitions seem to have a wider distribution, but also tend to form spatial clusters.
 However, this pattern does not hold completely when observing the data at its original scale (Figure \@ref(fig:map-plot)), where areas with different transition lengths are mixed between each other.
 When observing at the original scale, we could not spot any well defined pattern or direction of the occurrence of faster to slower transitions (Figure \@ref(fig:map-plot)).
 
 Other studies investigating patterns of transitions in the Amazon also found the formation of clusters of patterns, although there is a big heterogeneity at larger scales [@MullerHansen2017].
+The data can be analyzed year by year, and also be separated by primary and secondary forests being converted to agriculture (Figure \@ref(fig:transbar-plot)).
 
-The data can be analysed year by year, and also be separated by primary and secondary forests being converted to agriculture (Figure \@ref(fig:transbar-plot)).
-
-```{r transbar-plot, out.width = "17cm", fig.pos = "ht", echo = FALSE, fig.cap = "Transition area per year and transition length. The bars represent the total amount of area at some state of the transition for each year. The color gradient in each bar represents the transition length related to a deforestation or a agriculture establishment event. Blue tones represents fast transitions (transitions closer to 0 years), pink tones represents slow transitions (transitions closer to 35 years). Transition events were separated by deforestation of primary forests (a) and secondary forests (c), and the subsequent  agriculture establishment of primary forests (b) and secondary forests (d)."}
+```{r transbar-plot, out.width = "17cm", fig.pos = "ht", echo = FALSE, fig.cap = "Transition area from forest to agriculture, per year and transition length. The bars represent the total amount of area at some state of the transition for each year. The color gradient in each bar represents the transition length related to a deforestation or an agriculture establishment event. Blue tones represents fast transitions (transitions closer to 0 years), pink tones represent slow transitions (transitions closer to 35 years). Transition events were separated by deforestation of primary forests (a) and secondary forests (c), and the subsequent agriculture establishment of primary forests (b) and secondary forests (d)."}
 
 knitr::include_graphics("figs/trans_length_cols.png")
 
 ```
 
-The deforestation area of primary forests increased largely from 1986 to 2003, which was followed be a steep decrease until 2009, when the deforested areas reached a stable rate (Figure \@ref(fig:transbar-plot).a).
-From 1986 to approximately 1995, most of deforested areas suffered a slow transition, mostly were higher than 10 years, after this period, fast transitions started to become more common, specially from 2002 to 2004 (Figure \@ref(fig:transbar-plot).a).
-The peak of deforestation in 2003, according to our results, shows that 12.6% of the transitions were a direct conversion from forest to agriculture, estimates by @Morton2006 point to a proportion of 23%.
-If we include fast transitions (from 0 to 2 years) from our results, the proportion jumps to 48.5 % of all the transitions.
+The deforestation area of primary forests increased largely from 1986 to 2003, which was followed by a steep decrease until 2009, when the deforested areas reached a stable rate (Figure \@ref(fig:transbar-plot).a).
+From 1986 to approximately 1995, most of the deforested areas suffered a slow transition, mostly were higher than 10 years.
+After this period, fast transitions started to become more common, specially from 2002 to 2004 (Figure \@ref(fig:transbar-plot).a).
+The peak of deforestation in 2003, according to our results, shows that 12.6% of the transitions were a direct conversion from forest to agriculture.
+Previous studies estimated a proportion of 23% [@Morton2006].
+If we include fast transitions (from 0 to 2 years) from our results, the proportion jumps to 48.5 % of all transitions.
 
-Agriculture establishment over areas of primary forests peaked in 2005 and 2013 (Figure \@ref(fig:transbar-plot).b).
-Despite similar rates between both years, their transition lengths differ greatly, in 2005 most of the transitions were faster than 10 years, while in 2013 the great majority of transitions were slower than 10 years (Figure \@ref(fig:transbar-plot).b).
-The year of 2003 marked a change in the transition length of establishment of agriculture areas, after this year, most of the transitions happened in areas deforested at least 10 years before (Figure \@ref(fig:transbar-plot).b).
-Even after the decrease of deforestation after 2002, agriculture areas are expanding over lands where deforestation happened before 2002.
+Agricultural establishment over areas of primary forests peaked in 2005 and 2013 (Figure \@ref(fig:transbar-plot).b).
+Despite similar agricultural establishment rates between both years, their transition lengths differ greatly, in 2005 most of the transitions were faster than 10 years, while in 2013 the great majority of transitions were slower than 10 years (Figure \@ref(fig:transbar-plot).b).
+In 2003 it was observed a shift in the transition length from forest until the establishment of agricultural areas.
+From this year onwards, most transitions happened in areas deforested at least 10 years before (Figure \@ref(fig:transbar-plot).b).
+Even after the decrease of deforestation after 2002, areas under agriculture expanded over lands where deforestation happened before 2002 (mostly over pastureland).
 However, after 2019, a sudden drop of agriculture establishment rate happened (Figure \@ref(fig:transbar-plot).b).
 
 The period between 2001 and 2005 showed a peak of deforestation destined to agriculture (Figure \@ref(fig:transbar-plot).a), and of croplands expansion (Figure \@ref(fig:transbar-plot).b).
-From 2006 to 2010, we observe a decrease of both variables, a process that were already described by an analysis from 2001 and 2010 by @Macedo2012, which pointed for the decoupling of soybean expansion and deforestation.
-However, our results shows that after 2011, agriculture areas rapidly expanded in the amazon biome, specially at areas deforested many years before.
+From 2006 to 2010, we observed a decrease in both variables, a process that was already observed between 2001 and 2010 [@Macedo2012], which points out a decoupling of soybean expansion and deforestation.
+However, our result shows that after 2011, agricultural areas rapidly expanded in the amazon biome, especially at areas deforested many years before.
 
-The causes of deforestation and agriculture establishment in the Brazilian Amazon are complex and diverse.
+The causes of deforestation and agricultural establishment in the Brazilian Amazon are complex and diverse.
 Political context, public policies, market prices and law enforcement can influence how these processes evolve over time.
-The end of the 1980s and the 1990s were marked by the development of policies for protection of the environment, with the creation of the National Environmental Policy, and the establishment of the Brazilian Institute of Environment and Natural Resources (IBAMA) and the Ministry of Environment [@Banerjee2009].
-However, this was not immediately translated as a reduction of deforestation in the Amazon, which remained at high levels.
-Our results shows that deforestation in this period were mainly occupied by pasture for a long time before being converted to agriculture (Figure \@ref(fig:transbar-plot).a).
+The end of the 1980s and the 1990s were marked by the development of policies for protection of the environment, with the creation of the National Environmental Policy, the establishment of the Brazilian Institute of Environment and Natural Resources (IBAMA), and the Ministry of Environment [@Banerjee2009].
+However, this new policy environment was not immediately translated into a significant deforestation decrease in the Amazon, which remained at high levels until the beginning of 2000s.
+Our results show that deforestation in this period (1986 - 2000) was mainly followed by pasture, which remained for a long time before being converted to agriculture (Figure \@ref(fig:transbar-plot).a).
 
 Apart from protectionist policies created in the 1990s, development programs kept pressuring forests in the Amazon.
-In the late 1990s, the development policies "Brasil em Ação" and "Avança Brasil" (1995 - 2003) accelerated the infrastructure expansion, including in the Amazon [@Carvalho2002].
+In the late 1990s, the development policies "Brasil em Ação" and "Avança Brasil" (1995 - 2003) accelerated the national infrastructure expansion, including in the Amazon [@Carvalho2002].
 This is a period when the deforestation areas to be converted to agriculture reached the highest values in the time series (Figure \@ref(fig:transbar-plot).a), and also a peak in the establishment of agriculture in the Amazon biome, predominantly with fast transitions (Figure \@ref(fig:transbar-plot).b).
 
-In 2004, the Brazilian Government launched the Action Plan for the Prevention and Control of Deforestation in the Legal Amazon (PPCDAm), which was composed by many initiatives to curb deforestation [@West2021].
+In 2004, the Brazilian Government launched the Action Plan for the Prevention and Control of Deforestation in the Legal Amazon (PPCDAm), which was composed of many initiatives to curb deforestation [@West2021].
 The PPCDAm was considered as a successful policy to slow deforestation rates in Brazil, with international recognition.
-Our calculations from MapBiomas data reinforces the corelation of the PPCDAm with the reduction of deforestation after 2004, and reduction of the agriculture establishment after 2005 (Figure \@ref(fig:transbar-plot).a).
+Our calculations from MapBiomas data reinforces the correlation of the PPCDAm with the reduction of deforestation after 2004 (Figure \@ref(fig:transbar-plot).a), and reduction of the agriculture establishment after 2005 (Figure \@ref(fig:transbar-plot).b).
 
-In 2006, the Brazilian Association of Vegetable Oil Industries (BIOVE) and the National Association of Cereal Exporters (ANEC) committed to avoid commercialization of soy grains harvested from areas deforested after 2006.
+In 2006, the Brazilian Association of Vegetable Oil Industries (BIOVE) and the National Association of Cereal Exporters (ANEC) committed to avoid commercialization of soybean grains harvested from areas deforested after 2008.
 Our estimates of transitions show a decrease of deforested areas to be converted to agriculture after 2008, where it reached minimal values (Figure \@ref(fig:transbar-plot).a).
-After 2006, agriculture establishment over deforested primary forests suffered a decrease, which stayed relatively stable until 2012, where a steep increase occurred, however, the new areas being occupied by agriculture were mainly over areas that were cleared more than a decade before (therefore, before 2006) (Figure \@ref(fig:transbar-plot).b) This shows that agriculture expansion did not halt after the soy moratorium, producers started expanding in old cleared areas, which may have indirect impacts on deforestation increase over distant areas [@Arima2011]. However, this indirect effect is not always clear when analyzing the Amazon biome as a whole, our data shows that periods of fast agriculture expansion occurred at the same time with minimal deforestation values, according to PRODES. Expansion of agriculture areas also expanded over cleared areas of secondary forests in 2012, but with an important amount of fast transitions (Figure @ref(fig:transbar-plot).d). The causes of the increase of agriculture establishment areas can be numerous, one main driver was the approval of a new Forest Code, in 2012, which is considered to have undermined the environmental protection of forests [@Kroger2017; @Pereira2019].
+After 2006, agriculture establishment over deforested primary forests suffered a decrease, which stayed relatively stable until 2012, where a steep increase occurred, however, the new areas being occupied by agriculture were mainly over areas that were cleared more than a decade before (therefore, before 2006) (Figure \@ref(fig:transbar-plot).b) This shows that agriculture expansion did not halt after the soy moratorium, but producers expended over areas cleared many years ago, which may have indirect impacts on deforestation increase over distant areas [@Arima2011]. However, this indirect effect is not always clearly observed when analyzing the Amazon biome as a whole, but our data shows that periods of fast agriculture expansion occurred at the same time with minimal deforestation values, according to PRODES estimates (add reference). Expansion of agricultural areas also occurred over cleared areas of secondary forests in 2012, but with an important amount of fast transitions (Figure @ref(fig:transbar-plot).d). The causes of the increase of agricultural establishment areas can be numerous, and one main driver was the approval of a new Forest Code, in 2012, which is considered to have undermined the environmental protection of forests [@Kroger2017; @Pereira2019].
 
 The transition length patterns across years can change significantly between different states (Figure \@ref(fig:transridge-plot)).
 
-```{r transridge-plot, out.width = "17cm", fig.pos = "ht", echo = FALSE, fig.cap = "Transition length patterns inside states that belongs to the Amazon biome. Each year have a density estimate of the transition lengths, represented as colored curves. The peak of the curves represents transition length values with more frequency in one year of one state. Blue tones represents fast transitions (transitions closer to 0 years), pink tones represents slow transitions (transitions closer to 35 years)"}
+```{r transridge-plot, out.width = "17cm", fig.pos = "ht", echo = FALSE, fig.cap = "Transition length patterns inside states in the Amazon biome. Each year has a density estimate of the transition lengths, represented as colored curves. The peak of the curves represents transition length values with more frequency in one year of one state. Blue tones represents fast transitions (transitions closer to 0 years), pink tones represents slow transitions (transitions closer to 35 years)"}
 
 knitr::include_graphics("figs/trans_ridge.png")
 
 ```
 
-The state of Amapá presented fast transitions along all the time series, where slow transitions are not as common.
-In contrast, Acre shows a majority of slow transitions, in which only 2021 showed more fast transitions.
-There are three states where the pattern of transitions length across time are alike, Mato Grosso and Pará presented more fast transitions from 1995 to 2005, after this period, slow transitions became more common with time.
-Rondônia and Tocantins also presented a pattern in which transitions became slower with time, however this pattern started to occur earlier than Mato Grosso and Pará.
+The state of Amapá presented fast transitions along all the time series, without any significant period of slow transition.
+In contrast, transitions in Acre were majorly slow, in which only 2021 showed faster transitions.
+There are two states where the pattern of transition length are alike, Mato Grosso (MT) and Pará (PA).
+Both states underwent fast transitions from 1995 to 2005, and after this period slow transitions became predominant until the end of the time series.
+Rondônia (RO) and Tocantins (TO) presented a similar pattern of MT and PA, in which transitions decelerated , but for RO and TO since the beginning of 2000s, earlier than MA and PA.
 
-The great majority of transitions are from forests to Soybeans and "Other Temporary Crops", which represents 95% of the transitions in the Amazon biome (14% of Soybean and 81% of "Other Temporary Crops").
-When analyzing what happened after 5 years since the transition, Soybean farms are persistent, 79% of these areas remained as Soybean, 14% is converted to "Other Temporary Crops" and 7% in occupied by Pasture.
-"Other Temporary Crops" are less persistent, 27% of these areas remains as the same use, 56% is converted to Soybean, and 15% to Pasture.
-Conversions from Soybean and "Other Temporary Uses" to other covers and uses (apart from the already cited) are negligible.
-Sugar Cane, Cotton and Perennial Crops also appears, but in a negligible proportions.
+The great majority of transitions are from forests to soybean and \"Other Temporary Crops\", which represents 95% of the transitions in the Amazon biome (14% of Soybean and 81% of \"Other Temporary Crops\").
+When analyzing what happened after 5 years since the transition, soybean areas persistency rate was at 79% (i.e., areas that remained as soybean), 14% was converted to \"Other Temporary Crops\" and 7% was converted to pasture.
+\"Other Temporary Crops\" are less persistent.
+Hence, 27% of these areas remain in the same class, 56% were converted to soybean, and 15% to pasture.
+Conversions from soybean and \"Other Temporary Uses\" to other LULC classes (apart from the already cited) are negligible.
+Sugar cane, cotton and perennial crops also appear, but in a negligible proportion.
 
 ## Validation
 
 From the 100 random sample points used in the results validation, 1 point (sample 21) was not considered as a transition from our estimations, however, the visual inspection pointed to a likely event of transition from forest to agriculture.
-Also, there were 6 points (sample 6, 7, 55, 56, 78, 97) which the visual inspection did not found a transition from forest to pasture, although our estimations pointed as transitions.
+Also, there were 6 points (sample 6, 7, 55, 56, 78, 97) which the visual inspection did not find a transition from forest to pasture, although our estimations pointed as transitions.
 Therefore, 7% of the sample were completely misclassified by our estimates, and the rest of the accuracy assessment was performed over the remaining 93 sample points.
 
-When analyzing the errors from the transition length estimates, we observe that the year of deforestation shows the least amount of errors (Figure \@ref(fig:errorbar-plot)).
-The MAE of the deforestation year is of 1.42 years, and the error shows a bias towards underestimation.
-The year of the agriculture establishment and the transition length estimates showed larger errors when comparing with visual inspection.
+When analyzing the errors from the transition length estimates, we observed that the year of deforestation shows the least amount of errors (Figure \@ref(fig:errorbar-plot)).
+The MAE of the deforestation year is 1.42 years, and the error shows a bias towards underestimation.
+The year of the agriculture establishment and the transition length estimates showed larger errors when compared with visual inspection.
 
-```{r errorbar-plot, out.width = "17cm", fig.pos = "ht", echo = FALSE, fig.cap = "Bar with the count of error values (difference between observed and estimated values). Positive values indicate underestimation of the variable (estimations were lower than observations), negative values indicates overestimation (estimations higher than observations). Error metrics (Mean Absolute Error, Bias and Percent Bias) are displayed in the top right position of each box. The white deshed lines represents the MAE values of each variable."}
+```{r errorbar-plot, out.width = "17cm", fig.pos = "ht", echo = FALSE, fig.cap = "Bar with the count of error values (difference between observed and estimated values). Positive values indicate underestimation of the variable (estimations were lower than observations), negative values indicate overestimation (estimations higher than observations). Error metrics (Mean Absolute Error, Bias and Percent Bias) are displayed in the top right position of each box. The white dashed lines represent the MAE values of each variable."}
 
 knitr::include_graphics("figs/error_bars.png")
 
@@ -263,7 +269,7 @@ According to accuracy assessment from MapBiomas, the collection 7 presents a glo
 For the Forest class, MapBiomas showed small errors of inclusion (proportion of pixels misclassified as other classes, but the real class were Forest), which fluctuated around 1%.
 The omission errors for Forests are also small (proportion of pixels misclassified as Forests, but the real class were not Forest), which fluctuated around 2%.
 The Agriculture class presented more errors, the inclusion errors ranged from 22% to 5%, and were mostly composed by Forests pixels (forest pixels misclassified as agriculture).
-The omission errors of Agriculture ranged from 22% to 8%, and were also mostly composed by Forests pixels (agriculture pixels misclassified as Agriculture).
+The omission errors of Agriculture ranged from 22% to 8%, and were also mostly composed of Forest pixels (agriculture pixels misclassified as Agriculture).
 
 ## Qualitative assessment
 
@@ -272,14 +278,14 @@ Roads being considered as agriculture (sample 2).
 Omissions were detected, specially agriculture plots not being considered as a transition as a whole, parts of a plot that were clearly a transition were not considered as a transition (sample 16, 30, 75).
 Inclusions were detected, areas that clearly showed no agriculture were considered as transitions (sample 10, 98).
 Effect of border on results (sample 25, 56, 84, 92).
-Areas with sparse forest vegetation presented large error of deforestation year (sample 33).
+Areas with sparse forest vegetation presented a large error of deforestation year (sample 33).
 
-Patterns of agriculture areas are roughly well represented (sample 25, 43, 56, 84).
-Some locations presents a better homogeneity of transitions inside agriculture plots (sample 84).
+Patterns of agricultural areas are roughly well represented (sample 25, 43, 56, 84).
+Some locations present a better homogeneity of transitions inside agriculture plots (sample 84).
 
 Interference due to atmospheric conditions and lack of image availability clearly shaped spatial patterns of transitions at some locations.
-Quality of composites trough the time series affected accuracy of results.
-Regions of the North part of the Amazon presents lower quality than regions in the South of the Amazon biome.
+Quality of composites through the time series affected accuracy of results.
+Regions of the North part of the Amazon present lower quality than regions in the South of the Amazon biome.
 
 \conclusions[Conclusions]
 
