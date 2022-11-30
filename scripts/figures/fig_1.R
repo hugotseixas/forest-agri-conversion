@@ -41,6 +41,10 @@ amazon <- read_biomes() %>%
   filter(code_biome == 1) %>%
   st_transform("EPSG:4326")
 
+states <- read_state() %>%
+  st_transform("EPSG:4326") %>%
+  st_intersection(amazon)
+
 # LOAD DATASETS ---------------------------------------------------------------
 
 ## Load transition length raster ----
@@ -83,21 +87,24 @@ trans_hex <- grid %>%
   st_intersection(amazon)
 
 ## Crop raster to extract full resolution values ----
+hr_bbox <-
+  st_as_sfc(
+    st_bbox(
+      c(
+        xmin = -52.3262,
+        xmax = -52.0786,
+        ymax =  -12.3993,
+        ymin =  -12.6592
+      ),
+      crs = st_crs(4326)
+    )
+  )
+
 hr_raster <-
   as.data.frame(
     crop(
       mosaic,
-      st_as_sfc(
-        st_bbox(
-          c(
-            xmin = -52.3262,
-            xmax = -52.0786,
-            ymax =  -12.3993,
-            ymin =  -12.6592
-          ),
-          crs = st_crs(4326)
-        )
-      )
+      hr_bbox
     ),
     xy = TRUE
   ) %>%
@@ -136,9 +143,19 @@ dist_map <- ggplot() +
     y_offset = 5
   ) +
   geom_sf(
+    data = states,
+    fill = "transparent",
+    color = "black"
+  ) +
+  geom_sf(
     data = trans_hex,
     aes(fill = trans_length),
     linewidth = 0.05
+  ) +
+  geom_sf(
+    data = hr_bbox,
+    fill = "transparent",
+    color = "#c50505"
   ) +
   ggtitle(
     "Distribution of transitions from forest to agriculture in the Amazon"
@@ -193,9 +210,12 @@ hist_plot <- ggplot() +
     legend.position = ""
   )
 
-full_map <- dist_map +
+full_map <- dist_map + theme(plot.tag.position = c(0.2, 0.8)) +
   inset_element(hr_map, 0.76, 0, 1, 0.34, align_to = "panel") +
-  inset_element(hist_plot, 0, 0, 0.5, 0.4, align_to = "panel")
+  theme(plot.tag.position = c(0.95, 1.08)) +
+  inset_element(hist_plot, 0, 0, 0.5, 0.4, align_to = "panel") +
+  theme(plot.tag.position = c(0.4, 0.4)) +
+  plot_annotation(tag_levels = 'a')
 
 ggsave(
   "./figs/map.png",
