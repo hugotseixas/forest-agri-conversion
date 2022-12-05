@@ -158,7 +158,7 @@ dist_map <- ggplot() +
     color = "#c50505"
   ) +
   ggtitle(
-    "Distribution of transitions from forest to agriculture in the Amazon"
+    "Distribution of conversion from forest to agriculture in the Amazon"
   ) +
   guides(
     fill = guide_colourbar(
@@ -171,9 +171,9 @@ dist_map <- ggplot() +
   scale_fill_scico(
     palette = "batlow",
     breaks = c(0, 17, 35),
-    name = "Transition Length (year)"
+    name = "Conversion Length (year)"
   ) +
-  theme_void() +
+  theme_void(base_family = "roboto") +
   theme(
     legend.position = c(0.14, 0.77),
     text = element_text(size = 11)
@@ -188,7 +188,7 @@ hr_map <- ggplot() +
   scale_x_continuous(expand = c(0.0004, 0.0004)) +
   scale_y_continuous(expand = c(0.0004, 0.0004)) +
   coord_fixed() +
-  theme_void() +
+  theme_void(base_family = "roboto") +
   theme(
     legend.position = "",
     panel.background = element_rect(fill = "#747171"),
@@ -205,7 +205,7 @@ hist_plot <- ggplot() +
   scale_fill_scico_d(palette = "batlow") +
   scale_x_continuous(expand = c(0, 0)) +
   scale_y_continuous(expand = c(0, 0)) +
-  theme_void() +
+  theme_void(base_family = "roboto") +
   theme(
     legend.position = ""
   )
@@ -214,7 +214,7 @@ full_map <- dist_map + theme(plot.tag.position = c(0.2, 0.8)) +
   inset_element(hr_map, 0.76, 0, 1, 0.34, align_to = "panel") +
   theme(plot.tag.position = c(0.95, 1.08)) +
   inset_element(hist_plot, 0, 0, 0.5, 0.4, align_to = "panel") +
-  theme(plot.tag.position = c(0.4, 0.4)) +
+  theme(plot.tag.position = c(0.4, 0.37)) +
   plot_annotation(tag_levels = 'a')
 
 ggsave(
@@ -225,4 +225,3 @@ ggsave(
   units = "cm",
   dpi = 300
 )
-
