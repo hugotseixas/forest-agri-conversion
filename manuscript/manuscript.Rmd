@@ -84,23 +84,31 @@ Transitions were calculated using LULC classification data from MapBiomas, colle
 
 The MapBiomas data was downloaded from Google Earth Engine platform [@Gorelick2017].
 The pixels of the Amazon biome were filtered to contain only those that were occupied by forest and agriculture at some period, and that are not considered as water, according to the Global Surface Water product provided by Copernicus [@Pekel2016].
-For the download, the data was divided in 2732 tiles, to allow local processing of a large quantity of pixels.Two sets of data were downloaded with the same spatial dimensions, one with the LULC classifications for each year, and another with binary values, representing whether that pixels was valid for processing or not.
+For the download, the data was divided in 2732 tiles, to allow local processing of a large quantity of pixels.Two sets of data were downloaded with the same spatial dimensions, one with the LULC classifications for each year, and another with binary values, representing whether that pixels were valid for processing or not (according to the filter conditions mentioned above).
 
 The first part of the processing was to create a table from the binary values data, and create unique identification for each pixel, their coordinates, calculate the area, and also address the municipality in which each pixel was inside.
 In this part, a table was also generated with the spatial information of each tile, so that it is possible to convert the generated tables back to raster format.
 
-The second part of the processing was to load each tile separately, convert it to a table and calculate every possible conversion from forest to agriculture.
-The conversions were calculated pixel by pixel, by performing the following steps:
+The second part of the processing was to load each tile separately, convert it to a table and calculate every possible conversion from forest to agriculture (Figure \@ref(fig:routine-plot)).
+The conversions were calculated pixel by pixel, where the LULC time series were extracted and analysed for each conversion cycle that was present for that pixel.
+The calculation of the conversion length was extremely simple, it is the year of the establishment of agriculture subtracted by the last year classified as a forest, however, we add one year to the latter, so that it represents the year of deforestation (since it is more meaningful for analysis).
+
+```{r routine-plot, out.width = "17cm", fig.pos = "ht", echo = FALSE, fig.cap = "Representation of the process to calculate the conversion length from forests to agriculture. All values presented are hiphothetical, and serves only as an ilustration of the method."}
+
+knitr::include_graphics("figs/change_lenght_routine_scheme.png")
+```
+
+The process of calculation of the conversion length (Figure \@ref(fig:routine-plot)), can be breakdown to seven steps of processing:
 
 1.  Load raster and extract valid values into a table;
 
-2.  Calculate the year of first occurrence of any agriculture class for each pixel;
+2.  Calculate the year of first occurrence of any agriculture class (annual and permanent crops) for each pixel;
 
 3.  Calculate the first year of "Forest Formation" LULC class after the year calculated in step 2.
     This step identifies the occurrence of more than one conversion in a given pixel;
 
 4.  Classify rows as "before" or "after" the occurrence of the year calculated in step 3.
-    This is the identification of periods before and after the recurrence of forest after a first conversion to agriculture;
+    This is the identification of periods before and after a return of forest after a first conversion to agriculture;
 
 5.  Calculate the last year of "Forest Formation" within the rows classified as "before", and add 1 year to represent the deforestation year;
 
@@ -109,11 +117,50 @@ The conversions were calculated pixel by pixel, by performing the following step
 7.  Calculate the difference between years from items 5 and 6 to get the LULC conversion length in years, for each pixel;
 
 The steps 2 to 7 are performed recursively to identify multiple conversions, in case they are present.
-In addition to the conversion length values and the years of the conversion, they are also qualified by the type of agriculture that were established after deforestation, if the conversion occurred from primary or secondary forests, and the number of recurrences of conversions at the pixel.
+In addition to the conversion length values and the years of the conversion, they are also qualified by the type of agriculture that were established after deforestation, if the conversion occurred from primary or secondary forests, and the number of occurences of conversions at the pixel.
 The LULC classes within the conversion and until 5 years after were also stored.
 
 The conversion results are stored in a data set of tabular files, where data can be queried for further analysis.
 After the calculations, data was also converted back to raster format, with the aim to expand the accessibility of the data set.
+
+## Description of data collection
+
+After the calculation of conversions, the results are stored in three different types of tables (Figure \@ref(fig:tables-plot)), organized in a folder structure and stored as Apache Parquet files.
+
+```{r tables-plot, out.width = "17cm", fig.pos = "ht", echo = FALSE, fig.cap = " Representation of the tables generated by the conversion length calculation. All values presented are hiphothetical, and serves only as an ilustration of the method."}
+
+knitr::include_graphics("figs/tables_scheme.png")
+```
+
+The first type of table (Figure \@ref(fig:tables-plot).a) contain the spatial information (longitude, latitude and area) of each pixel, its unique identificators and the code of the municipality which contains the pixel.
+The "cell_id" column contains a unique identification for the whole data, while the "tile_cell_id" holds a unique value of each pixel for a single tile.
+Each tile is also uniquely identified in the column "tile_id".
+This table is named as "mask_cells".
+
+A second type of tables (Figure \@ref(fig:tables-plot).b) stores conversion length values, the first and last year of the conversion, the resulting agriculture type, and the number of the conversion cycle.
+They also contain the unique id of each pixel and tile (related to the table above).
+The "agri_code" column holds information about the type of agriculture the was established after deforestation.
+The "forest_year" have values that represent the year of deforestation, the "agri_year" is the year when the agriculture establishment happened, and the subtraction between both (the conversion length) is stored in the "c_length" column.
+Since it is possible that one pixels contains more than one conversion from forest to agriculture, we stored the number of the conversion in the column "c_cycle" (1 is the first conversion cycle).
+However, conversion from forest to other LULC is also possible, so the column "f_cycle" holds information about the number of the conversion from forest to any LULC.
+If the forest have suffered any conversion, it starts being considered as a secondary forest, as indicated in the column "forest_type".
+
+The third type of tables (Figure \@ref(fig:tables-plot).c) contains the LULC classes of all years within the conversion, and also the first 5 years after the conversion.
+The column "year" holds the year of the MapBiomas classification, and the "class_code" variable stores the LULC classification (according to MapBiomas) for the respective year.
+
+The three tables are related to each other and can be used altogether, and are separated by tiles.
+Another table containing the metadata of each tile is also created, and holds the spatial characteristics of the tiles.
+With this spatial information, it is possible to convert the tabular data back to spatial raster, with identical spatial properties as the original MapBiomas classification data.
+
+The tabular data was organized in a system of folders and sub folders in a hive format partitioning (Figure \@ref(fig:dataset-plot)).
+This structure allows for easily access parts of the data set, and also filter it without the necessity to read the tables.
+In the case of this data set, it is partitioned by the "tile_id" and "agri_cycle" variables.
+The data set also have a metadata file with the spatial characteristics of each file, it stores the identification of the tile, the maximum and minimum latitude and longitude, the coordinate reference system, and the number of columns, rows, and cells of each tile.
+
+```{r dataset-plot, out.width = "17cm", fig.pos = "ht", echo = FALSE, fig.cap = " Representation of the data set, structured in folders and sub folders."}
+
+knitr::include_graphics("figs/dataset_structure.png")
+```
 
 ## Accuracy assessment
 
@@ -130,22 +177,6 @@ The observed conversion length was obtained by subtracting both dates.
 To evaluate the accuracy, we calculated the Mean Absolute Error (MAE), the Bias (BIAS), and the Percent Bias (PBIAS).
 We also analyzed the results by plotting the errors as frequency bars, and scatter plots between observed and estimated values.
 After the completion of the analysis of the 100 sample points, we also conducted a qualitative assessment, where we compared our results with the satellite images.
-
-# Description of data collection
-
-After the calculation of conversions, the results are stored in three different types of tables, organized in a folder structure and stored as Apache Parquet files.
-
--   Tables that contain the spatial information (longitude, latitude) of each pixel, its unique id and the code of the municipality which contains the pixel.
-    It is named as "mask_cells";
-
--   Tables with conversion length values, the first and last year of the conversion, the resulting agriculture type, and the number of the conversion cycle.
-    They also contain the unique id of each pixel (related to the table above);
-
--   Table with the LULC classes of all years within the conversion, and also the first 5 years after the conversion.
-
-The three tables are related to each other and can be used altogether, and are separated by tiles.
-Another table containing the metadata of each tile is also created, and holds the spatial characteristics of the tiles.
-With this spatial information, it is possible to convert the tabular data back to spatial raster, with identical spatial properties as the original MapBiomas classification data.
 
 # Results and discussion
 
@@ -196,7 +227,7 @@ From this year onward, most conversions happened in areas deforested at least 10
 Even after the decrease of deforestation after 2002, areas under agriculture expanded over lands where deforestation happened before 2002 (mostly over pastureland).
 However, after 2019, a sudden drop of agriculture establishment rate happened (Figure \@ref(fig:transbar-plot).b).
 
-The period between 2001 and 2005 showed a peak of deforestation destined to agriculture (Figure \@ref(fig:transbar-plot).a), and of croplands expansion (Figure \@ref(fig:transbar-plot).b).
+The period between 2001 and 2005 showed a peak of deforestation (Figure \@ref(fig:transbar-plot).a), and of croplands expansion (Figure \@ref(fig:transbar-plot).b).
 From 2006 to 2010, we observed a decrease in both variables, a process that was already observed between 2001 and 2010 [@Macedo2012], which points out a decoupling of soybean expansion and deforestation.
 However, our result shows that after 2011, agricultural areas rapidly expanded in the amazon biome, especially at areas deforested many years before.
 
@@ -208,14 +239,14 @@ Our results show that deforestation in this period (1986 - 2000) was mainly foll
 
 Apart from protectionist policies created in the 1990s, development programs kept pressuring forests in the Amazon.
 In the late 1990s, the development policies "Brasil em Ação" and "Avança Brasil" (1995 - 2003) accelerated the national infrastructure expansion, including in the Amazon [@Carvalho2002].
-This is a period when the deforestation areas to be converted to agriculture reached the highest values in the time series (Figure \@ref(fig:transbar-plot).a), and also a peak in the establishment of agriculture in the Amazon biome, predominantly with fast conversions (Figure \@ref(fig:transbar-plot).b).
+This is a period when the deforestation areas reached the highest values in the time series (Figure \@ref(fig:transbar-plot).a), and also a peak in the establishment of agriculture in the Amazon biome, predominantly with fast conversions (Figure \@ref(fig:transbar-plot).b).
 
 In 2004, the Brazilian Government launched the Action Plan for the Prevention and Control of Deforestation in the Legal Amazon (PPCDAm), which was composed of many initiatives to curb deforestation [@West2021].
 The PPCDAm was considered as a successful policy to slow deforestation rates in Brazil, with international recognition.
 Our calculations from MapBiomas data reinforces the correlation of the PPCDAm with the reduction of deforestation after 2004 (Figure \@ref(fig:transbar-plot).a), and reduction of the agriculture establishment after 2005 (Figure \@ref(fig:transbar-plot).b).
 
 In 2006, the Brazilian Association of Vegetable Oil Industries (BIOVE) and the National Association of Cereal Exporters (ANEC) committed to avoid commercialization of soybean grains harvested from areas deforested after 2008.
-Our estimates of conversions show a decrease of deforested areas to be converted to agriculture after 2008, where it reached minimal values (Figure \@ref(fig:transbar-plot).a).
+Our estimates of conversions show a decrease of deforested areas after 2008, where it reached minimal values (Figure \@ref(fig:transbar-plot).a).
 After 2006, agriculture establishment over deforested primary forests suffered a decrease, which stayed relatively stable until 2012, where a steep increase occurred, however, the new areas being occupied by agriculture were mainly over areas that were cleared more than a decade before (therefore, before 2006) (Figure \@ref(fig:transbar-plot).b) This shows that agriculture expansion did not halt after the soy moratorium, but producers expended over areas cleared many years ago, which may have indirect impacts on deforestation increase over distant areas [@Arima2011]. However, this indirect effect is not always clearly observed when analyzing the Amazon biome as a whole, but our data shows that periods of fast agriculture expansion occurred at the same time with minimal deforestation values, according to PRODES estimates (add reference). Expansion of agricultural areas also occurred over cleared areas of secondary forests in 2012, but with an important amount of fast conversions (Figure \@ref(fig:transbar-plot).d). The causes of the increase of agricultural establishment areas can be numerous, and one main driver was the approval of a new Forest Code, in 2012, which is considered to have undermined the environmental protection of forests [@Kroger2017; @Pereira2019].
 
 The conversion length patterns across years can change significantly between different states (Figure \@ref(fig:transridge-plot)).
@@ -259,7 +290,7 @@ The dispersion of observed and estimated values shows no clear pattern of errors
 Transition length values are more concentrated in smaller values, which also shows higher errors (Figure \@ref(fig:errorscatter-plot).c).
 However, this is expected since faster conversions are more common (Figure \@ref(fig:map-plot)).
 
-```{r errorscatter-plot, out.width = "17cm", fig.pos = "ht", echo = FALSE, fig.cap = "Scatter plot between paired values of estimated and observed Deforestation and Agriculture Establishment years, and their respective Transition Length. Translucid white areas represent quantile ranges (5\\%, 25\\%, 75\\% and 95\\%) of the errors. The area between 5\\% and 95\\% quantiles includes 90\\% of points. The area between 25\\% and 75\\% quantiles includes 50\\% of points."}
+```{r errorscatter-plot, out.width = "17cm", fig.pos = "ht", echo = FALSE, fig.cap = "Scatter plot between paired values of estimated and observed Deforestation and Agriculture Establishment years, and their respective Transition Length. The gray line represents values which there would be no errors of the estimated values in comparison with the observed values. Translucid white areas represent quantile ranges (5\\%, 25\\%, 75\\% and 95\\%) of the errors. The area between 5\\% and 95\\% quantiles includes 90\\% of points. The area between 25\\% and 75\\% quantiles includes 50\\% of points."}
 
 knitr::include_graphics("figs/error_scatter.png")
 
@@ -269,7 +300,7 @@ According to accuracy assessment from MapBiomas, the collection 7 presents a glo
 For the Forest class, MapBiomas showed small errors of inclusion (proportion of pixels misclassified as other classes, but the real class were Forest), which fluctuated around 1%.
 The omission errors for Forests are also small (proportion of pixels misclassified as Forests, but the real class were not Forest), which fluctuated around 2%.
 The Agriculture class presented more errors, the inclusion errors ranged from 22% to 5%, and were mostly composed by Forests pixels (forest pixels misclassified as agriculture).
-The omission errors of Agriculture ranged from 22% to 8%, and were also mostly composed of Forest pixels (agriculture pixels misclassified as Agriculture).
+The omission errors of Agriculture ranged from 22% to 8%, and were also mostly composed of Forest pixels (agriculture pixels misclassified as forest).
 
 ## Qualitative assessment
 
@@ -288,6 +319,3 @@ Quality of composites through the time series affected accuracy of results.
 Regions of the North part of the Amazon present lower quality than regions in the South of the Amazon biome.
 
 \conclusions[Conclusions]
-
-TODO: resumo ainda precisa de mais informações, por exemplo, a série temporal da análise, a escala (ex. todo o bioma Amazônia no Brasil, na América do Sul, apenas alguns estados da Amazônia).
-Falar do método, que tipo de álgebra de mapa foi usada, algum tipo de regressão...enfim.
