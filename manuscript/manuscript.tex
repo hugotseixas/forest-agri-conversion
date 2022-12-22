@@ -219,7 +219,7 @@ This table is named ``\emph{mask\_cells}''.
 
 A second type of tables (Figure \ref{fig:tables-plot}.b) stores conversion length values, the first and last year of the conversion, the resulting agriculture type, and the number of the conversion cycle.
 They also contain the unique id of each pixel and tile (same as the table above).
-The ``agri\_code'' column holds information about the type of agriculture the was established after deforestation.
+The ``agri\_code'' column holds information about the type of agriculture that was established after deforestation.
 The ``forest\_year'' have values that represent the year of deforestation, the ``agri\_year'' is the year when the agriculture establishment happened, and the subtraction between both (the conversion length) is stored in the ``c\_length'' column.
 Since it is possible that one pixel contains more than one conversion from forest to agriculture, we stored the number of the conversion in the column ``c\_cycle'' (1 is the first conversion cycle).
 However, conversion from forest to other LULC is also possible, so the column ``f\_cycle'' holds information about the number of the conversion from forest to any LULC except agriculture.
