@@ -79,21 +79,27 @@ For example, this data can be used to develop insights into the economic costs a
 
 ## Conversion length calculation
 
-The estimations of conversion from forest to agriculture were performed for the Amazon biome region (biome limits defined by the Brazilian Institute of Geography and Statistics (IBGE), in 2019).
-Transitions were calculated using LULC classification data from MapBiomas, collection 7, which ranges from 1985 to 2021, at a spatial resolution of approximately 30 meters, and global accuracy at 91.3%.
+The estimations of conversion from forest to agriculture were performed for the Amazon biome (biome limits defined by the Brazilian Institute of Geography and Statistics (IBGE), in 2019).
+Conversions were calculated using LULC classification data from MapBiomas, collection 7, which ranges from 1985 to 2021, at a spatial resolution of approximately 30 meters, and global accuracy at 91.3%.
+The calculations considers forests as the "Forest Formation" (class code 3) class from MapBiomas, and does not include other types of natural vegetation.
+The agriculture is composed by eight classes from MapBiomas, "Soybean", "Sugar Cane", "Rice", "Cotton", "Other Temporary Crops", "Coffee", "Citrus", "Other Perennial Crops" (class code 39, 20, 40, 62, 41, 46, 47 and 48, respectively).
+The conversion length (time span) was considered as how many years there were between the deforestation and the establishment of agriculture in the same area.
 
 The MapBiomas data was downloaded from Google Earth Engine platform [@Gorelick2017].
-The pixels of the Amazon biome were filtered to contain only those that were occupied by forest and agriculture at some period, and that are not considered as water, according to the Global Surface Water product provided by Copernicus [@Pekel2016].
+The pixels within the Amazon biome were filtered to contain only those that were occupied by forest and agriculture in the period, and that are not considered as water, according to the Global Surface Water product provided by Copernicus [@Pekel2016].
 For the download, the data was divided in 2732 tiles, to allow local processing of a large quantity of pixels.Two sets of data were downloaded with the same spatial dimensions, one with the LULC classifications for each year, and another with binary values, representing whether that pixels were valid for processing or not (according to the filter conditions mentioned above).
 
-The first part of the processing was to create a table from the binary values data, and create unique identification for each pixel, their coordinates, calculate the area, and also the municipality in which each pixel was inside.
-In this part, a table was also generated with the spatial information of each tile, so that it is possible to convert the generated tables back to raster format.
+The first part of the processing was to create a table (*mask_cells*) from the binary data, and set a unique identification for each pixel, along with their coordinates, area (square meters), and also the respective municipality of each pixel.
+In this part, an additional metadata table (*tiles_metadata*) was generated with the spatial information of each tile, so that it is possible to convert the generated tables back to raster format.
 
-The second part of the processing was to load each tile separately, convert it to a table and calculate every possible conversion from forest to agriculture (Figure \@ref(fig:routine-plot)).
-The conversions were calculated pixel by pixel, where the LULC time series were extracted and analyzed for each conversion cycle that was present for that pixel.
-The calculation of the conversion length was simple, it is the year of the establishment of agriculture subtracted by the last year classified as a forest, however, we add one year to the latter, so that it represents the year of deforestation (since it is more meaningful for analysis).
+The second part of the processing was to load each raster tile separately, convert it to a new table (*lulc_table*) and calculate every possible conversion from forest to agriculture (Figure \@ref(fig:routine-plot)).
+The calculation of the conversion length (time span) was simple.
+It consisted of the year of the agriculture establishment subtracted by the last year classified as forest formation.
+Than, we add one year to the latter, so that it represents the year of deforestation (since it is more meaningful for analysis).
+For example, considering a conversion where the last forest year was 1986, and than turned to agriculture in 1989.
+In this case, we would add one year to the last forest year (1986 + 1) and than subtract the agriculture establishment year (1989) by it, the result would be 1989 subtracted by 1987, which returns a conversion length of 2 years (Figure \@ref(fig:routine-plot)).
 
-```{r routine-plot, out.width = "17cm", fig.pos = "h", echo = FALSE, fig.cap = "Representation of the process to calculate the conversion length from forests to agriculture. All values presented are hyphothetical, and serve only as an illustration of the method."}
+```{r routine-plot, out.width = "17cm", fig.pos = "h", echo = FALSE, fig.cap = "Representation of the process to calculate the conversion length from forests to agriculture. Numbers inside cricles represent the setp of the process to calculate the conversion length (1 to 7). All values presented are hyphothetical, and serve only as an illustration of the method."}
 
 knitr::include_graphics("figs/change_lenght_routine_scheme.png")
 ```
@@ -102,7 +108,7 @@ The process of calculation of the conversion length (Figure \@ref(fig:routine-pl
 
 1.  Load raster and extract valid values into a table;
 
-2.  Calculate the year of first occurrence of any agriculture class (annual and permanent crops) for each pixel;
+2.  Calculate the year of first occurrence of any anthropic class for each pixel;
 
 3.  Calculate the first year of "Forest Formation" LULC class after the year calculated in step 2.
     This step identifies the occurrence of more than one conversion in a given pixel;
@@ -116,9 +122,9 @@ The process of calculation of the conversion length (Figure \@ref(fig:routine-pl
 
 7.  Calculate the difference between years from items 5 and 6 to get the LULC conversion length in years, for each pixel;
 
-The steps 2 to 7 are performed recursively to identify multiple conversions, in case they are present.
-In addition to the conversion length values and the years of the conversion, they are also qualified by the type of agriculture that were established after deforestation, if the conversion occurred from primary or secondary forests, and the number of occurrences of conversions at the pixel.
-The LULC classes within the conversion and until 5 years after were also stored.
+The steps 2 to 7 are performed recursively to identify multiple cycles of conversions (e.g., forest -\> agriculture -\> forest -\> agriculture), in case they are present.
+In addition to the conversion length values and the years of the conversion, they are also qualified by the agriculture class that were established after deforestation, if the conversion occurred from primary or secondary forests, and the number of cycles of conversions at the pixel.
+The LULC classes between the deforestation and the agriculture establishment, and 5 years after the conversion, were also stored.
 
 The conversion results are stored in a data set of tabular files, where data can be queried for further analysis.
 After the calculations, data was also converted back to raster format, with the aim to expand the accessibility of the data set.
@@ -135,18 +141,20 @@ knitr::include_graphics("figs/tables_scheme.png")
 The first type of table (Figure \@ref(fig:tables-plot).a) contains the spatial information (longitude, latitude and area) of each pixel, its unique identification and the code of the municipality which contains the pixel.
 The "cell_id" column contains a unique identification for the whole data, while the "tile_cell_id" holds a unique value of each pixel for a single tile.
 Each tile is also uniquely identified in the column "tile_id".
-This table is named "mask_cells".
+This table is named "*mask_cells*".
 
 A second type of tables (Figure \@ref(fig:tables-plot).b) stores conversion length values, the first and last year of the conversion, the resulting agriculture type, and the number of the conversion cycle.
-They also contain the unique id of each pixel and tile (related to the table above).
+They also contain the unique id of each pixel and tile (same as the table above).
 The "agri_code" column holds information about the type of agriculture the was established after deforestation.
 The "forest_year" have values that represent the year of deforestation, the "agri_year" is the year when the agriculture establishment happened, and the subtraction between both (the conversion length) is stored in the "c_length" column.
 Since it is possible that one pixel contains more than one conversion from forest to agriculture, we stored the number of the conversion in the column "c_cycle" (1 is the first conversion cycle).
-However, conversion from forest to other LULC is also possible, so the column "f_cycle" holds information about the number of the conversion from forest to any LULC.
+However, conversion from forest to other LULC is also possible, so the column "f_cycle" holds information about the number of the conversion from forest to any LULC except agriculture.
 If the forest has suffered any conversion, it starts being considered as a secondary forest, as indicated in the column "forest_type".
+This table is named "*c_length*".
 
-The third type of tables (Figure \@ref(fig:tables-plot).c) contains the LULC classes of all years within the conversion, and also the first 5 years after the conversion.
+The third type of tables (Figure \@ref(fig:tables-plot).c) contain the LULC classes of all years between the deforestation and the agriculture establishment, and also the first 5 years after the conversion.
 The column "year" holds the year of the MapBiomas classification, and the "class_code" variable stores the LULC classification (according to MapBiomas) for the respective year.
+This table is named "*c_classes*".
 
 The three tables are related to each other and can be used altogether, and are separated by tiles.
 Another table containing the metadata of each tile is also created, and holds the spatial characteristics of the tiles.
