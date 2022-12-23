@@ -8,7 +8,7 @@
 #               (https://mapbiomas.org/en?cama_set_language=en)
 #
 # Author:       Hugo Tameirao Seixas
-# Contact:      tameirao.hugo@gmail.com
+# Contact:      seixas.hugo@protonmail.com
 # Date:         2020-09-11
 #
 # Notes:        In order to run this routine, you will need to have access
@@ -164,7 +164,7 @@ time_code <- as.integer(Sys.time())
 
 # Parent folder
 drive_mkdir(
-  name = glue("mb_transition-{time_code}"),
+  name = glue("mb_conversion-{time_code}"),
   path = "~/",
   overwrite = FALSE
 )
@@ -176,7 +176,7 @@ walk(
 
     drive_mkdir(
       name = glue("{folder_name}-{time_code}"),
-      path = glue("~/mb_transition-{time_code}/"),
+      path = glue("~/mb_conversion-{time_code}/"),
       overwrite = FALSE
     )
 
@@ -232,7 +232,7 @@ ee_monitoring(download_mb, task_time = 600)
 drive_files <-
   map_dfr(
     1:10,
-    ~ drive_ls(glue("~/mb_transition-{time_code}/"), recursive = TRUE)
+    ~ drive_ls(glue("~/mb_conversion-{time_code}/"), recursive = TRUE)
   ) %>%
   distinct(name, .keep_all = TRUE) %>%
   filter(

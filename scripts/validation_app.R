@@ -33,7 +33,7 @@ results <-
     cell_id = NA_real_,
     forest_year = NA_real_,
     agri_year = NA_real_,
-    trans_length = NA_real_
+    c_length = NA_real_
   ) %>%
   drop_na()
 
@@ -95,7 +95,7 @@ ui <- grid_page(
       width = "auto"
     ),
     numericInput(
-      inputId = "transBegin",
+      inputId = "cBegin",
       label = "Forest to Pasture",
       value = 1985L,
       min = 1985L,
@@ -104,7 +104,7 @@ ui <- grid_page(
       width = "auto"
     ),
     numericInput(
-      inputId = "transEnd",
+      inputId = "cEnd",
       label = "Pasture to Agriculture",
       value = 1985L,
       min = 1985L,
@@ -119,7 +119,7 @@ ui <- grid_page(
   ),
   grid_card_text(
     area = "header",
-    content = "Forest to agriculture transition: accuracy assessment",
+    content = "Forest to agriculture conversion: accuracy assessment",
     alignment = "center",
     is_title = FALSE
   ),
@@ -315,7 +315,7 @@ server <-
         crop(
           rast(
             glue(
-              "{proj_path}/data/trans_raster_mosaic/mb_mosaic_cycle_1.tif"
+              "{proj_path}/data/c_raster_mosaic/mb_mosaic_cycle_1.tif"
             )
           )[[2]],
           bbox
@@ -360,7 +360,7 @@ server <-
         crop(
           rast(
             glue(
-              "{proj_path}/data/trans_raster_mosaic/mb_mosaic_cycle_1.tif"
+              "{proj_path}/data/c_raster_mosaic/mb_mosaic_cycle_1.tif"
             )
           )[[3]],
           bbox
@@ -405,7 +405,7 @@ server <-
         crop(
           rast(
             glue(
-              "{proj_path}/data/trans_raster_mosaic/mb_mosaic_cycle_1.tif"
+              "{proj_path}/data/c_raster_mosaic/mb_mosaic_cycle_1.tif"
             )
           )[[4]],
           bbox
@@ -419,7 +419,7 @@ server <-
       ggplot() +
         geom_raster(
           data = img_df,
-          aes(x = x, y = y, fill = trans_length)
+          aes(x = x, y = y, fill = c_length)
         ) +
         geom_sf(
           data = point,
@@ -427,7 +427,7 @@ server <-
         ) +
         scale_fill_viridis_c(limits = c(0, 35)) +
         theme_void() +
-        labs(title = "Transition Length") +
+        labs(title = "Conversion Length") +
         theme(
           plot.title = element_text(size = 14, face = "bold")
         )
@@ -439,9 +439,9 @@ server <-
         add_row(
           sample_id = as.double(filter(stack(sample_cell), values == input$sampleCell)[[2]]),
           cell_id = as.double(input$sampleCell),
-          forest_year = input$transBegin,
-          agri_year = input$transEnd,
-          trans_length = input$transEnd - input$transBegin
+          forest_year = input$cBegin,
+          agri_year = input$cEnd,
+          c_length = input$cEnd - input$cBegin
         )
       new_results
     })

@@ -1,17 +1,17 @@
 # HEADER ----------------------------------------------------------------------
 #
-# Title:        Create transition raster files
-# Description:  This codes takes values from the "trans_length" dataset and
+# Title:        Create conversion raster files
+# Description:  This codes takes values from the "c_length" dataset and
 #               metadata information to recreate raster tiles with the
-#               transition values. The new raster files share the same spatial
+#               conversion values. The new raster files share the same spatial
 #               characteristics as the downloaded tiles (extent, resolution...)
 #               Each tile will be composed by a set of raster files, one file
-#               for each forest-agriculture transition cycle, and the bands of
+#               for each forest-agriculture conversion cycle, and the bands of
 #               the new files carry values of the variables stored in the
 #               parquet dataset.
 #
 # Author:       Hugo Tameirao Seixas
-# Contact:      tameirao.hugo@gmail.com
+# Contact:      seixas.hugo@protonmail.com
 # Date:         2020-09-11
 #
 # Notes:        Do not change the names of files and directories of the
@@ -36,18 +36,18 @@ library(purrr)
 
 ## Get tiles list from metadata file ----
 tiles_metadata <-
-  read_parquet("data/trans_tabular_dataset/tiles_metadata.parquet")
+  read_parquet("data/c_tabular_dataset/tiles_metadata.parquet")
 
 # RASTERIZE TABLES ------------------------------------------------------------
 
 ## Create directory to store new raster files  ----
-dir_create("data/trans_raster_tiles/")
+dir_create("data/c_raster_tiles/")
 
-## Load transition_length values from parquet dataset  ----
-trans_ds <- open_dataset("data/trans_tabular_dataset/trans_length/")
+## Load conversion length values from parquet dataset  ----
+c_ds <- open_dataset("data/c_tabular_dataset/c_length/")
 
 ## Load mask cells from parquet dataset  ----
-mask_ds <- open_dataset("data/trans_tabular_dataset/mask_cells/")
+mask_ds <- open_dataset("data/c_tabular_dataset/mask_cells/")
 
 ## Create set of raster files for each tile ----
 walk(
@@ -70,9 +70,9 @@ walk(
       tiles_metadata %>%
       filter(tile_id == tile)
 
-    # Get transition values ----
-    trans_table <-
-      trans_ds %>%
+    # Get conversion values ----
+    c_table <-
+      c_ds %>%
       filter(tile_id == tile) %>% # First filter the dataset for the tile
       select(-tile_id) %>%
       group_by(agri_cycle) %>%
@@ -80,15 +80,15 @@ walk(
 
     # Check if there is any valid value ----
     # Avoids possible unexpected errors
-    if (nrow(trans_table) == 0) { return() }
+    if (nrow(c_table) == 0) { return() }
 
     # Create one raster for each group (agri_cycle) ----
-    trans_table %>%
+    c_table %>%
       group_walk(
         ~ {
 
           ##### Set values for all raster cells ----
-          trans_table <-
+          c_table <-
             .x %>%
             # Get cell id of the tile
             full_join(cells, by = "cell_id") %>%
@@ -102,18 +102,18 @@ walk(
 
           # Get variables names ----
           variables <-
-            trans_table %>%
+            c_table %>%
             select(agri_code:forest_type) %>%
             names()
 
           # Create a list of raster layers and their values ----
-          trans_raster_list <-
+          c_raster_list <-
             map(
               .x = variables,
               function(var) {
 
                 #### Create empty raster using metadata values ----
-                trans_raster <-
+                c_raster <-
                   rast(
                     extent = ext(
                       c(meta$x_min, meta$x_max, meta$y_min, meta$y_max)
@@ -125,30 +125,30 @@ walk(
 
                 # Arrange cell values ----
                 raster_values <-
-                  trans_table %>%
+                  c_table %>%
                   arrange(tile_cell_id) %>%
                   pull(!!var)
 
                 # Fill layer with values ----
-                trans_raster <- setValues(trans_raster, values = raster_values)
+                c_raster <- setValues(c_raster, values = raster_values)
 
                 # Set layer name ----
-                names(trans_raster) <- var
+                names(c_raster) <- var
 
-                return(trans_raster)
+                return(c_raster)
 
               }
             )
 
           # Create raster stack from list ----
-          trans_stack <- rast(trans_raster_list)
+          c_stack <- rast(c_raster_list)
 
           # Save stack to file ----
           writeRaster(
-            trans_stack,
+            c_stack,
             glue(
-              'data/trans_raster_tiles/',
-              'trans_stack_{meta$tile_code}_cycle_{.y}.tif'
+              'data/c_raster_tiles/',
+              'c_stack_{meta$tile_code}_cycle_{.y}.tif'
             ),
             wopt = list(
               datatype = 'INT2U',

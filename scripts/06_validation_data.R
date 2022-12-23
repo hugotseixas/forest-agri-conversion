@@ -39,7 +39,7 @@ source('conf/config.R')
 #
 # CREATE SAMPLES --------------------------------------------------------------
 
-mask_cells <- open_dataset("data/trans_tabular_dataset/mask_cells/")
+mask_cells <- open_dataset("data/c_tabular_dataset/mask_cells/")
 
 cells <- mask_cells %>%
   select(cell_id) %>%

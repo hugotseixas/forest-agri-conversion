@@ -1,10 +1,10 @@
 # HEADER ----------------------------------------------------------------------
 #
-# Title:        Extract transition from Forest to Agriculture
-# Description:  This code extracts values of the transition between Forest and
+# Title:        Extract conversion from Forest to Agriculture
+# Description:  This code extracts values of the conversion between Forest and
 #               Agriculture from MapBiomas raster files. The process is applied
 #               in each file, where a number of iterations are performed to
-#               extract values from different transition cycles. The results
+#               extract values from different conversion cycles. The results
 #               are saved in .parquet format.
 #
 # Author:       Hugo Tameirao Seixas
@@ -39,7 +39,7 @@ source("R/terra_as_tibble.R")
 mb_dict <- read_delim('data/mb_class_dictionary.csv', delim = ',')
 
 ## Load mask cells from parquet dataset  ----
-mask_ds <- open_dataset("data/trans_tabular_dataset/mask_cells/")
+mask_ds <- open_dataset("data/c_tabular_dataset/mask_cells/")
 
 # LIST RASTER FILES -----------------------------------------------------------
 
@@ -57,9 +57,9 @@ file_list <-
   relocate(tile_id, tile_code) %>%
   arrange(tile_code)
 
-# EXTRACT LULC TRANSITION VALUES ----------------------------------------------
+# EXTRACT LULC CONVERSION VALUES ----------------------------------------------
 
-## Iterate trough files to extract transition values ----
+## Iterate trough files to extract conversion values ----
 walk(
   .x = pull(.data = file_list, var = tile_id),
   function(tile) {
@@ -107,32 +107,32 @@ walk(
 
     } else {
 
-      ### Create empty tibble to store transition values ----
-      trans_length_all <-
+      ### Create empty tibble to store conversion values ----
+      c_length_all <-
         tibble(
           cell_id = integer(),
           agri_code = integer(),
           forest_year = integer(),
           agri_year = integer(),
-          trans_length = integer(),
-          trans_cycle = integer()
+          c_length = integer(),
+          c_cycle = integer()
         )
 
       ### Create empty tibble to store lulc time series ----
-      trans_classes_all <-
+      c_classes_all <-
         tibble(
           cell_id = integer(),
           year = integer(),
           class_code = integer(),
-          trans_cycle = integer()
+          c_cycle = integer()
         )
 
-      ### Start transition cycles counting  ----
+      ### Start conversion cycles counting  ----
       cycle <- 0L
 
-      cat(' ---- Transition cycle: ')
+      cat(' ---- Conversion cycle: ')
 
-      ### Get transition length to each transition cycle ----
+      ### Get conversion length to each conversion cycle ----
       repeat {
 
         cycle <- cycle + 1L
@@ -229,38 +229,38 @@ walk(
             select(-c('period', 'class_type'))
 
           #### Calculate change length ----
-          trans_length <-
+          c_length <-
             agri_min %>%
             left_join(
               forest_max %>% select(cell_id, forest_max),
               by = 'cell_id'
             ) %>%
             mutate(
-              trans_length = agri_min - forest_max,
-              trans_cycle = cycle
+              c_length = agri_min - forest_max,
+              c_cycle = cycle
             ) %>%
             ungroup() %>%
             arrange(cell_id)
 
-          #### Filter years inside transition and 5 years after ----
-          trans_classes <-
+          #### Filter years inside conversion and 5 years after ----
+          c_classes <-
             lulc_table %>%
             select(-period) %>%
             left_join(
-              trans_length %>%
-                select(cell_id, agri_min, forest_max, trans_cycle),
+              c_length %>%
+                select(cell_id, agri_min, forest_max, c_cycle),
               by = 'cell_id',
             ) %>%
             arrange(cell_id) %>%
             filter(year > forest_max, year <= (agri_min + 5)) %>%
-            select(cell_id, year, class_code, trans_cycle)
+            select(cell_id, year, class_code, c_cycle)
 
-          #### Append data to "trans_classes_all" ----
-          trans_classes_all %<>%
-            bind_rows(trans_classes)
+          #### Append data to "c_classes_all" ----
+          c_classes_all %<>%
+            bind_rows(c_classes)
 
-          #### Rename and organize columns of trans length table ----
-          trans_length %<>%
+          #### Rename and organize columns of conversion length table ----
+          c_length %<>%
             rename(
               agri_code = class_code,
               forest_year = forest_max,
@@ -272,12 +272,12 @@ walk(
             ) %>%
             select(
               cell_id, agri_code, forest_year,
-              agri_year, trans_length, trans_cycle
+              agri_year, c_length, c_cycle
             )
 
-          #### Append data to "trans_length_all" ----
-          trans_length_all %<>%
-            bind_rows(trans_length)
+          #### Append data to "c_length_all" ----
+          c_length_all %<>%
+            bind_rows(c_length)
 
         }
 
@@ -314,33 +314,33 @@ walk(
 
       }
 
-      ## Calculate agri_cycle and forest_type for trans_length_all ----
-      trans_length_all %<>%
+      ## Calculate agri_cycle and forest_type for c_length_all ----
+      c_length_all %<>%
         group_by(cell_id) %>%
         mutate(agri_cycle = row_number()) %>%
         ungroup() %>%
         mutate(
           forest_type = as.integer(
             case_when(
-              trans_cycle == 1 ~ 1, # Primary forest
-              trans_cycle > 1 ~ 2 # Secondary forest
+              c_cycle == 1 ~ 1, # Primary forest
+              c_cycle > 1 ~ 2 # Secondary forest
             )
           )
         )
 
-      ## Calculate agri_cycle for trans_classes_all ----
-      trans_classes_all %<>%
+      ## Calculate agri_cycle for c_classes_all ----
+      c_classes_all %<>%
         left_join(
-          trans_length_all %>%
-            select(cell_id, trans_cycle, agri_cycle),
-          by = c("cell_id", "trans_cycle")
+          c_length_all %>%
+            select(cell_id, c_cycle, agri_cycle),
+          by = c("cell_id", "c_cycle")
         ) %>%
-        select(-trans_cycle)
+        select(-c_cycle)
 
       ## Create directories and store tables as parquet files ----
       walk2(
-        .x = c("trans_length", "trans_classes"),
-        .y = list(trans_length_all, trans_classes_all),
+        .x = c("c_length", "c_classes"),
+        .y = list(c_length_all, c_classes_all),
         function(var, table) {
 
           # Check if table have any row
@@ -354,7 +354,7 @@ walk(
                 # Create directories ----
                 dir_create(
                   path = glue(
-                    "data/trans_tabular_dataset/{var}/",
+                    "data/c_tabular_dataset/{var}/",
                     "tile_id={tile}/",
                     "agri_cycle={cycle}/"
                   )
@@ -366,7 +366,7 @@ walk(
                     filter(agri_cycle == cycle) %>%
                     select(-agri_cycle),
                   sink = glue(
-                    "data/trans_tabular_dataset/{var}/",
+                    "data/c_tabular_dataset/{var}/",
                     "tile_id={tile}/",
                     "agri_cycle={cycle}/",
                     "{var}-{file_list$tile_code[tile]}.parquet"

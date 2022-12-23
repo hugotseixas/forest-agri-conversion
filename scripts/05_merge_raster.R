@@ -2,11 +2,11 @@
 #
 # Title:        Merge raster tiles
 # Description:  This script merges the raster tiles created in the
-#               "03_rasterize.R" script into a single mosaic. Each mosaic is
-#               created for each forest-agriculture transition cycle.
+#               "04_rasterize.R" script into a single mosaic. Each mosaic is
+#               created for each forest-agriculture conversion cycle.
 #
 # Author:       Hugo Tameirao Seixas
-# Contact:      tameirao.hugo@gmail.com
+# Contact:      seixas.hugo@protonmail.com
 # Date:         2020-09-11
 #
 # Notes:        Do not change the names of files and directories of the
@@ -31,12 +31,12 @@ library(stringr)
 # PREPARE FILES AND DIRECTORIES -----------------------------------------------
 
 ## Create directory to store new raster files ----
-dir_create("data/trans_raster_mosaic/")
+dir_create("data/c_raster_mosaic/")
 
-## List raster files with transition values ----
-file_list <- dir_ls("data/trans_raster_tiles/")
+## List raster files with conversion values ----
+file_list <- dir_ls("data/c_raster_tiles/")
 
-# LIST FOREST-AGRICULTURE TRANSITION CYCLES -----------------------------------
+# LIST FOREST-AGRICULTURE CONVERSION CYCLES -----------------------------------
 
 ## Get number of cycles ----
 file_list %<>%
@@ -65,7 +65,7 @@ walk(
     # Merge raster as a mosaic using GDAL ----
     gdalbuildvrt(
       gdalfile = raster_path,
-      glue("data/trans_raster_mosaic/gdal_mosaic_cycle_{cycle_num}.vrt"),
+      glue("data/c_raster_mosaic/gdal_mosaic_cycle_{cycle_num}.vrt"),
       hidenodata = FALSE,
       overwrite = TRUE
     )
@@ -73,7 +73,7 @@ walk(
     # Open virtual raster to SpatRaster object ----
     raster_mosaic <-
       rast(
-        glue("data/trans_raster_mosaic/gdal_mosaic_cycle_{cycle_num}.vrt")
+        glue("data/c_raster_mosaic/gdal_mosaic_cycle_{cycle_num}.vrt")
       )
 
     # Rename bands ----
@@ -86,7 +86,7 @@ walk(
     writeRaster(
       x = raster_mosaic,
       filename = glue(
-        'data/trans_raster_mosaic/mb_mosaic_cycle_{cycle_num}.tif'
+        'data/c_raster_mosaic/mb_mosaic_cycle_{cycle_num}.tif'
       ),
       overwrite = TRUE,
       wopt = list(
@@ -98,7 +98,7 @@ walk(
 
     # Delete the virtual raster created by GDAL function ----
     file_delete(
-      glue('data/trans_raster_mosaic/gdal_mosaic_cycle_{cycle_num}.vrt')
+      glue('data/c_raster_mosaic/gdal_mosaic_cycle_{cycle_num}.vrt')
     )
 
   }

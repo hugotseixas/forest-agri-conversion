@@ -5,7 +5,7 @@
 #               are saved in .parquet format.
 #
 # Author:       Hugo Tameirao Seixas
-# Contact:      tameirao.hugo@gmail.com
+# Contact:      seixas.hugo@protonmail.com
 # Date:         2021-26-02
 #
 # Notes:        Do not change the names of files and directories of the
@@ -168,7 +168,7 @@ walk(
       ## Create directories ----
       dir_create(
         path = glue(
-          "data/trans_tabular_dataset/mask_cells/",
+          "data/c_tabular_dataset/mask_cells/",
           "tile_id={tile}/"
         )
       )
@@ -177,7 +177,7 @@ walk(
       write_parquet(
         x = table,
         sink = glue(
-          "data/trans_tabular_dataset/mask_cells/",
+          "data/c_tabular_dataset/mask_cells/",
           "tile_id={tile}/",
           "mask_cells-{file_list$tile_code[tile]}.parquet"
         ),
@@ -192,7 +192,7 @@ walk(
 ## Save raster metadata file ----
 write_parquet(
   x = tiles_metadata,
-  sink = "data/trans_tabular_dataset/tiles_metadata.parquet",
+  sink = "data/c_tabular_dataset/tiles_metadata.parquet",
   version = "2.6"
 )
 
