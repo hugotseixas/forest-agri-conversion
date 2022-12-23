@@ -159,7 +159,7 @@ Check the description file to see the version of each package.
       c(
         "dplyr", "forcats", "tibble", "tidyr", "readr", "magrittr", "purrr",
         "glue", "lubridate", "stringr", "ggplot2", "ggridges", "scales", "units",
-        "arrow", "fs", "gdalUtilities", "geobr", "googledrive", "terra", "sf", "sp", 
+        "arrow", "fs", "gdalUtilities", "geobr", "googledrive", "terra", "sf",
         "rgee", "geojsonio", "sparklyr", "shiny", "shinythemes", "gridlayout", "ggfx",
         "patchwork", "scico", "ggtext", "gt"
       )
