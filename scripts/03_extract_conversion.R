@@ -31,7 +31,6 @@ library(dplyr)
 # OPTIONS ---------------------------------------------------------------------
 #
 source("conf/config.R")
-source("R/terra_as_tibble.R")
 #
 # LOAD AUXILIARY DATA ---------------------------------------------------------
 
