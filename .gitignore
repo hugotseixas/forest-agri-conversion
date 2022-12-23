@@ -5,8 +5,8 @@
 *.log
 *.tif
 data/raw_raster_tiles/
-data/trans_raster_mosaic/
-data/trans_raster_tiles/
-data/trans_tabular_dataset/
+data/c_raster_mosaic/
+data/c_raster_tiles/
+data/c_tabular_dataset/
 logs/
 plots/
