@@ -8,7 +8,7 @@ Authors@R:
            email = "seixas.hugo@protonmail.com",
            comment = c(ORCID = "0000-0002-1206-9270"))
 Description: Estimation amount of years for the conversion from forest to agriculture in the brazilian amazon biome.
-License: MIT + file LICENSE
+License: GPL-3.0 + CC BY 4.0 + files LICENSE
 URL: https://github.com/hugotseixas/forest-agri-conversion
 Depends: 
     R (>= 4.0.0)
