@@ -1,6 +1,6 @@
 # HEADER ----------------------------------------------------------------------
 #
-# Title:        Create figure 3
+# Title:        Create figure 6
 # Description:  The objective of this routine is to explore the dataset by
 #               filtering and aggregating data in Spark. Results are supposed
 #               to give us a overall view of the data by plots and tables.
