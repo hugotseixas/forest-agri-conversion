@@ -1,6 +1,6 @@
 # Conversion from forest to agriculture in the Brazilian Amazon from 1985 to 2021
 
-<img src="./figs/trans_length_map.svg" width="900"/>
+<img src="./figs/graphical_abstract.png" width="900"/>
 
 ## Background
 
@@ -214,5 +214,22 @@ You should check this file before start running the scripts to set the options i
     This is a known issue, however the reasons for it are still unknown.
     You can ignore these error calls.
     Here is some links about this issue: <https://github.com/rspatial/terra/issues/30> and <https://github.com/sneumann/xcms/issues/288>
+
+## License
+
+### Code
+
+The code in this repository, including all code samples in the notebooks, is released under the [GPL-3.0 license](LICENSE-CODE).
+Read more at the [GNU Operating System](https://www.gnu.org/licenses/gpl-3.0.html).
+
+### Text
+
+The text content of this repository, including .rmd and html files, is released under the [CC BY 4.0 license](LICENSE-TEXT).
+Read more at [Creative Commons](https://creativecommons.org/licenses/by/4.0/legalcode).
+
+### Data
+
+The data content of this repository, including .csv spreadsheets, html tables and other tabular formats, is released under the [CC BY 4.0 license](LICENSE-DATA).
+Read more at [Creative Commons](https://creativecommons.org/licenses/by/4.0/legalcode).
 
 ------------------------------------------------------------------------
