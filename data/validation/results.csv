@@ -1,4 +1,4 @@
-sample_id,cell_id,forest_year,agri_year,trans_length
+sample_id,cell_id,forest_year,agri_year,c_length
 1,10435028,2007,2015,8
 2,10862809,1994,1998,4
 3,11723278,1996,2006,10
