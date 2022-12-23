@@ -1,7 +1,8 @@
 # CONFIG ----------------------------------------------------------------------
 #
 # This is a configuration file that sets options and variables that will be
-# used in the "01_download_mapbiomas.R" and "02_extract_transition.R".
+# used in the "01_download_mapbiomas.R", "02_extract_mask" and
+# "03_extract_conversion.R".
 # The options "gee_email", "clear_driver_folder" and "view_map" are safe
 # to be changed ("gee_email" is actually essential to run the download script).
 # However, it is not guaranteed that changes in the other options will generate
@@ -52,13 +53,13 @@ tile_dim <- 1536L
 # Default:
 #   tile_dim <- 1536L
 
-# The natural class of the transition -----------------------------------------
+# The natural class of the conversion -----------------------------------------
 trans_nat <- c(3)
 # Default value is "Forest Formation":
 #   trans_nat <- c(3)
 # Check https://mapbiomas.org/en/codigos-de-legenda?cama_set_language=en
 
-# The non natural class of the transition -------------------------------------
+# The non natural class of the conversion -------------------------------------
 trans_ant <- c(18, 19, 39, 20, 40, 62, 41, 36, 46, 47, 48)
 # Default value are agriculture classes:
 #   trans_ant <- c(18, 19, 39, 20, 40, 62, 41, 36, 46, 47, 48)
