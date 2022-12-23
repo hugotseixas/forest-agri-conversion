@@ -1,12 +1,12 @@
 # HEADER ----------------------------------------------------------------------
 #
 # Title:        Create figure 7
-# Description:  The objective of this routine is compare the transition length
+# Description:  The objective of this routine is compare the conversion length
 #               results, comparing them with visual observations.
 #
 #
 # Author:       Hugo Tameirao Seixas
-# Contact:      tameirao.hugo@gmail.com
+# Contact:      seixas.hugo@protonmail.com
 # Date:         2022-08-03
 #
 # Notes:
@@ -38,25 +38,25 @@ library(ggtext)
 
 ## Load observed data ----
 observed <- read_csv("data/validation/results.csv") %>%
-  mutate( # Remove points where there were no transition
+  mutate( # Remove points where there were no conversion
     forest_year = if_else(forest_year <= 0, NA_real_, forest_year),
     agri_year = if_else(agri_year <= 0, NA_real_, agri_year),
-    trans_length = if_else(agri_year <= 0, NA_real_, trans_length),
-    trans_length = if_else(forest_year <= 0, NA_real_, trans_length)
+    c_length = if_else(agri_year <= 0, NA_real_, c_length),
+    c_length = if_else(forest_year <= 0, NA_real_, c_length)
   ) %>%
   mutate( # Fix dates to match the estimates
     forest_year = forest_year,
     agri_year = agri_year
   ) %>%
   pivot_longer(
-    cols =  c(forest_year, agri_year, trans_length),
+    cols =  c(forest_year, agri_year, c_length),
     names_to = "var",
     values_to = "observed"
   ) %>%
   arrange(cell_id)
 
 ## Load estimates data ----
-estimated <- open_dataset("data/trans_tabular_dataset/trans_length/")
+estimated <- open_dataset("data/c_tabular_dataset/c_length/")
 
 estimated <- estimated %>%
   filter(
@@ -64,7 +64,7 @@ estimated <- estimated %>%
   ) %>%
   collect() %>%
   pivot_longer(
-    cols =  c(forest_year, agri_year, trans_length),
+    cols =  c(forest_year, agri_year, c_length),
     names_to = "var",
     values_to = "estimated"
   ) %>%
@@ -80,9 +80,9 @@ comparison <- estimated %>%
     difference = observed - estimated,
     var = factor(
       var,
-      levels = c("forest_year", "agri_year", "trans_length"),
+      levels = c("forest_year", "agri_year", "c_length"),
       labels = c(
-        "Deforestation", "Agriculture Establishment", "Transition Length"
+        "Deforestation", "Agriculture Establishment", "Conversion Length"
       )
     )
   )
@@ -121,7 +121,7 @@ write_csv(metrics, "data/figures/fig_4_metrics.csv")
 bar_plot <- comparison %>%
   ggplot() +
   facet_wrap( ~ var) +
-  ggtitle("Distribution of the errors of transition estimates.") +
+  ggtitle("Distribution of the errors of conversion estimates.") +
   geom_vline(
     data = mae,
     aes(xintercept = mae),
@@ -150,7 +150,7 @@ bar_plot <- comparison %>%
     data = tibble(
       label = c("(a)", "(b)", "(c)"),
       var = factor(
-        c("Deforestation", "Agriculture Establishment", "Transition Length")
+        c("Deforestation", "Agriculture Establishment", "Conversion Length")
       ),
       x = rep(25, 3),
       y = rep(57, 3)

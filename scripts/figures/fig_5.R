@@ -6,7 +6,7 @@
 #               to give us a overall view of the data by plots and tables.
 #
 # Author:       Hugo Tameirao Seixas
-# Contact:      tameirao.hugo@gmail.com
+# Contact:      seixas.hugo@protonmail.com
 # Date:         2020-11-10
 #
 # Notes:        In order to run this routine, you will need to successfully
@@ -50,24 +50,24 @@ mask_cells <-
   spark_read_parquet(
     sc,
     name = "mask_cells",
-    path = "data/trans_tabular_dataset/mask_cells/",
+    path = "data/c_tabular_dataset/mask_cells/",
     memory = FALSE
   )
 
-## Load trans_length table ----
-trans_length <-
+## Load c_length table ----
+c_length <-
   spark_read_parquet(
     sc,
-    name = "trans_length",
-    path = "data/trans_tabular_dataset/trans_length/",
+    name = "c_length",
+    path = "data/c_tabular_dataset/c_length/",
     memory = FALSE
   )
 
 # FILTER AND AGGREGATE DATA ---------------------------------------------------
 
 ## Sum deforestation and agriculture establishment along years ----
-trans_subset <-
-  trans_length %>%
+c_subset <-
+  c_length %>%
   filter(agri_cycle == 1) %>%
   select(cell_id:forest_type) %>%
   left_join(
@@ -76,33 +76,33 @@ trans_subset <-
   ) %>%
   group_by(
     forest_type, agri_year, forest_year,
-    agri_code, trans_length
+    agri_code, c_length
   ) %>%
   summarise(total_area = sum(area, na.rm = TRUE), .groups = "drop") %>%
   collect()
 
 ### Mutate columns and convert to long format ----
-trans_subset %<>%
+c_subset %<>%
   left_join(mb_dict, by = "agri_code") %>%
   pivot_longer(
     agri_year:forest_year,
-    names_to = "transition",
+    names_to = "conversion",
     values_to = "year") %>%
   mutate(
-    transition = fct_rev(factor(transition)),
+    conversion = fct_rev(factor(conversion)),
     year = ymd(year, truncated = 2L),
     forest_type = as.character(forest_type)
   )
 
 ### Summarise data ----
-trans_subset %<>%
-  group_by(transition, forest_type, trans_length, year) %>%
+c_subset %<>%
+  group_by(conversion, forest_type, c_length, year) %>%
   summarise(total_area = sum(total_area, na.rm = TRUE), .groups = "drop") %>%
   mutate(total_area = total_area / 1e6)
 
 ### Save plot data ----
 write_csv(
-  trans_subset,
+  c_subset,
   "data/figures/fig_2.csv"
 )
 
@@ -111,13 +111,13 @@ spark_disconnect(sc)
 
 # CREATE PLOTS ----------------------------------------------------------------
 
-## Columns with transition years ----
-cty <- trans_subset %>%
+## Columns with conversion years ----
+cty <- c_subset %>%
   ggplot() +
   facet_grid(
-    facets = transition ~ forest_type,
+    facets = conversion ~ forest_type,
     labeller = labeller(
-      transition = c(
+      conversion = c(
         "forest_year" = "Deforestation",
         "agri_year" = "Agriculture Establishment"
       ),
@@ -137,7 +137,7 @@ cty <- trans_subset %>%
       year = ymd("2004-05-01", "2006-05-01", "2012-05-01"),
       total_area = c(5000, 3500, 2000),
       forest_type = factor(1),
-      transition = factor("forest_year"),
+      conversion = factor("forest_year"),
       label = c("PPCDAm", "Soy Moratorium", "Forest Code")
     ),
     aes(x = year, y = total_area, label = label),
@@ -151,15 +151,15 @@ cty <- trans_subset %>%
     aes(
       x = year,
       y = total_area,
-      fill = trans_length,
-      color = trans_length,
-      group = trans_length
+      fill = c_length,
+      color = c_length,
+      group = c_length
     ),
     lwd = 0.1
   ) +
   geom_col(
     data = . %>%
-      group_by(transition, forest_type, year) %>%
+      group_by(conversion, forest_type, year) %>%
       summarise(total_area = sum(total_area, na.rm = TRUE), .groups = "drop"),
     aes(
       x = year,
@@ -172,7 +172,7 @@ cty <- trans_subset %>%
   geom_text(
     data = tibble(
       label = c("(a)", "(b)", "(c)", "(d)"),
-      transition =
+      conversion =
         as.factor(c("forest_year", "agri_year", "forest_year", "agri_year")),
       forest_type = c("1", "1", "2", "2"),
       area = rep(5100, 4),
@@ -184,10 +184,10 @@ cty <- trans_subset %>%
   ) +
   scale_fill_scico(
     palette = "batlow",
-    name = "Transition Length (year)",
+    name = "Conversion Length (year)",
     breaks = c(0, 17, 35)
   ) +
-  scale_color_scico(palette = "batlow", name = "Transition Length (year)") +
+  scale_color_scico(palette = "batlow", name = "Conversion Length (year)") +
   scale_x_date(
     date_breaks = "3 years",
     date_labels = "%Y",
@@ -198,7 +198,7 @@ cty <- trans_subset %>%
     breaks = pretty_breaks(3),
   ) +
   labs(
-    title = "Transition area per year and transition length",
+    title = "Conversion area per year and conversion length",
     x = "Year",
     y = "Area (square kilometre)"
   ) +
@@ -221,7 +221,7 @@ cty <- trans_subset %>%
   )
 
 ggsave(
-  "./figs/trans_length_cols.png",
+  "./figs/c_length_cols.png",
   cty,
   width = 17,
   height = 14,

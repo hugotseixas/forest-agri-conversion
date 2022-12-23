@@ -6,7 +6,7 @@
 #               to give us a overall view of the data by plots and tables.
 #
 # Author:       Hugo Tameirao Seixas
-# Contact:      tameirao.hugo@gmail.com
+# Contact:      seixas.hugo@protonmail.com
 # Date:         2020-11-10
 #
 # Notes:        In order to run this routine, you will need to successfully
@@ -47,9 +47,9 @@ states <- read_state() %>%
 
 # LOAD DATASETS ---------------------------------------------------------------
 
-## Load transition length raster ----
+## Load conversion length raster ----
 mosaic <-
-  rast("data/trans_raster_mosaic/mb_mosaic_cycle_1.tif")[["trans_length"]]
+  rast("data/c_raster_mosaic/mb_mosaic_cycle_1.tif")[["c_length"]]
 
 mosaic_agg <- terra::aggregate(mosaic, fact = 10, fun = "modal")
 
@@ -59,26 +59,26 @@ grid <- vect(st_make_grid(mosaic_agg, cellsize = 0.1, square = FALSE))
 ## Connect with Spark -----
 sc <- spark_connect(master = "local", config = config, version = "3.3.0")
 
-## Load trans_length table ----
-trans_length <-
+## Load c_length table ----
+c_length <-
   spark_read_parquet(
     sc,
-    name = "trans_length",
-    path = "data/trans_tabular_dataset/trans_length/",
+    name = "c_length",
+    path = "data/c_tabular_dataset/c_length/",
     memory = FALSE
   )
 
 # FILTER AND AGGREGATE DATA ---------------------------------------------------
 
-## Extract trans_length values from raster into hex grid ----
+## Extract c_length values from raster into hex grid ----
 extract_values <- terra::extract(mosaic_agg, grid) %>%
   drop_na() %>%
-  group_by(ID, trans_length) %>%
+  group_by(ID, c_length) %>%
   count() %>%
   group_by(ID) %>%
   filter(n == max(n))
 
-trans_hex <- grid %>%
+c_hex <- grid %>%
   st_as_sf() %>%
   mutate(ID := seq_len(nrow(.))) %>%
   left_join(., extract_values, by = "ID") %>%
@@ -110,17 +110,17 @@ hr_raster <-
   ) %>%
   as_tibble()
 
-## Get the frequency of trans_lenght ----
-frequency <- trans_length %>%
-  select(trans_length) %>%
+## Get the frequency of c_length ----
+frequency <- c_length %>%
+  select(c_length) %>%
   sdf_sample(fraction = 0.01, replacement = FALSE, seed = 2) %>%
   collect()
 
 ## Save plot data ----
 # Hex grid data
-write_csv(trans_hex, "data/figures/fig_1_hex.csv")
+write_csv(c_hex, "data/figures/fig_1_hex.csv")
 
-# Transition length frequency
+# Conversion length frequency
 write_csv(frequency, "data/figures/fig_1_freq.csv")
 
 # High resolution raster values
@@ -148,8 +148,8 @@ dist_map <- ggplot() +
     color = "black"
   ) +
   geom_sf(
-    data = trans_hex,
-    aes(fill = trans_length),
+    data = c_hex,
+    aes(fill = c_length),
     linewidth = 0.05
   ) +
   geom_sf(
@@ -182,7 +182,7 @@ dist_map <- ggplot() +
 hr_map <- ggplot() +
   geom_raster(
     data = hr_raster,
-    aes(x = x, y = y, fill = trans_length)
+    aes(x = x, y = y, fill = c_length)
   ) +
   scale_fill_scico(palette = "batlow") +
   scale_x_continuous(expand = c(0.0004, 0.0004)) +
@@ -198,7 +198,7 @@ hr_map <- ggplot() +
 hist_plot <- ggplot() +
   geom_bar(
     data = frequency,
-    aes(x = trans_length, fill = factor(trans_length)),
+    aes(x = c_length, fill = factor(c_length)),
     color = "black",
     lwd = 0.2
   ) +

@@ -6,7 +6,7 @@
 #               to give us a overall view of the data by plots and tables.
 #
 # Author:       Hugo Tameirao Seixas
-# Contact:      tameirao.hugo@gmail.com
+# Contact:      seixas.hugo@protonmail.com
 # Date:         2020-11-10
 #
 # Notes:        In order to run this routine, you will need to successfully
@@ -50,24 +50,24 @@ mask_cells <-
   spark_read_parquet(
     sc,
     name = "mask_cells",
-    path = "data/trans_tabular_dataset/mask_cells/",
+    path = "data/c_tabular_dataset/mask_cells/",
     memory = FALSE
   )
 
-## Load trans_length table ----
-trans_length <-
+## Load c_length table ----
+c_length <-
   spark_read_parquet(
     sc,
-    name = "trans_length",
-    path = "data/trans_tabular_dataset/trans_length/",
+    name = "c_length",
+    path = "data/c_tabular_dataset/c_length/",
     memory = FALSE
   )
 
 # FILTER AND AGGREGATE DATA ---------------------------------------------------
 
 ## Sample rows to create ridge plot ----
-trans_ridges <-
-  trans_length %>%
+c_ridges <-
+  c_length %>%
   filter(agri_cycle == 1) %>%
   select(cell_id:forest_type) %>%
   sdf_sample(fraction = 0.2, replacement = FALSE) %>%
@@ -87,12 +87,12 @@ spark_disconnect(sc)
 # CREATE PLOTS ----------------------------------------------------------------
 
 ## Ridge plot ----
-rp <- trans_ridges %>%
+rp <- c_ridges %>%
   ggplot() +
   facet_wrap( ~ name_state, ncol = 2) +
   geom_density_ridges_gradient(
     aes(
-      x = trans_length,
+      x = c_length,
       y = agri_year,
       group = agri_year,
       fill = after_stat(x)
@@ -102,11 +102,11 @@ rp <- trans_ridges %>%
   geom_text(
     data = tibble(
       label = c("(j)", "(g)", "(b)", "(i)", "(h)", "(e)", "(a)", "(d)", "(c)"),
-      name_state = unique(trans_ridges$name_state),
-      trans_length = rep(34, 9),
+      name_state = unique(c_ridges$name_state),
+      c_length = rep(34, 9),
       agri_year = rep(ymd("1995-01-01"), 9)
     ),
-    aes(x = trans_length, y = agri_year, label = label),
+    aes(x = c_length, y = agri_year, label = label),
     size = 3,
     color = "white"
   ) +
@@ -123,10 +123,10 @@ rp <- trans_ridges %>%
   theme_dark() +
   coord_flip() +
   labs(
-    title = "Transition length patterns inside states",
-    x = "Transition Length",
+    title = "Conversion length patterns inside states",
+    x = "Conversion Length",
     y = "Agriculture Establishment",
-    fill = "Transition Length"
+    fill = "Conversion Length"
   ) +
   guides(
     fill = guide_colourbar(
@@ -144,7 +144,7 @@ rp <- trans_ridges %>%
   )
 
 ggsave(
-  "./figs/trans_ridge.png",
+  "./figs/c_ridge.png",
   rp,
   width = 17,
   height = 15,

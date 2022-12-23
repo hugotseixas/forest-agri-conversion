@@ -1,12 +1,12 @@
 # HEADER ----------------------------------------------------------------------
 #
 # Title:        Create figure 8
-# Description:  The objective of this routine is compare the transition length
+# Description:  The objective of this routine is compare the conversion length
 #               results, comparing them with visual observations.
 #
 #
 # Author:       Hugo Tameirao Seixas
-# Contact:      tameirao.hugo@gmail.com
+# Contact:      seixas.hugo@protonmail.com
 # Date:         2022-08-03
 #
 # Notes:
@@ -38,22 +38,22 @@ library(ggtext)
 
 ## Load observed data ----
 observed <- read_csv("data/validation/results.csv") %>%
-  mutate( # Remove points where there were no transition
+  mutate( # Remove points where there were no conversion
     forest_year = if_else(forest_year <= 0, NA_real_, forest_year),
     agri_year = if_else(agri_year <= 0, NA_real_, agri_year),
-    trans_length = if_else(agri_year <= 0, NA_real_, trans_length),
-    trans_length = if_else(forest_year <= 0, NA_real_, trans_length)
+    c_length = if_else(agri_year <= 0, NA_real_, c_length),
+    c_length = if_else(forest_year <= 0, NA_real_, c_length)
   ) %>%
   mutate(across(forest_year:agri_year, ~ .x - 1984)) %>%
   pivot_longer(
-    cols =  c(forest_year, agri_year, trans_length),
+    cols =  c(forest_year, agri_year, c_length),
     names_to = "var",
     values_to = "observed"
   ) %>%
   arrange(cell_id)
 
 ## Load estimates data ----
-estimated <- open_dataset("data/trans_tabular_dataset/trans_length/")
+estimated <- open_dataset("data/c_tabular_dataset/c_length/")
 
 estimated %<>%
   filter(
@@ -62,7 +62,7 @@ estimated %<>%
   collect() %>%
   mutate(across(forest_year:agri_year, ~ .x - 1984)) %>%
   pivot_longer(
-    cols =  c(forest_year, agri_year, trans_length),
+    cols =  c(forest_year, agri_year, c_length),
     names_to = "var",
     values_to = "estimated"
   ) %>%
@@ -78,9 +78,9 @@ comparison <- estimated %>%
     difference = observed - estimated,
     var = factor(
       var,
-      levels = c("forest_year", "agri_year", "trans_length"),
+      levels = c("forest_year", "agri_year", "c_length"),
       labels = c(
-        "Deforestation", "Agriculture Establishment", "Transition Length"
+        "Deforestation", "Agriculture Establishment", "Conversion Length"
       )
     )
   )
@@ -123,7 +123,7 @@ write_csv(quants, "data/figures/fig_5_quants.csv")
 scatter_plot <- comparison %>%
   ggplot() +
   facet_wrap( ~ var) +
-  ggtitle("Dispersion between observed and estimated transitions.") +
+  ggtitle("Dispersion between observed and estimated conversions.") +
   geom_ribbon(
     data = subset(quants, group_id == 2),
     aes(
@@ -164,7 +164,7 @@ scatter_plot <- comparison %>%
     data = tibble(
       label = c("(a)", "(b)", "(c)"),
       var = factor(
-        c("Deforestation", "Agriculture Establishment", "Transition Length")
+        c("Deforestation", "Agriculture Establishment", "Conversion Length")
       ),
       estimated = rep(1, 3),
       observed = rep(35, 3)
