@@ -1,0 +1,229 @@
+var,group_id,min,max,estimated,observed
+Deforestation,1,-4.199999999999999,3.1999999999999886,-1,-1
+Deforestation,2,-1,0,-1,-1
+Agriculture Establishment,1,-8.7,11.049999999999983,-1,-1
+Agriculture Establishment,2,-1.75,3.75,-1,-1
+Conversion Length,1,-10.399999999999999,13.799999999999983,-1,-1
+Conversion Length,2,-2,4,-1,-1
+Deforestation,1,-4.199999999999999,3.1999999999999886,0,0
+Deforestation,2,-1,0,0,0
+Agriculture Establishment,1,-8.7,11.049999999999983,0,0
+Agriculture Establishment,2,-1.75,3.75,0,0
+Conversion Length,1,-10.399999999999999,13.799999999999983,0,0
+Conversion Length,2,-2,4,0,0
+Deforestation,1,-4.199999999999999,3.1999999999999886,1,1
+Deforestation,2,-1,0,1,1
+Agriculture Establishment,1,-8.7,11.049999999999983,1,1
+Agriculture Establishment,2,-1.75,3.75,1,1
+Conversion Length,1,-10.399999999999999,13.799999999999983,1,1
+Conversion Length,2,-2,4,1,1
+Deforestation,1,-4.199999999999999,3.1999999999999886,2,2
+Deforestation,2,-1,0,2,2
+Agriculture Establishment,1,-8.7,11.049999999999983,2,2
+Agriculture Establishment,2,-1.75,3.75,2,2
+Conversion Length,1,-10.399999999999999,13.799999999999983,2,2
+Conversion Length,2,-2,4,2,2
+Deforestation,1,-4.199999999999999,3.1999999999999886,3,3
+Deforestation,2,-1,0,3,3
+Agriculture Establishment,1,-8.7,11.049999999999983,3,3
+Agriculture Establishment,2,-1.75,3.75,3,3
+Conversion Length,1,-10.399999999999999,13.799999999999983,3,3
+Conversion Length,2,-2,4,3,3
+Deforestation,1,-4.199999999999999,3.1999999999999886,4,4
+Deforestation,2,-1,0,4,4
+Agriculture Establishment,1,-8.7,11.049999999999983,4,4
+Agriculture Establishment,2,-1.75,3.75,4,4
+Conversion Length,1,-10.399999999999999,13.799999999999983,4,4
+Conversion Length,2,-2,4,4,4
+Deforestation,1,-4.199999999999999,3.1999999999999886,5,5
+Deforestation,2,-1,0,5,5
+Agriculture Establishment,1,-8.7,11.049999999999983,5,5
+Agriculture Establishment,2,-1.75,3.75,5,5
+Conversion Length,1,-10.399999999999999,13.799999999999983,5,5
+Conversion Length,2,-2,4,5,5
+Deforestation,1,-4.199999999999999,3.1999999999999886,6,6
+Deforestation,2,-1,0,6,6
+Agriculture Establishment,1,-8.7,11.049999999999983,6,6
+Agriculture Establishment,2,-1.75,3.75,6,6
+Conversion Length,1,-10.399999999999999,13.799999999999983,6,6
+Conversion Length,2,-2,4,6,6
+Deforestation,1,-4.199999999999999,3.1999999999999886,7,7
+Deforestation,2,-1,0,7,7
+Agriculture Establishment,1,-8.7,11.049999999999983,7,7
+Agriculture Establishment,2,-1.75,3.75,7,7
+Conversion Length,1,-10.399999999999999,13.799999999999983,7,7
+Conversion Length,2,-2,4,7,7
+Deforestation,1,-4.199999999999999,3.1999999999999886,8,8
+Deforestation,2,-1,0,8,8
+Agriculture Establishment,1,-8.7,11.049999999999983,8,8
+Agriculture Establishment,2,-1.75,3.75,8,8
+Conversion Length,1,-10.399999999999999,13.799999999999983,8,8
+Conversion Length,2,-2,4,8,8
+Deforestation,1,-4.199999999999999,3.1999999999999886,9,9
+Deforestation,2,-1,0,9,9
+Agriculture Establishment,1,-8.7,11.049999999999983,9,9
+Agriculture Establishment,2,-1.75,3.75,9,9
+Conversion Length,1,-10.399999999999999,13.799999999999983,9,9
+Conversion Length,2,-2,4,9,9
+Deforestation,1,-4.199999999999999,3.1999999999999886,10,10
+Deforestation,2,-1,0,10,10
+Agriculture Establishment,1,-8.7,11.049999999999983,10,10
+Agriculture Establishment,2,-1.75,3.75,10,10
+Conversion Length,1,-10.399999999999999,13.799999999999983,10,10
+Conversion Length,2,-2,4,10,10
+Deforestation,1,-4.199999999999999,3.1999999999999886,11,11
+Deforestation,2,-1,0,11,11
+Agriculture Establishment,1,-8.7,11.049999999999983,11,11
+Agriculture Establishment,2,-1.75,3.75,11,11
+Conversion Length,1,-10.399999999999999,13.799999999999983,11,11
+Conversion Length,2,-2,4,11,11
+Deforestation,1,-4.199999999999999,3.1999999999999886,12,12
+Deforestation,2,-1,0,12,12
+Agriculture Establishment,1,-8.7,11.049999999999983,12,12
+Agriculture Establishment,2,-1.75,3.75,12,12
+Conversion Length,1,-10.399999999999999,13.799999999999983,12,12
+Conversion Length,2,-2,4,12,12
+Deforestation,1,-4.199999999999999,3.1999999999999886,13,13
+Deforestation,2,-1,0,13,13
+Agriculture Establishment,1,-8.7,11.049999999999983,13,13
+Agriculture Establishment,2,-1.75,3.75,13,13
+Conversion Length,1,-10.399999999999999,13.799999999999983,13,13
+Conversion Length,2,-2,4,13,13
+Deforestation,1,-4.199999999999999,3.1999999999999886,14,14
+Deforestation,2,-1,0,14,14
+Agriculture Establishment,1,-8.7,11.049999999999983,14,14
+Agriculture Establishment,2,-1.75,3.75,14,14
+Conversion Length,1,-10.399999999999999,13.799999999999983,14,14
+Conversion Length,2,-2,4,14,14
+Deforestation,1,-4.199999999999999,3.1999999999999886,15,15
+Deforestation,2,-1,0,15,15
+Agriculture Establishment,1,-8.7,11.049999999999983,15,15
+Agriculture Establishment,2,-1.75,3.75,15,15
+Conversion Length,1,-10.399999999999999,13.799999999999983,15,15
+Conversion Length,2,-2,4,15,15
+Deforestation,1,-4.199999999999999,3.1999999999999886,16,16
+Deforestation,2,-1,0,16,16
+Agriculture Establishment,1,-8.7,11.049999999999983,16,16
+Agriculture Establishment,2,-1.75,3.75,16,16
+Conversion Length,1,-10.399999999999999,13.799999999999983,16,16
+Conversion Length,2,-2,4,16,16
+Deforestation,1,-4.199999999999999,3.1999999999999886,17,17
+Deforestation,2,-1,0,17,17
+Agriculture Establishment,1,-8.7,11.049999999999983,17,17
+Agriculture Establishment,2,-1.75,3.75,17,17
+Conversion Length,1,-10.399999999999999,13.799999999999983,17,17
+Conversion Length,2,-2,4,17,17
+Deforestation,1,-4.199999999999999,3.1999999999999886,18,18
+Deforestation,2,-1,0,18,18
+Agriculture Establishment,1,-8.7,11.049999999999983,18,18
+Agriculture Establishment,2,-1.75,3.75,18,18
+Conversion Length,1,-10.399999999999999,13.799999999999983,18,18
+Conversion Length,2,-2,4,18,18
+Deforestation,1,-4.199999999999999,3.1999999999999886,19,19
+Deforestation,2,-1,0,19,19
+Agriculture Establishment,1,-8.7,11.049999999999983,19,19
+Agriculture Establishment,2,-1.75,3.75,19,19
+Conversion Length,1,-10.399999999999999,13.799999999999983,19,19
+Conversion Length,2,-2,4,19,19
+Deforestation,1,-4.199999999999999,3.1999999999999886,20,20
+Deforestation,2,-1,0,20,20
+Agriculture Establishment,1,-8.7,11.049999999999983,20,20
+Agriculture Establishment,2,-1.75,3.75,20,20
+Conversion Length,1,-10.399999999999999,13.799999999999983,20,20
+Conversion Length,2,-2,4,20,20
+Deforestation,1,-4.199999999999999,3.1999999999999886,21,21
+Deforestation,2,-1,0,21,21
+Agriculture Establishment,1,-8.7,11.049999999999983,21,21
+Agriculture Establishment,2,-1.75,3.75,21,21
+Conversion Length,1,-10.399999999999999,13.799999999999983,21,21
+Conversion Length,2,-2,4,21,21
+Deforestation,1,-4.199999999999999,3.1999999999999886,22,22
+Deforestation,2,-1,0,22,22
+Agriculture Establishment,1,-8.7,11.049999999999983,22,22
+Agriculture Establishment,2,-1.75,3.75,22,22
+Conversion Length,1,-10.399999999999999,13.799999999999983,22,22
+Conversion Length,2,-2,4,22,22
+Deforestation,1,-4.199999999999999,3.1999999999999886,23,23
+Deforestation,2,-1,0,23,23
+Agriculture Establishment,1,-8.7,11.049999999999983,23,23
+Agriculture Establishment,2,-1.75,3.75,23,23
+Conversion Length,1,-10.399999999999999,13.799999999999983,23,23
+Conversion Length,2,-2,4,23,23
+Deforestation,1,-4.199999999999999,3.1999999999999886,24,24
+Deforestation,2,-1,0,24,24
+Agriculture Establishment,1,-8.7,11.049999999999983,24,24
+Agriculture Establishment,2,-1.75,3.75,24,24
+Conversion Length,1,-10.399999999999999,13.799999999999983,24,24
+Conversion Length,2,-2,4,24,24
+Deforestation,1,-4.199999999999999,3.1999999999999886,25,25
+Deforestation,2,-1,0,25,25
+Agriculture Establishment,1,-8.7,11.049999999999983,25,25
+Agriculture Establishment,2,-1.75,3.75,25,25
+Conversion Length,1,-10.399999999999999,13.799999999999983,25,25
+Conversion Length,2,-2,4,25,25
+Deforestation,1,-4.199999999999999,3.1999999999999886,26,26
+Deforestation,2,-1,0,26,26
+Agriculture Establishment,1,-8.7,11.049999999999983,26,26
+Agriculture Establishment,2,-1.75,3.75,26,26
+Conversion Length,1,-10.399999999999999,13.799999999999983,26,26
+Conversion Length,2,-2,4,26,26
+Deforestation,1,-4.199999999999999,3.1999999999999886,27,27
+Deforestation,2,-1,0,27,27
+Agriculture Establishment,1,-8.7,11.049999999999983,27,27
+Agriculture Establishment,2,-1.75,3.75,27,27
+Conversion Length,1,-10.399999999999999,13.799999999999983,27,27
+Conversion Length,2,-2,4,27,27
+Deforestation,1,-4.199999999999999,3.1999999999999886,28,28
+Deforestation,2,-1,0,28,28
+Agriculture Establishment,1,-8.7,11.049999999999983,28,28
+Agriculture Establishment,2,-1.75,3.75,28,28
+Conversion Length,1,-10.399999999999999,13.799999999999983,28,28
+Conversion Length,2,-2,4,28,28
+Deforestation,1,-4.199999999999999,3.1999999999999886,29,29
+Deforestation,2,-1,0,29,29
+Agriculture Establishment,1,-8.7,11.049999999999983,29,29
+Agriculture Establishment,2,-1.75,3.75,29,29
+Conversion Length,1,-10.399999999999999,13.799999999999983,29,29
+Conversion Length,2,-2,4,29,29
+Deforestation,1,-4.199999999999999,3.1999999999999886,30,30
+Deforestation,2,-1,0,30,30
+Agriculture Establishment,1,-8.7,11.049999999999983,30,30
+Agriculture Establishment,2,-1.75,3.75,30,30
+Conversion Length,1,-10.399999999999999,13.799999999999983,30,30
+Conversion Length,2,-2,4,30,30
+Deforestation,1,-4.199999999999999,3.1999999999999886,31,31
+Deforestation,2,-1,0,31,31
+Agriculture Establishment,1,-8.7,11.049999999999983,31,31
+Agriculture Establishment,2,-1.75,3.75,31,31
+Conversion Length,1,-10.399999999999999,13.799999999999983,31,31
+Conversion Length,2,-2,4,31,31
+Deforestation,1,-4.199999999999999,3.1999999999999886,32,32
+Deforestation,2,-1,0,32,32
+Agriculture Establishment,1,-8.7,11.049999999999983,32,32
+Agriculture Establishment,2,-1.75,3.75,32,32
+Conversion Length,1,-10.399999999999999,13.799999999999983,32,32
+Conversion Length,2,-2,4,32,32
+Deforestation,1,-4.199999999999999,3.1999999999999886,33,33
+Deforestation,2,-1,0,33,33
+Agriculture Establishment,1,-8.7,11.049999999999983,33,33
+Agriculture Establishment,2,-1.75,3.75,33,33
+Conversion Length,1,-10.399999999999999,13.799999999999983,33,33
+Conversion Length,2,-2,4,33,33
+Deforestation,1,-4.199999999999999,3.1999999999999886,34,34
+Deforestation,2,-1,0,34,34
+Agriculture Establishment,1,-8.7,11.049999999999983,34,34
+Agriculture Establishment,2,-1.75,3.75,34,34
+Conversion Length,1,-10.399999999999999,13.799999999999983,34,34
+Conversion Length,2,-2,4,34,34
+Deforestation,1,-4.199999999999999,3.1999999999999886,35,35
+Deforestation,2,-1,0,35,35
+Agriculture Establishment,1,-8.7,11.049999999999983,35,35
+Agriculture Establishment,2,-1.75,3.75,35,35
+Conversion Length,1,-10.399999999999999,13.799999999999983,35,35
+Conversion Length,2,-2,4,35,35
+Deforestation,1,-4.199999999999999,3.1999999999999886,36,36
+Deforestation,2,-1,0,36,36
+Agriculture Establishment,1,-8.7,11.049999999999983,36,36
+Agriculture Establishment,2,-1.75,3.75,36,36
+Conversion Length,1,-10.399999999999999,13.799999999999983,36,36
+Conversion Length,2,-2,4,36,36

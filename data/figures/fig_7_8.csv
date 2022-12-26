@@ -1,0 +1,298 @@
+cell_id,agri_code,c_cycle,forest_type,tile_id,agri_cycle,var,estimated,sample_id,observed,difference
+1638939,41,1,1,342,1,Deforestation,3,10,2,-1
+1638939,41,1,1,342,1,Agriculture Establishment,20,10,29,9
+1638939,41,1,1,342,1,Conversion Length,17,10,27,10
+2521910,48,4,2,356,1,Deforestation,29,20,3,-26
+2521910,48,4,2,356,1,Agriculture Establishment,29,20,28,-1
+2521910,48,4,2,356,1,Conversion Length,0,20,25,25
+4462582,48,2,2,396,1,Deforestation,19,55,NA,NA
+4462582,48,2,2,396,1,Agriculture Establishment,19,55,NA,NA
+4462582,48,2,2,396,1,Conversion Length,0,55,NA,NA
+5502475,39,2,2,400,1,Deforestation,31,70,30,-1
+5502475,39,2,2,400,1,Agriculture Establishment,32,70,32,0
+5502475,39,2,2,400,1,Conversion Length,1,70,2,1
+7634457,41,3,2,442,1,Deforestation,34,97,34,0
+7634457,41,3,2,442,1,Agriculture Establishment,35,97,NA,NA
+7634457,41,3,2,442,1,Conversion Length,1,97,NA,NA
+7873646,41,1,1,468,1,Deforestation,31,98,30,-1
+7873646,41,1,1,468,1,Agriculture Establishment,37,98,36,-1
+7873646,41,1,1,468,1,Conversion Length,6,98,6,0
+9204434,41,1,1,486,1,Deforestation,22,99,21,-1
+9204434,41,1,1,486,1,Agriculture Establishment,30,99,29,-1
+9204434,41,1,1,486,1,Conversion Length,8,99,8,0
+9853594,41,1,1,522,1,Deforestation,22,100,28,6
+9853594,41,1,1,522,1,Agriculture Establishment,36,100,32,-4
+9853594,41,1,1,522,1,Conversion Length,14,100,4,-10
+10435028,41,1,1,556,1,Deforestation,24,1,23,-1
+10435028,41,1,1,556,1,Agriculture Establishment,31,1,31,0
+10435028,41,1,1,556,1,Conversion Length,7,1,8,1
+10862809,41,1,1,557,1,Deforestation,10,2,10,0
+10862809,41,1,1,557,1,Agriculture Establishment,34,2,14,-20
+10862809,41,1,1,557,1,Conversion Length,24,2,4,-20
+11723278,41,1,1,561,1,Deforestation,11,3,12,1
+11723278,41,1,1,561,1,Agriculture Establishment,29,3,22,-7
+11723278,41,1,1,561,1,Conversion Length,18,3,10,-8
+12181053,41,1,1,587,1,Deforestation,18,4,17,-1
+12181053,41,1,1,587,1,Agriculture Establishment,30,4,28,-2
+12181053,41,1,1,587,1,Conversion Length,12,4,11,-1
+12716970,41,1,1,591,1,Deforestation,27,5,28,1
+12716970,41,1,1,591,1,Agriculture Establishment,32,5,32,0
+12716970,41,1,1,591,1,Conversion Length,5,5,4,-1
+13399915,41,1,1,702,1,Deforestation,36,6,36,0
+13399915,41,1,1,702,1,Agriculture Establishment,37,6,NA,NA
+13399915,41,1,1,702,1,Conversion Length,1,6,NA,NA
+13814692,41,1,1,776,1,Deforestation,8,7,7,-1
+13814692,41,1,1,776,1,Agriculture Establishment,30,7,NA,NA
+13814692,41,1,1,776,1,Conversion Length,22,7,NA,NA
+14221930,41,1,1,853,1,Deforestation,4,8,4,0
+14221930,41,1,1,853,1,Agriculture Establishment,29,8,15,-14
+14221930,41,1,1,853,1,Conversion Length,25,8,11,-14
+15892318,39,1,1,989,1,Deforestation,10,9,12,2
+15892318,39,1,1,989,1,Agriculture Establishment,32,9,32,0
+15892318,39,1,1,989,1,Conversion Length,22,9,20,-2
+18272526,41,1,1,1031,1,Deforestation,20,11,21,1
+18272526,41,1,1,1031,1,Agriculture Establishment,35,11,25,-10
+18272526,41,1,1,1031,1,Conversion Length,15,11,4,-11
+19015080,41,1,1,1070,1,Deforestation,9,12,9,0
+19015080,41,1,1,1070,1,Agriculture Establishment,32,12,26,-6
+19015080,41,1,1,1070,1,Conversion Length,23,12,17,-6
+19243285,41,2,2,1070,1,Deforestation,7,13,2,-5
+19243285,41,2,2,1070,1,Agriculture Establishment,35,13,34,-1
+19243285,41,2,2,1070,1,Conversion Length,28,13,32,4
+20683999,41,1,1,1078,1,Deforestation,20,14,16,-4
+20683999,41,1,1,1078,1,Agriculture Establishment,35,14,34,-1
+20683999,41,1,1,1078,1,Conversion Length,15,14,18,3
+21311248,39,1,1,1082,1,Deforestation,4,15,3,-1
+21311248,39,1,1,1082,1,Agriculture Establishment,35,15,27,-8
+21311248,39,1,1,1082,1,Conversion Length,31,15,24,-7
+22051613,41,1,1,1112,1,Deforestation,9,16,11,2
+22051613,41,1,1,1112,1,Agriculture Establishment,32,16,21,-11
+22051613,41,1,1,1112,1,Conversion Length,23,16,10,-13
+22727809,41,1,1,1116,1,Deforestation,23,17,23,0
+22727809,41,1,1,1116,1,Agriculture Establishment,31,17,30,-1
+22727809,41,1,1,1116,1,Conversion Length,8,17,7,-1
+24394572,41,2,2,1142,1,Deforestation,24,18,18,-6
+24394572,41,2,2,1142,1,Agriculture Establishment,26,18,26,0
+24394572,41,2,2,1142,1,Conversion Length,2,18,8,6
+24487730,41,1,1,1143,1,Deforestation,18,19,18,0
+24487730,41,1,1,1143,1,Agriculture Establishment,29,19,29,0
+24487730,41,1,1,1143,1,Conversion Length,11,19,11,0
+26760500,39,1,1,1148,1,Deforestation,18,22,18,0
+26760500,39,1,1,1148,1,Agriculture Establishment,33,22,31,-2
+26760500,39,1,1,1148,1,Conversion Length,15,22,13,-2
+27183567,39,2,2,1151,1,Deforestation,11,23,1,-10
+27183567,39,2,2,1151,1,Agriculture Establishment,21,23,21,0
+27183567,39,2,2,1151,1,Conversion Length,10,23,20,10
+27870213,41,1,1,1159,1,Deforestation,5,24,11,6
+27870213,41,1,1,1159,1,Agriculture Establishment,5,24,15,10
+27870213,41,1,1,1159,1,Conversion Length,0,24,4,4
+28194906,39,1,1,1167,1,Deforestation,13,25,13,0
+28194906,39,1,1,1167,1,Agriculture Establishment,32,25,27,-5
+28194906,39,1,1,1167,1,Conversion Length,19,25,14,-5
+29812450,41,1,1,1171,1,Deforestation,18,26,18,0
+29812450,41,1,1,1171,1,Agriculture Establishment,29,26,23,-6
+29812450,41,1,1,1171,1,Conversion Length,11,26,5,-6
+30947528,41,1,1,1172,1,Deforestation,15,27,15,0
+30947528,41,1,1,1172,1,Agriculture Establishment,17,27,18,1
+30947528,41,1,1,1172,1,Conversion Length,2,27,3,1
+31209423,41,1,1,1172,1,Deforestation,14,28,14,0
+31209423,41,1,1,1172,1,Agriculture Establishment,14,28,18,4
+31209423,41,1,1,1172,1,Conversion Length,0,28,4,4
+32071277,41,1,1,1173,1,Deforestation,9,29,8,-1
+32071277,41,1,1,1173,1,Agriculture Establishment,9,29,11,2
+32071277,41,1,1,1173,1,Conversion Length,0,29,3,3
+32736217,41,1,1,1174,1,Deforestation,16,30,16,0
+32736217,41,1,1,1174,1,Agriculture Establishment,18,30,19,1
+32736217,41,1,1,1174,1,Conversion Length,2,30,3,1
+33763341,41,1,1,1176,1,Deforestation,12,31,10,-2
+33763341,41,1,1,1176,1,Agriculture Establishment,29,31,28,-1
+33763341,41,1,1,1176,1,Conversion Length,17,31,18,1
+33957290,41,1,1,1176,1,Deforestation,33,32,33,0
+33957290,41,1,1,1176,1,Agriculture Establishment,34,32,34,0
+33957290,41,1,1,1176,1,Conversion Length,1,32,1,0
+34544756,41,3,2,1180,1,Deforestation,11,33,12,1
+34544756,41,3,2,1180,1,Agriculture Establishment,36,33,30,-6
+34544756,41,3,2,1180,1,Conversion Length,25,33,18,-7
+34957489,41,1,1,1181,1,Deforestation,23,34,21,-2
+34957489,41,1,1,1181,1,Agriculture Establishment,32,34,29,-3
+34957489,41,1,1,1181,1,Conversion Length,9,34,8,-1
+35167191,41,1,1,1181,1,Deforestation,12,35,11,-1
+35167191,41,1,1,1181,1,Agriculture Establishment,21,35,20,-1
+35167191,41,1,1,1181,1,Conversion Length,9,35,9,0
+36301627,39,1,1,1200,1,Deforestation,16,36,16,0
+36301627,39,1,1,1200,1,Agriculture Establishment,30,36,31,1
+36301627,39,1,1,1200,1,Conversion Length,14,36,15,1
+36321127,41,1,1,1200,1,Deforestation,21,37,21,0
+36321127,41,1,1,1200,1,Agriculture Establishment,31,37,29,-2
+36321127,41,1,1,1200,1,Conversion Length,10,37,8,-2
+36445842,39,1,1,1202,1,Deforestation,18,38,18,0
+36445842,39,1,1,1202,1,Agriculture Establishment,30,38,28,-2
+36445842,39,1,1,1202,1,Conversion Length,12,38,10,-2
+36905754,41,1,1,1203,1,Deforestation,19,39,19,0
+36905754,41,1,1,1203,1,Agriculture Establishment,32,39,29,-3
+36905754,41,1,1,1203,1,Conversion Length,13,39,10,-3
+38017096,39,1,1,1204,1,Deforestation,4,40,4,0
+38017096,39,1,1,1204,1,Agriculture Establishment,15,40,7,-8
+38017096,39,1,1,1204,1,Conversion Length,11,40,3,-8
+38487615,41,1,1,1205,1,Deforestation,19,41,19,0
+38487615,41,1,1,1205,1,Agriculture Establishment,21,41,21,0
+38487615,41,1,1,1205,1,Conversion Length,2,41,2,0
+39096173,41,1,1,1205,1,Deforestation,18,42,18,0
+39096173,41,1,1,1205,1,Agriculture Establishment,20,42,24,4
+39096173,41,1,1,1205,1,Conversion Length,2,42,6,4
+39153494,41,1,1,1205,1,Deforestation,13,43,16,3
+39153494,41,1,1,1205,1,Agriculture Establishment,18,43,19,1
+39153494,41,1,1,1205,1,Conversion Length,5,43,3,-2
+39446107,41,1,1,1205,1,Deforestation,16,44,16,0
+39446107,41,1,1,1205,1,Agriculture Establishment,17,44,19,2
+39446107,41,1,1,1205,1,Conversion Length,1,44,3,2
+39962954,41,1,1,1206,1,Deforestation,7,45,5,-2
+39962954,41,1,1,1206,1,Agriculture Establishment,17,45,18,1
+39962954,41,1,1,1206,1,Conversion Length,10,45,13,3
+40427877,41,1,1,1206,1,Deforestation,13,46,13,0
+40427877,41,1,1,1206,1,Agriculture Establishment,14,46,15,1
+40427877,41,1,1,1206,1,Conversion Length,1,46,2,1
+40515463,41,1,1,1206,1,Deforestation,14,47,13,-1
+40515463,41,1,1,1206,1,Agriculture Establishment,21,47,20,-1
+40515463,41,1,1,1206,1,Conversion Length,7,47,7,0
+41036298,41,1,1,1207,1,Deforestation,20,48,20,0
+41036298,41,1,1,1207,1,Agriculture Establishment,21,48,28,7
+41036298,41,1,1,1207,1,Conversion Length,1,48,8,7
+41463735,41,1,1,1207,1,Deforestation,15,49,15,0
+41463735,41,1,1,1207,1,Agriculture Establishment,15,49,23,8
+41463735,41,1,1,1207,1,Conversion Length,0,49,8,8
+42443831,41,2,2,1210,1,Deforestation,28,50,20,-8
+42443831,41,2,2,1210,1,Agriculture Establishment,29,50,33,4
+42443831,41,2,2,1210,1,Conversion Length,1,50,13,12
+43011008,41,1,1,1213,1,Deforestation,22,51,20,-2
+43011008,41,1,1,1213,1,Agriculture Establishment,30,51,31,1
+43011008,41,1,1,1213,1,Conversion Length,8,51,11,3
+43190435,41,1,1,1214,1,Deforestation,19,52,19,0
+43190435,41,1,1,1214,1,Agriculture Establishment,21,52,23,2
+43190435,41,1,1,1214,1,Conversion Length,2,52,4,2
+43965277,39,1,1,1215,1,Deforestation,12,53,12,0
+43965277,39,1,1,1215,1,Agriculture Establishment,28,53,18,-10
+43965277,39,1,1,1215,1,Conversion Length,16,53,6,-10
+44029178,41,1,1,1215,1,Deforestation,17,54,17,0
+44029178,41,1,1,1215,1,Agriculture Establishment,25,54,28,3
+44029178,41,1,1,1215,1,Conversion Length,8,54,11,3
+44904209,41,1,1,1232,1,Deforestation,2,56,NA,NA
+44904209,41,1,1,1232,1,Agriculture Establishment,25,56,29,4
+44904209,41,1,1,1232,1,Conversion Length,23,56,NA,NA
+45064081,41,1,1,1232,1,Deforestation,18,57,18,0
+45064081,41,1,1,1232,1,Agriculture Establishment,20,57,24,4
+45064081,41,1,1,1232,1,Conversion Length,2,57,6,4
+46262891,41,1,1,1233,1,Deforestation,11,58,11,0
+46262891,41,1,1,1233,1,Agriculture Establishment,20,58,23,3
+46262891,41,1,1,1233,1,Conversion Length,9,58,12,3
+46468857,41,1,1,1234,1,Deforestation,19,59,19,0
+46468857,41,1,1,1234,1,Agriculture Establishment,21,59,26,5
+46468857,41,1,1,1234,1,Conversion Length,2,59,7,5
+46622124,41,1,1,1234,1,Deforestation,15,60,16,1
+46622124,41,1,1,1234,1,Agriculture Establishment,16,60,18,2
+46622124,41,1,1,1234,1,Conversion Length,1,60,2,1
+47435142,41,1,1,1235,1,Deforestation,14,61,14,0
+47435142,41,1,1,1235,1,Agriculture Establishment,14,61,17,3
+47435142,41,1,1,1235,1,Conversion Length,0,61,3,3
+47542399,41,1,1,1235,1,Deforestation,9,62,9,0
+47542399,41,1,1,1235,1,Agriculture Establishment,12,62,15,3
+47542399,41,1,1,1235,1,Conversion Length,3,62,6,3
+48941512,41,1,1,1236,1,Deforestation,4,63,4,0
+48941512,41,1,1,1236,1,Agriculture Establishment,7,63,13,6
+48941512,41,1,1,1236,1,Conversion Length,3,63,9,6
+49229009,41,1,1,1236,1,Deforestation,10,64,10,0
+49229009,41,1,1,1236,1,Agriculture Establishment,11,64,26,15
+49229009,41,1,1,1236,1,Conversion Length,1,64,16,15
+50235552,41,1,1,1237,1,Deforestation,18,65,21,3
+50235552,41,1,1,1237,1,Agriculture Establishment,23,65,26,3
+50235552,41,1,1,1237,1,Conversion Length,5,65,5,0
+50751367,41,1,1,1238,1,Deforestation,15,66,14,-1
+50751367,41,1,1,1238,1,Agriculture Establishment,22,66,23,1
+50751367,41,1,1,1238,1,Conversion Length,7,66,9,2
+51029529,41,1,1,1238,1,Deforestation,31,67,31,0
+51029529,41,1,1,1238,1,Agriculture Establishment,37,67,34,-3
+51029529,41,1,1,1238,1,Conversion Length,6,67,3,-3
+51682871,41,1,1,1239,1,Deforestation,18,68,18,0
+51682871,41,1,1,1239,1,Agriculture Establishment,26,68,29,3
+51682871,41,1,1,1239,1,Conversion Length,8,68,11,3
+55023642,41,1,1,1257,1,Deforestation,19,69,19,0
+55023642,41,1,1,1257,1,Agriculture Establishment,20,69,23,3
+55023642,41,1,1,1257,1,Conversion Length,1,69,4,3
+55459608,41,1,1,1257,1,Deforestation,20,71,20,0
+55459608,41,1,1,1257,1,Agriculture Establishment,22,71,29,7
+55459608,41,1,1,1257,1,Conversion Length,2,71,9,7
+56258713,41,1,1,1258,1,Deforestation,16,72,16,0
+56258713,41,1,1,1258,1,Agriculture Establishment,19,72,26,7
+56258713,41,1,1,1258,1,Conversion Length,3,72,10,7
+57098435,41,1,1,1261,1,Deforestation,18,73,18,0
+57098435,41,1,1,1261,1,Agriculture Establishment,19,73,26,7
+57098435,41,1,1,1261,1,Conversion Length,1,73,8,7
+57481862,39,2,2,1261,1,Deforestation,22,74,22,0
+57481862,39,2,2,1261,1,Agriculture Establishment,24,74,26,2
+57481862,39,2,2,1261,1,Conversion Length,2,74,4,2
+60810222,39,1,1,1269,1,Deforestation,2,75,8,6
+60810222,39,1,1,1269,1,Agriculture Establishment,26,75,26,0
+60810222,39,1,1,1269,1,Conversion Length,24,75,18,-6
+61372234,41,1,1,1274,1,Deforestation,9,76,13,4
+61372234,41,1,1,1274,1,Agriculture Establishment,28,76,25,-3
+61372234,41,1,1,1274,1,Conversion Length,19,76,12,-7
+61811732,41,1,1,1275,1,Deforestation,10,77,26,16
+61811732,41,1,1,1275,1,Agriculture Establishment,31,77,31,0
+61811732,41,1,1,1275,1,Conversion Length,21,77,5,-16
+62435676,41,1,1,1280,1,Deforestation,20,78,20,0
+62435676,41,1,1,1280,1,Agriculture Establishment,31,78,NA,NA
+62435676,41,1,1,1280,1,Conversion Length,11,78,NA,NA
+62615861,41,1,1,1280,1,Deforestation,11,79,11,0
+62615861,41,1,1,1280,1,Agriculture Establishment,12,79,35,23
+62615861,41,1,1,1280,1,Conversion Length,1,79,24,23
+62617333,39,2,2,1280,1,Deforestation,16,80,16,0
+62617333,39,2,2,1280,1,Agriculture Establishment,24,80,25,1
+62617333,39,2,2,1280,1,Conversion Length,8,80,9,1
+62677865,41,1,1,1280,1,Deforestation,10,81,10,0
+62677865,41,1,1,1280,1,Agriculture Establishment,31,81,29,-2
+62677865,41,1,1,1280,1,Conversion Length,21,81,19,-2
+64257543,41,1,1,1283,1,Deforestation,19,82,19,0
+64257543,41,1,1,1283,1,Agriculture Establishment,20,82,33,13
+64257543,41,1,1,1283,1,Conversion Length,1,82,14,13
+64589961,39,1,1,1285,1,Deforestation,19,83,18,-1
+64589961,39,1,1,1285,1,Agriculture Establishment,21,83,25,4
+64589961,39,1,1,1285,1,Conversion Length,2,83,7,5
+66253915,39,1,1,1288,1,Deforestation,12,84,12,0
+66253915,39,1,1,1288,1,Agriculture Establishment,26,84,28,2
+66253915,39,1,1,1288,1,Conversion Length,14,84,16,2
+66363920,41,1,1,1289,1,Deforestation,20,85,19,-1
+66363920,41,1,1,1289,1,Agriculture Establishment,29,85,33,4
+66363920,41,1,1,1289,1,Conversion Length,9,85,14,5
+66649737,41,1,1,1289,1,Deforestation,16,86,19,3
+66649737,41,1,1,1289,1,Agriculture Establishment,29,86,34,5
+66649737,41,1,1,1289,1,Conversion Length,13,86,15,2
+66890126,41,1,1,1289,1,Deforestation,21,87,21,0
+66890126,41,1,1,1289,1,Agriculture Establishment,29,87,31,2
+66890126,41,1,1,1289,1,Conversion Length,8,87,10,2
+68606875,39,1,1,1292,1,Deforestation,2,88,2,0
+68606875,39,1,1,1292,1,Agriculture Establishment,26,88,30,4
+68606875,39,1,1,1292,1,Conversion Length,24,88,28,4
+69657759,41,1,1,1301,1,Deforestation,11,89,10,-1
+69657759,41,1,1,1301,1,Agriculture Establishment,12,89,29,17
+69657759,41,1,1,1301,1,Conversion Length,1,89,19,18
+70497132,41,1,1,1303,1,Deforestation,30,90,30,0
+70497132,41,1,1,1303,1,Agriculture Establishment,34,90,34,0
+70497132,41,1,1,1303,1,Conversion Length,4,90,4,0
+70620055,41,1,1,1303,1,Deforestation,2,91,2,0
+70620055,41,1,1,1303,1,Agriculture Establishment,14,91,34,20
+70620055,41,1,1,1303,1,Conversion Length,12,91,32,20
+70785481,41,1,1,1303,1,Deforestation,15,92,15,0
+70785481,41,1,1,1303,1,Agriculture Establishment,15,92,23,8
+70785481,41,1,1,1303,1,Conversion Length,0,92,8,8
+71941298,41,1,1,1307,1,Deforestation,11,93,11,0
+71941298,41,1,1,1307,1,Agriculture Establishment,11,93,13,2
+71941298,41,1,1,1307,1,Conversion Length,0,93,2,2
+72523448,39,1,1,1313,1,Deforestation,5,94,5,0
+72523448,39,1,1,1313,1,Agriculture Establishment,35,94,32,-3
+72523448,39,1,1,1313,1,Conversion Length,30,94,27,-3
+72659109,41,1,1,1316,1,Deforestation,21,95,21,0
+72659109,41,1,1,1316,1,Agriculture Establishment,24,95,23,-1
+72659109,41,1,1,1316,1,Conversion Length,3,95,2,-1
+74474455,41,1,1,1356,1,Deforestation,5,96,5,0
+74474455,41,1,1,1356,1,Agriculture Establishment,33,96,29,-4
+74474455,41,1,1,1356,1,Conversion Length,28,96,24,-4
