@@ -38,7 +38,9 @@ source('conf/spark_config.R')
 # LOAD AUXILIARY DATA ---------------------------------------------------------
 
 ## Load municipality data ----
-municip <- read_municipality(year = "2019")
+municip <- read_municipality(year = "2019") %>%
+  as_tibble() %>%
+  select(code_muni, name_state)
 
 # LOAD DATASETS ---------------------------------------------------------------
 
@@ -70,16 +72,24 @@ c_ridges <-
   c_length %>%
   filter(agri_cycle == 1) %>%
   select(cell_id:forest_type) %>%
-  sdf_sample(fraction = 0.2, replacement = FALSE) %>%
+  sdf_sample(fraction = 0.01, replacement = FALSE, seed = 1) %>%
   left_join(
     mask_cells %>% select(cell_id, area, code_muni),
     by = "cell_id"
   ) %>%
+  select(agri_year, c_length, code_muni) %>%
   collect() %>%
   left_join(municip, by = "code_muni") %>%
   drop_na() %>%
   mutate(agri_year = ymd(agri_year, truncated = 2L)) %>%
-  filter(year(agri_year) >= 1995)
+  filter(year(agri_year) >= 1995) %>%
+  select(-code_muni)
+
+### Save plot data ----
+write_csv(
+  c_ridges,
+  "data/figures/fig_6.csv"
+)
 
 ## Disconnect from Spark after all queries ----
 spark_disconnect(sc)

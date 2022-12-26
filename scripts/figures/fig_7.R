@@ -110,10 +110,10 @@ metrics <- mae %>%
 ## Save plots data ----
 
 # Comparison table
-write_csv(comparison, "data/figures/fig_4_5.csv")
+write_csv(comparison, "data/figures/fig_7_8.csv")
 
 # Error metrics
-write_csv(metrics, "data/figures/fig_4_metrics.csv")
+write_csv(metrics, "data/figures/fig_7_metrics.csv")
 
 # ANALYSE RESULTS -------------------------------------------------------------
 

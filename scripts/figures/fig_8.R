@@ -112,10 +112,10 @@ quants <- do.call("rbind", replicate(38, quants, simplify = FALSE)) %>%
 ## Save plots data ----
 
 # Comparison table
-write_csv(comparison, "data/figures/fig_4_5.csv")
+write_csv(comparison, "data/figures/fig_7_8.csv")
 
 # Quantiles
-write_csv(quants, "data/figures/fig_5_quants.csv")
+write_csv(quants, "data/figures/fig_8_quants.csv")
 
 # ANALYSE RESULTS -------------------------------------------------------------
 

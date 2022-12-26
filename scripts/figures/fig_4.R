@@ -118,13 +118,13 @@ frequency <- c_length %>%
 
 ## Save plot data ----
 # Hex grid data
-write_csv(c_hex, "data/figures/fig_1_hex.csv")
+write_csv(c_hex, "data/figures/fig_4_hex.csv")
 
 # Conversion length frequency
-write_csv(frequency, "data/figures/fig_1_freq.csv")
+write_csv(frequency, "data/figures/fig_4_freq.csv")
 
 # High resolution raster values
-write_csv(hr_raster, "data/figures/fig_1_hr.csv")
+write_csv(hr_raster, "data/figures/fig_4_hr.csv")
 
 ## Disconnect from Spark after all queries ----
 spark_disconnect(sc)

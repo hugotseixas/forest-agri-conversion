@@ -103,7 +103,7 @@ c_subset %<>%
 ### Save plot data ----
 write_csv(
   c_subset,
-  "data/figures/fig_2.csv"
+  "data/figures/fig_5.csv"
 )
 
 ## Disconnect from Spark after all queries ----
