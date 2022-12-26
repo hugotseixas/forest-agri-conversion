@@ -222,7 +222,7 @@ The data can be analyzed year by year, and also be separated by primary and seco
 
 ```{r transbar-plot, out.width = "17cm", fig.pos = "h", echo = FALSE, fig.cap = "Conversion area from forest to agriculture, per year and conversion length. The bars represent the total amount of area at some state of the conversion for each year. The color gradient in each bar represent the conversion length related to a deforestation or an agriculture establishment event. Blue tones represents fast conversions (closer to 0 years), pink tones represent slow conversions (closer to 35 years). Conversion events were separated by deforestation of primary forests (a) and secondary forests (c), and the subsequent agriculture establishment of primary forests (b) and secondary forests (d)."}
 
-knitr::include_graphics("figs/trans_length_cols.png")
+knitr::include_graphics("figs/c_length_cols.png")
 
 ```
 
@@ -271,7 +271,7 @@ Even though it is possible to analyze the results in the Amazon as a whole, the 
 
 ```{r transridge-plot, out.width = "17cm", fig.pos = "h", echo = FALSE, fig.cap = "Conversion length patterns inside states in the Amazon biome. Each year has a density estimate of the conversion lengths, represented as colored curves. The peak of the curves represents conversion length values with more frequency in one year of one state. Blue tones represent fast conversions (conversions closer to 0 years), pink tones represent slow conversions (conversions closer to 35 years)."}
 
-knitr::include_graphics("figs/trans_ridge.png")
+knitr::include_graphics("figs/c_ridge.png")
 
 ```
 
